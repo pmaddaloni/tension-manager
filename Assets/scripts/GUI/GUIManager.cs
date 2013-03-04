@@ -26,13 +26,13 @@ public class GUIManager : MonoBehaviour {
 	}
 	
 	void initText() {
-		sceneDescription.Text = "scene desc";
+		sceneDescription.Text = "scene!";
 		timer.Text = "timer";
 		gameStatus.Text = "gameStatus";
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		sceneDescription.Text = logic.scenes[0];
 	}
 }
