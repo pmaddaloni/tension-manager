@@ -3,20 +3,22 @@ using System.Collections;
 
 public class ChoiceButtons : GuiObject
 {
-	
-	//A 2d list containing text choices, by level
-	private ArrayList choiceLevels = new ArrayList ();
-	private int numChoices = 3;
+	//the choices to display
+	private string[] choiceStrings;
+	public string[] ChoiceStrings {
+		set {choiceStrings = value;}
+	}
 	
 	//Which choice is selected in the grid?
 	private int choiceSelected = 0;
-	private string[] choiceText;
+	public int ChoiceSelected {
+		get{return choiceSelected;}
+	}
 	
 	// Use this for initialization
 	protected override void Start ()
 	{
 		base.Start();
-		choiceText = new string[numChoices];
 	}
 	
 	// Update is called once per frame
@@ -27,9 +29,6 @@ public class ChoiceButtons : GuiObject
 	//manage displaying this object
 	protected override void handleGUI() {
 		//build string array
-		for (int i = 0; i < numChoices; i++) {
-			choiceText [i] = "Choice " + i;		
-		}
-		choiceSelected = GUI.SelectionGrid (position, choiceSelected, choiceText, 1);
+		choiceSelected = GUI.SelectionGrid (position, choiceSelected, choiceStrings, 1);
 	}
 }
