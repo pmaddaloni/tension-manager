@@ -11,7 +11,7 @@ public class LogicManager : MonoBehaviour {
 	private float gameLength = 300;
 	
 	//how many seconds per choice?
-	private int choiceLength = 15;
+	private int choiceLength = 5;
 	
 	//when did the current choice start?
 	private float choiceStartTime;
@@ -41,6 +41,7 @@ public class LogicManager : MonoBehaviour {
 		choiceStartTime = Time.timeSinceLevelLoad; //initialize the choice timer
 		choiceStrings = new string[numChoices];
 		initChoiceStrings();//initialize the choice strings
+		initGameStatus(); //initialize the game status
 		
 		try {			
 			// Create an instance of StreamReader to read from a file. 
@@ -86,6 +87,11 @@ public class LogicManager : MonoBehaviour {
 		gui.setChoices(choiceStrings);//set the choices in the gui
 	}
 	
+	//Initialize the game status
+	void initGameStatus() {
+		gui.setGameStatus("this is a game.");
+	}
+	
 	/*
 	 * update the choice time
 	 * If time's up, handle the choice
@@ -104,5 +110,6 @@ public class LogicManager : MonoBehaviour {
 	//handle a user choice
 	void handleChoice() {
 		//set new choices here after dealing with repercussions
+		Debug.Log (gui.getChosenID());
 	}
 }
