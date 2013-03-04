@@ -15,29 +15,22 @@ public class GUIManager : MonoBehaviour {
 	ChoiceButtons choices;
 	
 	void Start () {
+		//initialize the components
 		SceneText[] texts = gameObject.GetComponents<SceneText>();
 		sceneDescription = texts[0];
 		timer = texts[1];
 		gameStatus = texts[2];
 		choiceTimer = texts[3];
-		
-		initText();//Initialize the text areas
-		
 		choices = gameObject.GetComponent<ChoiceButtons>();
 	}
 	
-	void initText() {
-		sceneDescription.Text = "scene!";
-		gameStatus.Text = "gameStatus";
-		choiceTimer.Text = "choice timer";
-	}
 	
 	// Update is called once per frame
 	void Update () {
 		sceneDescription.Text = logic.scenes[0];
 		//update the game timer
 		timer.Text = getGameTime();
-		choiceTimer.Text = logic.ChoiceTimeRemaining.ToString();
+		choiceTimer.Text = "Choice Selected in: \n" + logic.ChoiceTimeRemaining.ToString();
 	}
 	
 	//set the choices in the buttons
@@ -45,6 +38,15 @@ public class GUIManager : MonoBehaviour {
 		choices.ChoiceStrings = choiceStrings;
 	}
 	
+	public void setGameStatus(string status) {
+		gameStatus.Text = status;
+	}
+	
+	//return the ID of the selected choice
+	public int getChosenID() {
+		return choices.ChoiceSelected;
+	}
+		
 	//returns the game time in a pretty clock-like string
 	string getGameTime() {
 		int time = (int)logic.GameTimeRemaining;
