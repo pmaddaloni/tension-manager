@@ -18,6 +18,7 @@ public class GUIManager : MonoBehaviour {
 		//initialize the components
 		SceneText[] texts = gameObject.GetComponents<SceneText>();
 		sceneDescription = texts[0];
+		sceneDescription.activated = true;
 		timer = texts[1];
 		gameStatus = texts[2];
 		choiceTimer = texts[3];
@@ -34,6 +35,13 @@ public class GUIManager : MonoBehaviour {
 		//update the game timer
 		timer.Text = getTimerText();
 		choiceTimer.Text = "Choice Selected in: \n" + logic.ChoiceTimeRemaining.ToString();
+	}
+	
+	public void activateGameGUI() {
+		timer.activated = true;
+		gameStatus.activated = true;
+		choiceTimer.activated = true;
+		choices.activated = true;
 	}
 	
 	//set the choices in the buttons
@@ -56,6 +64,6 @@ public class GUIManager : MonoBehaviour {
 		
 		int minutes = time/60;
 		int seconds = time % 60;
-		return ("The bomb will explode in\n" + minutes + ": " + seconds);
+		return ("The bomb will explode in\n  " + minutes + ":" + seconds.ToString("00"));
 	}
 }

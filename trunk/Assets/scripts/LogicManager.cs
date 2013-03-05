@@ -57,26 +57,24 @@ public class LogicManager : MonoBehaviour
 	
 	//the array of choice options 
 
-	private string[] choiceStrings;
+	private choiceNode[] choices;
 	public struct choiceNode {
-		string label;
-		string description;
-		string successText;
-		string failureText;
-		int impactAmount;
-		int challengeRate;
+		public string label;
+		public string description;
+		public string successText;
+		public string failureText;
+		public int impactAmount;
+		public int challengeRate;
 	}
 			
 	public string[] scenes = new string[20];
-	public IList[] choices = new IList[5];
+	public IList[] choiceList = new IList[5];
 	
 	
 	//---------------------------METHODS-----------------------------------------//	
 	void Start () {
 		choiceStartTime = Time.timeSinceLevelLoad; //initialize the choice timer
-		choiceStrings = new string[numChoices];
-		initChoiceStrings();//initialize the choice strings
-		initGameStatus(); //initialize the game status
+		choices = new choiceNode[numChoices];
 						
 		try {			
 			// Create an instance of StreamReader to read from a file. 
@@ -185,18 +183,33 @@ public class LogicManager : MonoBehaviour
 	//Start the game -- initialize timers
 	void startGame ()
 	{
+		gui.activateGameGUI();//start up the GUI
 		gameStarted = true;
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
-		setChoiceStrings ();//initialize the choice strings
+		setChoices();//initialize the choices
 		setGameStatus (); //initialize the game status
+		//seed the random number generator
+		UnityEngine.Random.seed = (int)System.DateTime.Now.TimeOfDay.TotalMilliseconds;
 	}
 	
-	void setChoiceStrings ()
-	{
-		//Insert logic for choosing the choice strings here
+	//set the current choices
+	void setChoices() {
 		for (int i = 0; i < numChoices; i++) {
-			choiceStrings [i] = ("logicChoice " + i);
+			choices[i] = new choiceNode();
+			choices[i].label = ("choiceNode " + i);
+		}
+		setGUIChoiceStrings();
+	}
+	
+	
+	//set the choice strings in the GUI
+	void setGUIChoiceStrings ()
+	{
+		//set the strings for the array buttons
+		string[] choiceStrings = new string[numChoices];
+		for (int i = 0; i < numChoices; i++) {
+			choiceStrings[i] = choices[i].label;
 		}
 		gui.setChoiceStrings(choiceStrings);//update the choices in the gui
 	}
@@ -234,6 +247,12 @@ public class LogicManager : MonoBehaviour
 	void handleChoice ()
 	{
 		//set new choices here after dealing with repercussions
-		Debug.Log (gui.getChosenID ());
+		choiceNode choice = choices[gui.getChosenID()];
+		bool success = UnityEngine.Random.Range(0,1) >= choice.challengeRate;
+		if (success) print ("success!");
+			else print ("failure!");
+		//handle repercussions of success/failure
+		//update game state, etc.
+		setChoices();//updates the choice list
 	}
 }

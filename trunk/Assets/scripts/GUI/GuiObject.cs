@@ -8,6 +8,9 @@ public class GuiObject : MonoBehaviour
 	
 	public string guiName;
 	
+	//is this gui object active? Defaults to false
+	public bool activated = false;
+	
 	//where in the screen should the object appear?
 	public float xPercentScreen;
 	public float yPercentScren;
@@ -43,7 +46,7 @@ public class GuiObject : MonoBehaviour
 	
 	//handle the object display
 	void OnGUI() {
-		handleGUI();
+		if (activated) handleGUI();
 	}
 }
 
