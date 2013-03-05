@@ -1,70 +1,269 @@
 <Initial>
 
-<1> Try to talk with the man
+<Choice1> 
 
+<label>
+Try to talk with the man
+<End>
+
+<description> 
 You raise the bullhorn to your mouth. “Look, whatever it is that you want, we can work it out. Just please step away form the ledge and disarm that bomb sir. Then we can talk about what it is you want.”
+<End>
 
-<2> Converse with the other police on the scene
+<success> 
+The man looks hesitant for a moment 
+<End>
 
+<failure> 
+The man scowls at you 
+<End>
+
+<impact> 
+1 
+<End>
+
+<challenge> 
+1
+<End>
+<EndCHOICE>
+
+<Choice2> 
+
+<label>
+Converse with the other police on the scene
+<End>
+
+<description>
 “What can you tell me about the situation?” 
 
 The officer looks tired. He answers, “We don’t have much information. We’ve been able to get a good look at the guy, and the bomb looks authentic enough. The swat is on its way with the bomb squad. We have to calm this guy down or at the least we’re looking at millions of dollars worth of city damage and a PR nightmare, at the worst we’re looking at lots of collateral damage and people dying. Crazy fucker.”
 
-<3> Call in the bomb squad
+<End>
 
+<success>
+The man sees you talking with the officers and looks hesitant.
+<end>
+
+<failure>
+Your ignoring the man seems to irritate him.
+<end>
+
+<impact>
+1
+<end>
+
+<challenge>
+1
+<end>
+<EndCHOICE>
+
+<Choice3> 
+
+<label>
+Call in the bomb squad
+<end>
+
+<description>
 You take out the radio in your overcoat and hold in the button.
 
 “How long until arrival?”
 
-The radio hisses that satisfying white noise, then a response “ETA two minutes sir. Over.”
+The radio hisses that satisfying white noise, then a response “We will be there momentarily sir.”
 
 You put the radio back in your coat.
+<end>
 
-<4> Call in Swat
+<success>
+The man sees you talking on the radio and looks hesitant.
+<end>
 
+<failure>
+Your ignoring the man seems to irritate him.
+<end>
+
+<impact>
+1
+<end>
+
+<challenge>
+1
+<end>
+<EndChoice>
+
+<Choice4> 
+
+<label>
+Call in Swat
+<end>
+
+<description>
 You take out the radio in your overcoat and hold in the button.
 
 You notice that you got there before swat had. 
 “How long until arrival?”
 
-The radio hisses that satisfying white noise, then a response, “ETA three minutes sir. Over.”
+The radio hisses that satisfying white noise, then a response, “We will be there momentarily sir. Over.”
 
 You put the radio back in your coat.
+<end>
 
-<5> Try and clear the area
+<success>
+The man sees you talking with on the radio and looks hesitant.
+<end>
+
+<failure>
+Your ignoring the man seems to irritate him.
+<end>
+
+<impact>
+1
+<end>
+
+<challenge>
+1
+<end>
+<EndChoice>
+
+<Choice5> 
+
+<description>
+Try and clear the area
 
 Holding the bullhorn, “Alright everyone that is not a policeman needs to move out of this immediate area. Go home folks and let us handle this. We appreciate your cooperation in making our jobs easier.”
 
 This appears to have done nothing.
+<end>
 
-<6> Do nothing
+<success>
+The man sees you trying to clear the area and looks hesitant.
+<end>
 
+<failure>
+You taking away his audience raises his ire.
+<end>
+
+<impact>
+1
+<end>
+
+<challenge>
+1
+<end>
+<ENDChoice>
+
+<Choice6> 
+
+<label>
+Do nothing
+<end>
+
+<description>
 You stand there grinding your teeth, unsure of what to do with yourself. You pull out a pack of cigarettes from your pocket. Quitting was never really an options anyway. The drag calms your nerves a bit.
+<end>
 
-<End>
+<success>
+The man sees you standing there and does the same.
+<end>
 
+<failure>
+Your ignoring the man doesn’t seem to affect him.
+<end>
 
+<impact>
+0
+<end>
+
+<challenge>
+1
+<end>
+<EndChoice>
+<EndClass>
 
 
 <Class0>
 
-1) Attempt to reason with the man about his family
+<Choice1> 
 
+<label>
+Attempt to reason with the man about his family
+<end>
+
+<description>
 You speak of the loved ones he may have. Friends and family he would leave behind. He stares back coldly at you.
+<end>
 
-2) Do nothing
+<success>
+The man’s expression changes and he seems confused.
+<end>
 
+<failure>
+“I have no one worth living for. Fuck off!”
+<end>
+
+<impact>
+1
+<end>
+
+<challenge>
+1
+<end>
+<ENDCHOICE>
+
+<Choice2> 
+
+<label>
+Do nothing
+<end>
+
+<description>
 Cigarettes always make bad situations better, right? It gives you a minute to collect your thoughts and decide what to do. The glow of the end of your cigarette takes you away for a moment.
+<end>
 
-3) Call bomb squad into position
+<success>
+The man sees you standing there and does the same.
+<end>
 
-If they haven’t arrived yet:
-go to initial call bomb squad option
+<failure>
+Your ignoring the man doesn’t seem to affect him.
+<end>
 
-Else
+<impact>
+0
+<end>
+
+<challenge>
+1
+<end>
+<EndCHOICE>
+
+<Choice3> 
+
+<label>
+Call bomb squad into position
+<end>
+
+<description>
 The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor, and one down here just in case. Let’s be sharp everyone.”
+<end>
 
-4) Call swat into position
+<success>
+The man does not react to your action.
+<end>
+
+<failure>
+He turns his head a bit as if he hears something. He looks angry.
+<end>
+
+<impact>
+0
+<end>
+
+<challenge>
+1
+<end>
+<EndChoice>
+
+<4> Call swat into position
 
 If they haven’t arrived yet: 
 go to initial call swat option
@@ -72,28 +271,28 @@ go to initial call swat option
 Else
 The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor to support the bomb squad if necessary. Do not open fire unless I give the order.”
 
-5) Attempt to reason with the man through common sense
+<5> Attempt to reason with the man through common sense
 
 You attempt to appeal to man’s better sensibilities. He responds by screaming something unintelligible.
 
-6) Look through binoculars
+<6> Look through binoculars
 
 An officer standing next to you hands you a pair. You look through their telescoping lenses and see the man is [insert_var] from the edge of the building.
 
 <End>
 
 <Class1>
-<End>
+<EndClass>
 
 <Class2>
 
 <Class3>
-<End>
+<EndClass>
 
 <Class4>
-<End>
+<EndClass>
 
 <Class5>
-<End>
+<EndClass>
 
 
