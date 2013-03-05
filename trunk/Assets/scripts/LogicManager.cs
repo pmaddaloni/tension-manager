@@ -6,48 +6,62 @@ using System;
 public class LogicManager : MonoBehaviour
 {
 	
+	//Da GUI
 	public GUIManager gui;
+	
+	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
 	private float gameLength = 300;
 	
+	//how many seconds per choice?
+	private int choiceLength = 5;
+	
+	//--------------------------TIMER VARIABLES--------------------------------//
 	//when does the user start the game?
 	private float gameStartTime;
 	
 	//Has the game started yet?
 	private bool gameStarted = false;
 	public bool GameStarted {
-		get {return gameStarted;}
+		get { return gameStarted;}
 	}
-	
-	//how many seconds per choice?
-	private int choiceLength = 5;
 	
 	//when did the current choice start?
 	private float choiceStartTime;
 		
 	//the time the game has been running
 	private float gameTimeRemaining;
-
 	public float GameTimeRemaining {
 		get { return gameTimeRemaining;}
 	}
 	
 	//how long until the current choice is selected?
 	private int choiceTimeRemaining;
-
 	public int ChoiceTimeRemaining {
 		get { return choiceTimeRemaining;}
 	}
 	
+	//-------------------------GAME STATE VARIABLES---------------------------//
+	
 	//how many choices
 	private int numChoices = 3;
+	
+	//what is the current distance from the edge?
+	private int jumperDist = 5;
+	public int JumperDist {
+		get{return jumperDist;}
+	}
+
+	//-------------------------CHOICE MEMBERS---------------------------//
 	
 	//the array of choice options 
 	private string[] choiceStrings;
 	public string[] scenes = new string[20];
 	public IList[] choices = new IList[20];
 	
+	
+	//---------------------------METHODS-----------------------------------------//	
 	void Start ()
 	{
 		choiceStrings = new string[numChoices];
@@ -65,7 +79,7 @@ public class LogicManager : MonoBehaviour
 						line = sr.ReadLine ();
 						while (!(line.Trim()).Equals("<End Of Scene>")) {
 							scenes [0] += line;
-							line = sr.ReadLine ();
+							line = sr.ReadLine();
 						}
 					}
 				}
@@ -80,7 +94,6 @@ public class LogicManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		
 		if (!gameStarted) {
 			//start the game!
 			if (Input.anyKeyDown)
@@ -88,7 +101,7 @@ public class LogicManager : MonoBehaviour
 			return;
 		}
 		
-		gameTimeRemaining = gameLength - gameStartTime;
+		updateGameTimeRemaining();
 		handleChoiceTimer ();
 	}
 	
@@ -98,22 +111,29 @@ public class LogicManager : MonoBehaviour
 		gameStarted = true;
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
-		initChoiceStrings ();//initialize the choice strings
-		initGameStatus (); //initialize the game status
+		setChoiceStrings ();//initialize the choice strings
+		setGameStatus (); //initialize the game status
 	}
 	
-	void initChoiceStrings ()
+	void setChoiceStrings ()
 	{
+		//Insert logic for choosing the choice strings here
 		for (int i = 0; i < numChoices; i++) {
 			choiceStrings [i] = ("logicChoice " + i);
 		}
-		gui.setChoices (choiceStrings);//set the choices in the gui
+		gui.setChoiceStrings(choiceStrings);//update the choices in the gui
 	}
 	
-	//Initialize the game status
-	void initGameStatus ()
+	//Set the game status in the gui
+	void setGameStatus ()
 	{
-		gui.setGameStatus ("this is a game.");
+		gui.setGameStatus ("The crazy mofo is " + jumperDist + " steps from the edge");
+	}
+	
+	void updateGameTimeRemaining() {
+		
+		float timePassed = Time.timeSinceLevelLoad - gameStartTime;
+		gameTimeRemaining = gameLength - timePassed;
 	}
 	
 	/*

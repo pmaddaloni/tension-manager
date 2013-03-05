@@ -23,8 +23,7 @@ public class GUIManager : MonoBehaviour {
 		choiceTimer = texts[3];
 		choices = gameObject.GetComponent<ChoiceButtons>();
 	}
-	
-	
+		
 	// Update is called once per frame
 	void Update () {
 		sceneDescription.Text = logic.scenes[0];
@@ -33,12 +32,12 @@ public class GUIManager : MonoBehaviour {
 		if(!logic.GameStarted) return;
 		
 		//update the game timer
-		timer.Text = getGameTime();
+		timer.Text = getTimerText();
 		choiceTimer.Text = "Choice Selected in: \n" + logic.ChoiceTimeRemaining.ToString();
 	}
 	
 	//set the choices in the buttons
-	public void setChoices(string[] choiceStrings) {
+	public void setChoiceStrings(string[] choiceStrings) {
 		choices.ChoiceStrings = choiceStrings;
 	}
 	
@@ -52,11 +51,11 @@ public class GUIManager : MonoBehaviour {
 	}
 		
 	//returns the game time in a pretty clock-like string
-	string getGameTime() {
+	string getTimerText() {
 		int time = (int)logic.GameTimeRemaining;
 		
 		int minutes = time/60;
 		int seconds = time % 60;
-		return ("Time Remaining\n" + minutes + ": " + seconds);
+		return ("The bomb will explode in\n" + minutes + ": " + seconds);
 	}
 }
