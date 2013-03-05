@@ -56,38 +56,115 @@ public class LogicManager : MonoBehaviour
 	//-------------------------CHOICE MEMBERS---------------------------//
 	
 	//the array of choice options 
+
 	private string[] choiceStrings;
+	public struct choiceNode {
+		string label;
+		string description;
+		string successText;
+		string failureText;
+		int impactAmount;
+		int challengeRate;
+	}
+			
 	public string[] scenes = new string[20];
-	public IList[] choices = new IList[20];
+	public IList[] choices = new IList[5];
 	
 	
 	//---------------------------METHODS-----------------------------------------//	
-	void Start ()
-	{
+	void Start () {
+		choiceStartTime = Time.timeSinceLevelLoad; //initialize the choice timer
 		choiceStrings = new string[numChoices];
-				
+		initChoiceStrings();//initialize the choice strings
+		initGameStatus(); //initialize the game status
+						
 		try {			
 			// Create an instance of StreamReader to read from a file. 
-			// The using statement also closes the StreamReader. 
-			using (StreamReader sr = new StreamReader("TheStorySoFar.txt")) {
-				string line;
-				// Read and display lines from the file until the end of  
-				// the file is reached. 
-				while ((line = sr.ReadLine()) != null) {
-					//Debug.Log(line);
-					if ((line.Trim ()).Equals ("Intro:")) {
-						line = sr.ReadLine ();
-						while (!(line.Trim()).Equals("<End Of Scene>")) {
-							scenes [0] += line;
+            // The using statement also closes the StreamReader. 
+			
+			//Read Scenes
+            using (StreamReader sr = new StreamReader("Scenes.txt")) 
+            {
+                string line;
+				int sceneCounter = 0;
+                // Read and display lines from the file until the end of  
+                // the file is reached. 
+                while ((line = sr.ReadLine()) != null) 
+                {
+                    //Debug.Log(line);
+					if ( (line.Trim()).Equals("<Intro>") )
+					{
+						line = sr.ReadLine();
+						while( !(line.Trim()).Equals("<End>") )
+						{
+							scenes[sceneCounter] += line + '\n';
 							line = sr.ReadLine();
 						}
+						sceneCounter++;
 					}
-				}
-			}
-		} catch (Exception e) {
-			// Let the user know what went wrong.
-			Debug.Log ("The file could not be read:");
-			Debug.Log (e.Message);
+					
+					else {
+						line = sr.ReadLine();						
+						if ((line.Trim()).Equals("<Scene" + sceneCounter + ">"))
+						{
+	
+							line = sr.ReadLine();
+							while( !(line.Trim()).Equals("<End>") && sceneCounter < 20)
+							{
+								print(line);
+								scenes[sceneCounter] += line;
+								line = sr.ReadLine();
+							}
+							sceneCounter++;
+						}			
+					}
+                }
+            }
+			
+			//Read Choices
+			/*using (StreamReader sr = new StreamReader("Choices.txt")) 
+            {
+                string line;
+                // Read and display lines from the file until the end of  
+                // the file is reached. 
+                while ((line = sr.ReadLine()) != null) 
+                {
+                    //Debug.Log(line);
+					if ( (line.Trim()).Equals("<Intro>") )
+					{
+						line = sr.ReadLine();
+						while( !(line.Trim()).Equals("<End>") )
+						{
+							scenes[sceneCounter] += line + '\n';
+							line = sr.ReadLine();
+						}
+						sceneCounter++;
+					}
+					
+					else {
+						line = sr.ReadLine();						
+						if ((line.Trim()).Equals("<Scene" + sceneCounter + ">"))
+						{
+	
+							line = sr.ReadLine();
+							while( !(line.Trim()).Equals("<End>") && sceneCounter < 20)
+							{
+								print(line);
+								scenes[sceneCounter] += line;
+								line = sr.ReadLine();
+							}
+							sceneCounter++;
+						}			
+					}
+                }
+            }
+		}*/
+		}
+		catch (Exception e)
+		{
+            // Let the user know what went wrong.
+            Debug.Log("The file could not be read:");
+            Debug.Log(e.Message);
 		}
 	}
 	

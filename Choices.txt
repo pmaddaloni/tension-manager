@@ -1,0 +1,99 @@
+<Initial>
+
+<1> Try to talk with the man
+
+You raise the bullhorn to your mouth. “Look, whatever it is that you want, we can work it out. Just please step away form the ledge and disarm that bomb sir. Then we can talk about what it is you want.”
+
+<2> Converse with the other police on the scene
+
+“What can you tell me about the situation?” 
+
+The officer looks tired. He answers, “We don’t have much information. We’ve been able to get a good look at the guy, and the bomb looks authentic enough. The swat is on its way with the bomb squad. We have to calm this guy down or at the least we’re looking at millions of dollars worth of city damage and a PR nightmare, at the worst we’re looking at lots of collateral damage and people dying. Crazy fucker.”
+
+<3> Call in the bomb squad
+
+You take out the radio in your overcoat and hold in the button.
+
+“How long until arrival?”
+
+The radio hisses that satisfying white noise, then a response “ETA two minutes sir. Over.”
+
+You put the radio back in your coat.
+
+<4> Call in Swat
+
+You take out the radio in your overcoat and hold in the button.
+
+You notice that you got there before swat had. 
+“How long until arrival?”
+
+The radio hisses that satisfying white noise, then a response, “ETA three minutes sir. Over.”
+
+You put the radio back in your coat.
+
+<5> Try and clear the area
+
+Holding the bullhorn, “Alright everyone that is not a policeman needs to move out of this immediate area. Go home folks and let us handle this. We appreciate your cooperation in making our jobs easier.”
+
+This appears to have done nothing.
+
+<6> Do nothing
+
+You stand there grinding your teeth, unsure of what to do with yourself. You pull out a pack of cigarettes from your pocket. Quitting was never really an options anyway. The drag calms your nerves a bit.
+
+<End>
+
+
+
+
+<Class0>
+
+1) Attempt to reason with the man about his family
+
+You speak of the loved ones he may have. Friends and family he would leave behind. He stares back coldly at you.
+
+2) Do nothing
+
+Cigarettes always make bad situations better, right? It gives you a minute to collect your thoughts and decide what to do. The glow of the end of your cigarette takes you away for a moment.
+
+3) Call bomb squad into position
+
+If they haven’t arrived yet:
+go to initial call bomb squad option
+
+Else
+The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor, and one down here just in case. Let’s be sharp everyone.”
+
+4) Call swat into position
+
+If they haven’t arrived yet: 
+go to initial call swat option
+
+Else
+The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor to support the bomb squad if necessary. Do not open fire unless I give the order.”
+
+5) Attempt to reason with the man through common sense
+
+You attempt to appeal to man’s better sensibilities. He responds by screaming something unintelligible.
+
+6) Look through binoculars
+
+An officer standing next to you hands you a pair. You look through their telescoping lenses and see the man is [insert_var] from the edge of the building.
+
+<End>
+
+<Class1>
+<End>
+
+<Class2>
+
+<Class3>
+<End>
+
+<Class4>
+<End>
+
+<Class5>
+<End>
+
+
