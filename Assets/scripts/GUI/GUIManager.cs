@@ -28,6 +28,10 @@ public class GUIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		sceneDescription.Text = logic.scenes[0];
+		
+		//stop if the game hasn't started yet
+		if(!logic.GameStarted) return;
+		
 		//update the game timer
 		timer.Text = getGameTime();
 		choiceTimer.Text = "Choice Selected in: \n" + logic.ChoiceTimeRemaining.ToString();
