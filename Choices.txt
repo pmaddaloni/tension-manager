@@ -1,290 +1,354 @@
-<Initial>
-
-<Choice1> 
-
-<label>
-Try to talk with the man
-<End>
-
-<description> 
-You raise the bullhorn to your mouth. “Look, whatever it is that you want, we can work it out. Just please step away form the ledge and disarm that bomb sir. Then we can talk about what it is you want.”
-<End>
-
-<success> 
-The man looks hesitant for a moment 
-<End>
-
-<failure> 
-The man scowls at you 
-<End>
-
-<impact> 
-1 
-<End>
-
-<challenge> 
-1
-<End>
-<EndCHOICE>
-
-<Choice2> 
-
-<label>
-Converse with the other police on the scene
-<End>
-
-<description>
-“What can you tell me about the situation?” 
-
-The officer looks tired. He answers, “We don’t have much information. We’ve been able to get a good look at the guy, and the bomb looks authentic enough. The swat is on its way with the bomb squad. We have to calm this guy down or at the least we’re looking at millions of dollars worth of city damage and a PR nightmare, at the worst we’re looking at lots of collateral damage and people dying. Crazy fucker.”
-
-<End>
-
-<success>
-The man sees you talking with the officers and looks hesitant.
-<end>
-
-<failure>
-Your ignoring the man seems to irritate him.
-<end>
-
-<impact>
-1
-<end>
-
-<challenge>
-1
-<end>
-<EndCHOICE>
-
-<Choice3> 
-
-<label>
-Call in the bomb squad
-<end>
-
-<description>
-You take out the radio in your overcoat and hold in the button.
-
-“How long until arrival?”
-
-The radio hisses that satisfying white noise, then a response “We will be there momentarily sir.”
-
-You put the radio back in your coat.
-<end>
-
-<success>
-The man sees you talking on the radio and looks hesitant.
-<end>
-
-<failure>
-Your ignoring the man seems to irritate him.
-<end>
-
-<impact>
-1
-<end>
-
-<challenge>
-1
-<end>
-<EndChoice>
-
-<Choice4> 
-
-<label>
-Call in Swat
-<end>
-
-<description>
-You take out the radio in your overcoat and hold in the button.
-
-You notice that you got there before swat had. 
-“How long until arrival?”
-
-The radio hisses that satisfying white noise, then a response, “We will be there momentarily sir. Over.”
-
-You put the radio back in your coat.
-<end>
-
-<success>
-The man sees you talking with on the radio and looks hesitant.
-<end>
-
-<failure>
-Your ignoring the man seems to irritate him.
-<end>
-
-<impact>
-1
-<end>
-
-<challenge>
-1
-<end>
-<EndChoice>
-
-<Choice5> 
-
-<description>
-Try and clear the area
-
-Holding the bullhorn, “Alright everyone that is not a policeman needs to move out of this immediate area. Go home folks and let us handle this. We appreciate your cooperation in making our jobs easier.”
-
-This appears to have done nothing.
-<end>
-
-<success>
-The man sees you trying to clear the area and looks hesitant.
-<end>
-
-<failure>
-You taking away his audience raises his ire.
-<end>
-
-<impact>
-1
-<end>
-
-<challenge>
-1
-<end>
-<ENDChoice>
-
-<Choice6> 
-
-<label>
-Do nothing
-<end>
-
-<description>
-You stand there grinding your teeth, unsure of what to do with yourself. You pull out a pack of cigarettes from your pocket. Quitting was never really an options anyway. The drag calms your nerves a bit.
-<end>
-
-<success>
-The man sees you standing there and does the same.
-<end>
-
-<failure>
-Your ignoring the man doesn’t seem to affect him.
-<end>
-
-<impact>
-0
-<end>
-
-<challenge>
-1
-<end>
-<EndChoice>
-<EndClass>
-
-
 <Class0>
 
-<Choice1> 
+	<Choice1> 
 
-<label>
-Attempt to reason with the man about his family
-<end>
+		<label>
+			Try to talk with the man
+		<End>
 
-<description>
-You speak of the loved ones he may have. Friends and family he would leave behind. He stares back coldly at you.
-<end>
+		<description> 
+		You raise the bullhorn to your mouth. “Look, whatever it is that you want, we can work it out. Just please step away form the ledge and disarm that bomb sir. Then we can talk about what it is you want.”
+		<End>
 
-<success>
-The man’s expression changes and he seems confused.
-<end>
+		<success> 
+		The man looks hesitant for a moment 
+		<End>
 
-<failure>
-“I have no one worth living for. Fuck off!”
-<end>
+		<failure> 
+		The man scowls at you 
+		<End>
 
-<impact>
-1
-<end>
+		<impact> 
+		1 
+		<End>
 
-<challenge>
-1
-<end>
-<ENDCHOICE>
+		<challenge> 
+		1
+		<End>
+	<EndCHOICE>
 
-<Choice2> 
+	<Choice2> 
 
-<label>
-Do nothing
-<end>
+		<label>
+		Converse with the other police on the scene
+		<End>
 
-<description>
-Cigarettes always make bad situations better, right? It gives you a minute to collect your thoughts and decide what to do. The glow of the end of your cigarette takes you away for a moment.
-<end>
+		<description>
+		“What can you tell me about the situation?” 
 
-<success>
-The man sees you standing there and does the same.
-<end>
+		The officer looks tired. He answers, “We don’t have much information. We’ve been able to get a good look at the guy, and the bomb looks authentic enough. The swat is on its way with the bomb squad. We have to calm this guy down or at the least we’re looking at millions of dollars worth of city damage and a PR nightmare, at the worst we’re looking at lots of collateral damage and people dying. Crazy fucker.”
 
-<failure>
-Your ignoring the man doesn’t seem to affect him.
-<end>
+		<End>
 
-<impact>
-0
-<end>
+		<success>
+		The man sees you talking with the officers and looks hesitant.
+		<end>
 
-<challenge>
-1
-<end>
-<EndCHOICE>
+		<failure>
+		Your ignoring the man seems to irritate him.
+		<end>
 
-<Choice3> 
+		<impact>
+		1
+		<end>
 
-<label>
-Call bomb squad into position
-<end>
+		<challenge>
+		1
+		<end>
+	<EndCHOICE>
 
-<description>
-The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor, and one down here just in case. Let’s be sharp everyone.”
-<end>
+	<Choice3> 
 
-<success>
-The man does not react to your action.
-<end>
+		<label>
+		Call in the bomb squad
+		<end>
 
-<failure>
-He turns his head a bit as if he hears something. He looks angry.
-<end>
+		<description>
+		You take out the radio in your overcoat and hold in the button.
 
-<impact>
-0
-<end>
+		“How long until arrival?”
 
-<challenge>
-1
-<end>
-<EndChoice>
+		The radio hisses that satisfying white noise, then a response “We will be there momentarily sir.”
 
-<4> Call swat into position
+		You put the radio back in your coat.
+		<end>
 
-If they haven’t arrived yet: 
-go to initial call swat option
+		<success>
+		The man sees you talking on the radio and looks hesitant.
+		<end>
 
-Else
-The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor to support the bomb squad if necessary. Do not open fire unless I give the order.”
+		<failure>
+		Your ignoring the man seems to irritate him.
+		<end>
 
-<5> Attempt to reason with the man through common sense
+		<impact>
+		1
+		<end>
 
-You attempt to appeal to man’s better sensibilities. He responds by screaming something unintelligible.
+		<challenge>
+		1
+		<end>
+	<EndChoice>
 
-<6> Look through binoculars
+	<Choice4> 
 
-An officer standing next to you hands you a pair. You look through their telescoping lenses and see the man is [insert_var] from the edge of the building.
+			<label>
+			Call in Swat
+			<end>
 
-<End>
+			<description>
+			You take out the radio in your overcoat and hold in the button.
 
-<Class1>
+			You notice that you got there before swat had. 
+			“How long until arrival?”
+
+			The radio hisses that satisfying white noise; then a response, “We will be there momentarily sir. Over.”
+
+			You put the radio back in your coat.
+			<end>
+
+			<success>
+			The man sees you talking with on the radio and looks hesitant.
+			<end>
+
+			<failure>
+			Your ignoring the man seems to irritate him.
+			<end>
+
+			<impact>
+			1
+			<end>
+
+			<challenge>
+			1
+			<end>
+		<EndChoice>
+
+	<Choice5> 
+
+		<label>
+		Try and clear the area
+		<end>
+
+		<description>
+		Holding the bullhorn, “Alright everyone that is not a policeman needs to move out of this immediate area. Go home folks and let us handle this. We appreciate your cooperation in making our jobs easier.”
+
+		This appears to have done nothing.
+		<end>
+
+		<success>
+		The man sees you trying to clear the area and looks hesitant.
+		<end>
+
+		<failure>
+		You taking away his audience raises his ire.
+		<end>
+
+		<impact>
+		1
+		<end>
+
+		<challenge>
+		1
+		<end>
+	<ENDChoice>
+
+	<Choice6> 
+
+		<label>
+		Do nothing
+		<end>
+
+		<description>
+		You stand there grinding your teeth, unsure of what to do with yourself. You pull out a pack of cigarettes from your pocket. Quitting was never really an options anyway. The drag calms your nerves a bit.
+		<end>
+
+		<success>
+		The man sees you standing there and does the same.
+		<end>
+
+		<failure>
+		Your ignoring the man doesn’t seem to affect him.
+		<end>
+
+		<impact>
+		0
+		<end>
+
+		<challenge>
+		1
+		<end>
+	<EndChoice>
 <EndClass>
 
+<Class1>
+
+	<Choice1> 
+
+		<label>
+		Attempt to reason with the man about his family
+		<end>
+
+		<description>
+		You speak of the loved ones he may have. Friends and family he would leave behind. He stares back coldly at you.
+		<end>
+
+		<success>
+		The man’s expression changes and he seems confused.
+		<end>
+
+		<failure>
+		“I have no one worth living for. Fuck off!”
+		<end>
+
+		<impact>
+		1
+		<end>
+
+		<challenge>
+		1
+		<end>
+	<ENDCHOICE>
+
+	<Choice2> 
+
+		<label>
+		Do nothing
+		<end>
+
+		<description>
+		Cigarettes always make bad situations better, right? It gives you a minute to collect your thoughts and decide what to do. The glow of the end of your cigarette takes you away for a moment.
+		<end>
+
+		<success>
+		The man sees you standing there and does the same.
+		<end>
+
+		<failure>
+		Your ignoring the man doesn’t seem to affect him.
+		<end>
+
+		<impact>
+		0
+		<end>
+
+		<challenge>
+		1
+		<end>
+	<EndCHOICE>
+
+	<Choice3> 
+
+		<label>
+		Call bomb squad into position
+		<end>
+
+		<description>
+		The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor, and one down here just in case. Let’s be sharp everyone.”
+		<end>
+
+		<success>
+		The man does not react to your action.
+		<end>
+
+		<failure>
+		He turns his head a bit as if he hears something. He looks angry.
+		<end>
+
+		<impact>
+		0
+		<end>
+
+		<challenge>
+		1
+		<end>
+	<EndChoice>
+
+	<Choice4> 
+
+		<label>
+		Call swat into position
+		<end>
+
+		<description>
+		The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor to support the bomb squad if necessary. Do not open fire unless I give the order.”
+		<end>
+
+		<success>
+		The man does not react to your action.
+		<end>
+
+		<failure>
+		He turns his head a bit as if he hears something. He looks angry.
+		<end>
+
+		<impact>
+		0
+		<end>
+
+		<challenge>
+		1
+		<end>
+	<EndChoice>
+
+	<Choice5> 
+
+		<label>
+		Attempt to reason with the man through common sense
+		<end>
+
+		<description>
+		You attempt to appeal to man’s better sensibilities. He responds by screaming something unintelligible.
+		<end>
+
+		<success>
+		The man seems moved by your words.
+		<end>
+
+		<failure>
+		He flips you the bird.
+		<end>
+
+		<impact>
+		0
+		<end>
+
+		<challenge>
+		1
+		<end>
+	<EndChoice>
+
+	<Choice6> 
+
+		<label>
+		Look through binoculars
+		<end>
+
+		<description>
+		An officer standing next to you hands you a pair. You look through their telescoping lenses and see the man looking directly back at you. He points.
+		<end>
+		<End>
+
+		<success>
+		The man does not react to your action.
+		<end>
+
+		<failure>
+		He turns his head a bit as if he hears something. He looks angry.
+		<end>
+
+		<impact>
+		0
+		<end>
+
+		<challenge>
+		1
+		<end>
+	<EndChoice>
+<ENDCLASS>
+
 <Class2>
+<EndClass>
 
 <Class3>
 <EndClass>
