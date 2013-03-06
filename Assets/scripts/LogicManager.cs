@@ -68,14 +68,15 @@ public class LogicManager : MonoBehaviour
 	}
 			
 	public string[] scenes = new string[20];
+	public IList[] choiceList = new IList[6];
 	public string sceneText; //the scene description
-	public IList[] choiceList = new IList[5];
+
 	
 	
 	//---------------------------METHODS-----------------------------------------//	
 	void Start () {
 		choiceStartTime = Time.timeSinceLevelLoad; //initialize the choice timer
-		choices = new choiceNode[numChoices];
+		choiceStrings = new string[numChoices];
 						
 		try {			
 			// Create an instance of StreamReader to read from a file. 
@@ -91,10 +92,10 @@ public class LogicManager : MonoBehaviour
                 while ((line = sr.ReadLine()) != null) 
                 {
                     //Debug.Log(line);
-					if ( (line.Trim()).Equals("<Intro>") )
+					if ( (line.Trim().ToUpper()).Equals("<INTRO>") )
 					{
 						line = sr.ReadLine();
-						while( !(line.Trim()).Equals("<End>") )
+						while( !(line.Trim().ToUpper()).Equals("<END>") )
 						{
 							scenes[sceneCounter] += line + '\n';
 							line = sr.ReadLine();
@@ -104,13 +105,12 @@ public class LogicManager : MonoBehaviour
 					
 					else {
 						line = sr.ReadLine();						
-						if ((line.Trim()).Equals("<Scene" + sceneCounter + ">"))
+						if ((line.Trim().ToUpper()).Equals("<SCENE" + sceneCounter + ">"))
 						{
 	
 							line = sr.ReadLine();
-							while( !(line.Trim()).Equals("<End>") && sceneCounter < 20)
+							while( !(line.Trim().ToUpper()).Equals("<END>") && sceneCounter < 20)
 							{
-								print(line);
 								scenes[sceneCounter] += line;
 								line = sr.ReadLine();
 							}
@@ -121,43 +121,95 @@ public class LogicManager : MonoBehaviour
             }
 			
 			//Read Choices
-			/*using (StreamReader sr = new StreamReader("Choices.txt")) 
+			using (StreamReader sr = new StreamReader("Choices.txt")) 
             {
+				int classCounter = 0;
                 string line;
                 // Read and display lines from the file until the end of  
                 // the file is reached. 
                 while ((line = sr.ReadLine()) != null) 
                 {
-                    //Debug.Log(line);
-					if ( (line.Trim()).Equals("<Intro>") )
-					{
-						line = sr.ReadLine();
-						while( !(line.Trim()).Equals("<End>") )
-						{
-							scenes[sceneCounter] += line + '\n';
-							line = sr.ReadLine();
-						}
-						sceneCounter++;
+					if ((line.Trim()).Length == 0)
+					{	
+						continue;
 					}
 					
-					else {
-						line = sr.ReadLine();						
-						if ((line.Trim()).Equals("<Scene" + sceneCounter + ">"))
+                    //Debug.Log(line);
+					if ( (line.Trim()).ToUpper().Equals("<CLASS" + classCounter +">") )
+					{
+
+						line = sr.ReadLine();
+						
+						while( !(line.Trim()).ToUpper().Equals("<ENDCLASS>") )
 						{
-	
-							line = sr.ReadLine();
-							while( !(line.Trim()).Equals("<End>") && sceneCounter < 20)
-							{
-								print(line);
-								scenes[sceneCounter] += line;
-								line = sr.ReadLine();
+							choiceNode temp = new choiceNode();
+							
+							if ((line.Trim()).Length == 0)
+							{	
+								continue;
 							}
-							sceneCounter++;
-						}			
-					}
-                }
-            }
-		}*/
+							
+							while( !(line.Trim()).ToUpper().Equals("<ENDCHOICE>") )
+							{			
+								if ((line.Trim()).Length == 0)
+								{	
+									continue;
+								}
+								
+								switch((line.Trim()).ToUpper())
+								{
+									case "<LABEL>":
+										while( !(line.Trim()).ToUpper().Equals("<END>") )
+										{
+											temp.label += line + '\n';
+											line = sr.ReadLine();
+										}
+										break;
+									case "<DESCRIPTION>":
+										while( !(line.Trim()).ToUpper().Equals("<END>") )
+										{
+											temp.description += line + '\n';
+											line = sr.ReadLine();
+										}
+										break;
+									case "<SUCCESS>":
+										while( !(line.Trim()).ToUpper().Equals("<END>") )
+										{
+											temp.successText += line + '\n';
+											line = sr.ReadLine();
+										}
+										break;
+									case "<FAILURE>":
+										while( !(line.Trim()).ToUpper().Equals("<END>") )
+										{
+											temp.failureText += line + '\n';
+											line = sr.ReadLine();
+										}
+										break;
+									case "<IMPACT>":
+										while( !(line.Trim()).ToUpper().Equals("<END>") )
+										{
+											temp.impactAmount = Convert.ToInt32(line);
+											line = sr.ReadLine();
+										}
+										break;
+									case "<CHALLENGE>":
+										while( !(line.Trim()).ToUpper().Equals("<END>") )
+										{
+											temp.challengeRate = Convert.ToInt32(line);
+											line = sr.ReadLine();
+										}
+										break;
+									default:
+										break;
+								}
+							}
+							choiceList[classCounter].Add(temp);
+						}
+						classCounter++;
+					}//end if			
+                }//end CLASS while loop
+            }//end using
 		}
 		catch (Exception e)
 		{
