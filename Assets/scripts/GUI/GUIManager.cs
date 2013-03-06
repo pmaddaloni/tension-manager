@@ -27,7 +27,8 @@ public class GUIManager : MonoBehaviour {
 		
 	// Update is called once per frame
 	void Update () {
-		sceneDescription.Text = logic.scenes[0];
+		//update the description text field from the logicManager stored string
+		sceneDescription.Text = logic.sceneText;
 		
 		//stop if the game hasn't started yet
 		if(!logic.GameStarted) return;
