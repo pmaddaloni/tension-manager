@@ -64,10 +64,11 @@ public class LogicManager : MonoBehaviour
 		public string successText;
 		public string failureText;
 		public int impactAmount;
-		public int challengeRate;
+		public float challengeRate;
 	}
 			
 	public string[] scenes = new string[20];
+	public string sceneText; //the scene description
 	public IList[] choiceList = new IList[5];
 	
 	
@@ -164,6 +165,8 @@ public class LogicManager : MonoBehaviour
             Debug.Log("The file could not be read:");
             Debug.Log(e.Message);
 		}
+		//initialize the scene description
+		sceneText = scenes[0];
 	}
 	
 	// Update is called once per frame
@@ -188,7 +191,7 @@ public class LogicManager : MonoBehaviour
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
 		setChoices();//initialize the choices
-		setGameStatus (); //initialize the game status
+		updateGameStatus (); //initialize the game status
 		//seed the random number generator
 		UnityEngine.Random.seed = (int)System.DateTime.Now.TimeOfDay.TotalMilliseconds;
 	}
@@ -197,7 +200,17 @@ public class LogicManager : MonoBehaviour
 	void setChoices() {
 		for (int i = 0; i < numChoices; i++) {
 			choices[i] = new choiceNode();
+			
+			//just using dummy data - the logic for pulling these from the doc and setting levels 
+			//should hapen here
 			choices[i].label = ("choiceNode " + i);
+			choices[i].challengeRate = .5f;
+			choices[i].impactAmount = 1;
+			choices[i].description = "You valiantly try to do thing " + i + "\n";
+			choices[i].successText = "You succeed at thing " + i + ".\n The crazy mofo moves " 
+				+ choices[i].impactAmount + " steps away from the ledge.\n";
+			choices[i].failureText = "Ah, crap. You fail miserably at thing " + i + ".\n The crazy mofo moves " 
+				+ choices[i].impactAmount + " steps towards from the ledge.\n";
 		}
 		setGUIChoiceStrings();
 	}
@@ -215,7 +228,7 @@ public class LogicManager : MonoBehaviour
 	}
 	
 	//Set the game status in the gui
-	void setGameStatus ()
+	void updateGameStatus ()
 	{
 		gui.setGameStatus ("The crazy mofo is " + jumperDist + " steps from the edge");
 	}
@@ -248,11 +261,25 @@ public class LogicManager : MonoBehaviour
 	{
 		//set new choices here after dealing with repercussions
 		choiceNode choice = choices[gui.getChosenID()];
-		bool success = UnityEngine.Random.Range(0,1) >= choice.challengeRate;
-		if (success) print ("success!");
-			else print ("failure!");
-		//handle repercussions of success/failure
-		//update game state, etc.
+		float attempt = UnityEngine.Random.Range(0f,1f);
+		bool success = attempt >= choice.challengeRate;
+		
+		//the description for the next scene
+		sceneText = choice.description;
+		
+		if (success) {
+			jumperDist += choice.impactAmount;
+			sceneText += choice.successText;
+		}
+		else {
+			jumperDist -= choice.impactAmount;
+			sceneText += choice.failureText;
+		}
+		
+		sceneText += "\n\n More Stuff happens. What do you want to do? \n";
+		
+		updateGameStatus();//tell the GUI to update the game status
+		
 		setChoices();//updates the choice list
 	}
 }
