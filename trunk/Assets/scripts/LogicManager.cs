@@ -84,6 +84,8 @@ public class LogicManager : MonoBehaviour
 		parser.parseChoices("Choices.txt", choiceList);
 	
 		sceneText = scenes[0];
+		
+		TensionManager tension = gameObject.AddComponent<TensionManager>();
 	}
 	
 	// Update is called once per frame
