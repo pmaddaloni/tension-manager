@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System;
 
@@ -76,8 +77,8 @@ public class LogicManager : MonoBehaviour
 	//---------------------------METHODS-----------------------------------------//	
 	void Start () {
 		choiceStartTime = Time.timeSinceLevelLoad; //initialize the choice timer
-		choiceStrings = new string[numChoices];
-						
+		choices = new choiceNode[numChoices];
+		
 		try {			
 			// Create an instance of StreamReader to read from a file. 
             // The using statement also closes the StreamReader. 
@@ -134,13 +135,10 @@ public class LogicManager : MonoBehaviour
 						continue;
 					}
 					
-                    //Debug.Log(line);
 					if ( (line.Trim()).ToUpper().Equals("<CLASS" + classCounter +">") )
 					{
-
-						line = sr.ReadLine();
-						
-						while( !(line.Trim()).ToUpper().Equals("<ENDCLASS>") )
+										
+						while( (line = sr.ReadLine()) != null && !(line.Trim()).ToUpper().Equals("<ENDCLASS>") )
 						{
 							choiceNode temp = new choiceNode();
 							
@@ -149,54 +147,61 @@ public class LogicManager : MonoBehaviour
 								continue;
 							}
 							
-							while( !(line.Trim()).ToUpper().Equals("<ENDCHOICE>") )
+							while( (line = sr.ReadLine()) != null && !(line.Trim()).ToUpper().Equals("<ENDCHOICE>") )
 							{			
 								if ((line.Trim()).Length == 0)
 								{	
 									continue;
 								}
-								
+								print ((line.Trim()).ToUpper() + "\n");
 								switch((line.Trim()).ToUpper())
 								{
+									
 									case "<LABEL>":
+										line = sr.ReadLine();
 										while( !(line.Trim()).ToUpper().Equals("<END>") )
 										{
-											temp.label += line + '\n';
+											temp.label += line.Trim() + '\n';
 											line = sr.ReadLine();
 										}
 										break;
 									case "<DESCRIPTION>":
+										line = sr.ReadLine();
 										while( !(line.Trim()).ToUpper().Equals("<END>") )
 										{
-											temp.description += line + '\n';
+											temp.description += line.Trim() + '\n';
 											line = sr.ReadLine();
 										}
 										break;
 									case "<SUCCESS>":
+										line = sr.ReadLine();
 										while( !(line.Trim()).ToUpper().Equals("<END>") )
 										{
-											temp.successText += line + '\n';
+											temp.successText += line.Trim () + '\n';
 											line = sr.ReadLine();
 										}
 										break;
 									case "<FAILURE>":
+										line = sr.ReadLine();
 										while( !(line.Trim()).ToUpper().Equals("<END>") )
 										{
-											temp.failureText += line + '\n';
+											temp.failureText += line.Trim() + '\n';
 											line = sr.ReadLine();
 										}
 										break;
 									case "<IMPACT>":
+										line = sr.ReadLine();
 										while( !(line.Trim()).ToUpper().Equals("<END>") )
 										{
-											temp.impactAmount = Convert.ToInt32(line);
+											temp.impactAmount = Convert.ToInt32(line.Trim());
 											line = sr.ReadLine();
 										}
 										break;
 									case "<CHALLENGE>":
+										line = sr.ReadLine();
 										while( !(line.Trim()).ToUpper().Equals("<END>") )
 										{
-											temp.challengeRate = Convert.ToInt32(line);
+											temp.challengeRate = Convert.ToInt32(line.Trim());
 											line = sr.ReadLine();
 										}
 										break;
@@ -204,12 +209,16 @@ public class LogicManager : MonoBehaviour
 										break;
 								}
 							}
+							
+							choiceList[classCounter] = new List<choiceNode>();
 							choiceList[classCounter].Add(temp);
 						}
-						classCounter++;
+						classCounter++; 
 					}//end if			
+					
                 }//end CLASS while loop
             }//end using
+			sceneText = scenes[0];
 		}
 		catch (Exception e)
 		{
@@ -217,8 +226,6 @@ public class LogicManager : MonoBehaviour
             Debug.Log("The file could not be read:");
             Debug.Log(e.Message);
 		}
-		//initialize the scene description
-		sceneText = scenes[0];
 	}
 	
 	// Update is called once per frame
