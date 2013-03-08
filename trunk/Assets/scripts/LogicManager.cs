@@ -117,7 +117,6 @@ public class LogicManager : MonoBehaviour
 	//set the current choices
 	void setChoices() {
 		List<choiceNode> tmp = new List<choiceNode>(choiceList[currentChoiceClass]);
-		print("This many choices:" + tmp.Count);
 		for (int i = 0; i < numChoices; i++) 
 		{
 			choices[i] = new choiceNode();
