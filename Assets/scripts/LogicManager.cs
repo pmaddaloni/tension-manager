@@ -61,6 +61,8 @@ public class LogicManager : MonoBehaviour
 		get { return choiceTimeRemaining;}
 	}
 	
+	private string begin = "Click to begin the game.";
+	
 	//-------------------------CHOICE MEMBERS---------------------------//
 	
 	//the array of choice options 
@@ -80,7 +82,7 @@ public class LogicManager : MonoBehaviour
 		parser.parseScenes("Scenes.txt", scenes);
 		parser.parseChoices("Choices.txt", choiceList);
 	
-		sceneText = scenes[0];
+		sceneText = scenes[0] + "\n" + begin;
 		
 		TensionManager tM = gameObject.AddComponent<TensionManager>();
 		tM.init(gameLength, "tensionLevels.txt");
@@ -103,6 +105,7 @@ public class LogicManager : MonoBehaviour
 	//Start the game -- initialize timers
 	void startGame ()
 	{
+		sceneText = sceneText.Remove(sceneText.IndexOf(begin),begin.Length);
 		gameStarted = true;
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
@@ -147,7 +150,7 @@ public class LogicManager : MonoBehaviour
 	//Set the game status in the gui
 	void updateGameStatus ()
 	{
-		gui.setGameStatus ("The crazy mofo is " + jumperDist + " steps from the edge");
+		gui.setGameStatus ("The man is " + jumperDist + " steps from the edge.");
 	}
 	
 	void updateGameTimeRemaining() {
@@ -186,14 +189,14 @@ public class LogicManager : MonoBehaviour
 		
 		if (success) {
 			jumperDist += choice.impactAmount;
-			sceneText += choice.successText;
+			sceneText += "\n" + choice.successText;
 		}
 		else {
 			jumperDist -= choice.impactAmount;
-			sceneText += choice.failureText;
+			sceneText += "\n" + choice.failureText;
 		}
 		
-		sceneText += "\n\n More Stuff happens. What do you want to do? \n";
+		sceneText += "\n\n Make your move.";
 		
 		updateGameStatus();//tell the GUI to update the game status
 		
