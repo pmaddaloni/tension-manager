@@ -25,13 +25,9 @@ public class GUIManager : MonoBehaviour {
 		choices = gameObject.GetComponent<ChoiceButtons>();
 	}
 		
-	// Update is called once per frame
 	void Update () {
 		//update the description text field from the logicManager stored string
 		sceneDescription.Text = logic.sceneText;
-		
-		//stop if the game hasn't started yet
-		if(!logic.GameStarted) return;
 		
 		//update the game timer
 		timer.Text = getTimerText();

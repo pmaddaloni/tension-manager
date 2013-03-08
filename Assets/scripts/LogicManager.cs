@@ -27,6 +27,15 @@ public class LogicManager : MonoBehaviour
 	//how many seconds per choice?
 	private int choiceLength = 5;
 	
+	//how many choices
+	private int numChoices = 3;
+	
+	//what is the current distance from the edge? Initialized here for every game
+	private int jumperDist = 5;
+	public int JumperDist {
+		get{return jumperDist;}
+	}
+	
 	//--------------------------TIMER VARIABLES--------------------------------//
 	//when does the user start the game?
 	private float gameStartTime;
@@ -52,17 +61,6 @@ public class LogicManager : MonoBehaviour
 		get { return choiceTimeRemaining;}
 	}
 	
-	//-------------------------GAME STATE VARIABLES---------------------------//
-	
-	//how many choices
-	private int numChoices = 3;
-	
-	//what is the current distance from the edge?
-	private int jumperDist = 5;
-	public int JumperDist {
-		get{return jumperDist;}
-	}
-
 	//-------------------------CHOICE MEMBERS---------------------------//
 	
 	//the array of choice options 
@@ -84,7 +82,8 @@ public class LogicManager : MonoBehaviour
 	
 		sceneText = scenes[0];
 		
-		TensionManager tension = gameObject.AddComponent<TensionManager>();
+		TensionManager tM = gameObject.AddComponent<TensionManager>();
+		tM.init(gameLength, "tensionLevels.txt");
 	}
 	
 	// Update is called once per frame
@@ -104,7 +103,6 @@ public class LogicManager : MonoBehaviour
 	//Start the game -- initialize timers
 	void startGame ()
 	{
-		gui.activateGameGUI();//start up the GUI
 		gameStarted = true;
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
@@ -112,6 +110,7 @@ public class LogicManager : MonoBehaviour
 		updateGameStatus (); //initialize the game status
 		//seed the random number generator
 		UnityEngine.Random.seed = (int)System.DateTime.Now.TimeOfDay.TotalMilliseconds;
+		gui.activateGameGUI();//start up the GUI
 	}
 	
 	//set the current choices
