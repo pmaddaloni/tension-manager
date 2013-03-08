@@ -3,7 +3,7 @@
 	<Choice1> 
 
 		<label>
-			Try to talk with the man
+			Try to talk with the man poop
 		<End>
 
 		<description> 
