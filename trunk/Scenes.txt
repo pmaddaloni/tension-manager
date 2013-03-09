@@ -6,12 +6,15 @@
 <End>
 
 <Scene1>
+  Time is up, and all the sound seems to be sucked out of the air for blocks. The man, now standing toes ever so slightly peering out over the edge, looks at you and shakes his head. You hold your breath and wonder if there was ever any chance you could've helped this man. Less fire and more smoke, dust, and rubble, the man is gone in an instant and replaced by destruction. The crowd screams and your fellow officers scramble for cover as debris comes down in fast, violent streaks. You sit there, back pressed against a squad car and sink your face into your hands. Another smoke won't help with this, sadly.
 <End>
 
 <Scene2>
+	The man takes one last good look at you and then leaps into the void. People begin to scramble, but you find yourself rooted firmly to your position. The moribund man's eyes are still unnervingly locked on yours as he quickly closes the distance. You know you should move but your body seems to be held in an almost rigor mortis-like state. Your cigarette sticking to your lip and the smoke getting into your eyes, you keep you gaze steady to meet this maniac as he plummets toward you. There is a moment of calm you feel before he makes contact. The last thing you can hear is a shrill ringing followed by a blinding white light.
 <End>
 
 <Scene3>
+	The man steps clumsily down off the ledge out of your line of vision. Your radio goes abuzz with the chatter from SWAT taking the man down and the bomb squad moving in. The officers around you all start to congratulate each other. Someone slaps your back and says something. You don't hear it. You wonder if the man would've been better off if you had left him alone. What does he face now? Obviously deranged, not much of a life. For that matter, do you? Fuck quitting for now. You light another one and wander from the scene.
 <End>
 
 <Scene4>
