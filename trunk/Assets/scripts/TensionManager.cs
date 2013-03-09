@@ -25,19 +25,33 @@ public class TensionManager : MonoBehaviour {
 	}
 	
 	/*returns the impact level necessary to match the desired tension
-	 * how much time has passed in this arc duration?
+	 * timePassed: how much time has passed in this arc duration?
 	 * */
-	public int getImpactLevel(float timePassed) {
-		float currDesiredTension = getCurrDesiredTension (timePassed);
-		Debug.Log("current desired tension: " + currDesiredTension);
+	public int getImportanceLevel(float timeRemaining) {
+		float currDesiredTensionPercent = getCurrDesiredTension(arcDuration-timeRemaining)/maxTension;
+		
+		Debug.Log("current desired tension percent: " + currDesiredTensionPercent);
 		return 0;
 	}
 	
 	//interpolates the current tension value for this amount of time passed
+	//assumes an equal amount of time per graph tension level
 	private float getCurrDesiredTension(float timePassed) {
+		
+		if (timePassed > arcDuration) {
+			Debug.LogError("Tried to calculate desired tension for timePassed > arcDuration");
+			return 0;
+		}
 		float percentComplete = timePassed/arcDuration;
-		int index = (int)Math.Round(percentComplete * tensionLevels.Count);
-		return tensionLevels[index];
+		
+		//based on percent complete, which index from the list should the tension be at?
+		float rawIndex = percentComplete * (tensionLevels.Count-1);
+		int lowIndex = (int)Math.Floor(rawIndex);
+		int highIndex = (int)Math.Ceiling(rawIndex);
+		float betweenPercent = rawIndex - lowIndex;
+		float lowValue = tensionLevels[lowIndex];
+		float highValue = tensionLevels[highIndex];
+		return lowValue + (highValue-lowValue)*betweenPercent;
 	}
 	
 	public void init(float duration, string tensionFileName, float min, float max) {

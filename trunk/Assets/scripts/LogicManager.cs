@@ -30,7 +30,7 @@ public class LogicManager : MonoBehaviour
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
-	private float gameLength = 300;
+	private float gameLength = 10;
 	
 	//how many seconds per choice?
 	private int choiceLength = 5;
@@ -112,6 +112,7 @@ public class LogicManager : MonoBehaviour
 		}
 		
 		updateGameTimeRemaining();
+		tM.getImportanceLevel(gameTimeRemaining);
 		handleChoiceTimer ();
 	}
 	
