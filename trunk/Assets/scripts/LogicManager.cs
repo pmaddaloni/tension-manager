@@ -19,6 +19,9 @@ public class LogicManager : MonoBehaviour
 	//Da GUI
 	public GUIManager gui;
 	
+	//The Tension Manager
+	TensionManager tM;
+	
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
@@ -26,6 +29,9 @@ public class LogicManager : MonoBehaviour
 	
 	//how many seconds per choice?
 	private int choiceLength = 5;
+	
+	float minTension = 0;
+	float maxTension = 100;
 	
 	//how many choices
 	private int numChoices = 3;
@@ -84,8 +90,8 @@ public class LogicManager : MonoBehaviour
 	
 		sceneText = scenes[0] + "\n" + begin;
 		
-		TensionManager tM = gameObject.AddComponent<TensionManager>();
-		tM.init(gameLength, "tensionLevels.txt");
+		tM = gameObject.AddComponent<TensionManager>();
+		tM.init(gameLength, "tensionLevels.txt", minTension, maxTension);
 	}
 	
 	// Update is called once per frame
