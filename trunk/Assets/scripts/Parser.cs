@@ -13,7 +13,7 @@ public class Parser : MonoBehaviour
             // The using statement also closes the StreamReader. 
 			
 			//Read Scenes
-            using (StreamReader sr = new StreamReader("Scenes.txt")) 
+            using (StreamReader sr = new StreamReader(fileName)) 
             {
                 string line;
 				int sceneCounter = 0;
@@ -51,7 +51,6 @@ public class Parser : MonoBehaviour
             }
 		} catch (Exception e) {
 			// Let the user know what went wrong.
-			Debug.Log ("The file could not be read:");
 			Debug.Log (e.Message);
 		}
 	}
@@ -60,7 +59,7 @@ public class Parser : MonoBehaviour
 	{
 		try {
 						//Read Choices
-			using (StreamReader sr = new StreamReader("Choices.txt")) 
+			using (StreamReader sr = new StreamReader(fileName)) 
             {
 				int classCounter = 0;
                 string line;
@@ -157,8 +156,63 @@ public class Parser : MonoBehaviour
 		catch (Exception e)
 		{
             // Let the user know what went wrong.
-            Debug.Log("The file could not be read:");
             Debug.Log(e.Message);
+		}
+	}
+	
+	public void parseRandomEvents (string fileName, randomEventNode[] randomEvents)
+	{
+		try {			
+			// Create an instance of StreamReader to read from a file. 
+            // The using statement also closes the StreamReader. 
+			
+			//Read Scenes
+            using (StreamReader sr = new StreamReader(fileName)) 
+            {
+                string line;
+				int randomEventCounter = 0;
+                // Read and display lines from the file until the end of  
+                // the file is reached. 
+                while ((line = sr.ReadLine()) != null) 
+                {
+                    //Debug.Log(line);
+					if ( (line.Trim().ToUpper()).Equals("<RandomScene" + randomEventCounter + ">") )
+					{
+						while( (line = sr.ReadLine()) != null && !(line.Trim()).ToUpper().Equals("<ENDSCENE>") )
+						{			
+								if ((line.Trim()).Length == 0)
+								{	
+									continue;
+								}
+								switch((line.Trim()).ToUpper())
+								{
+									case "<DESCRIPTION>":
+										line = sr.ReadLine();
+										while( !(line.Trim()).ToUpper().Equals("<END>") )
+										{
+											randomEvents[randomEventCounter].description += line.Trim() + '\n';
+											line = sr.ReadLine();
+										}
+										break;
+									case "<IMPACT>":
+										line = sr.ReadLine();
+										while( !(line.Trim()).ToUpper().Equals("<END>") )
+										{
+											randomEvents[randomEventCounter].impactAmount = Convert.ToInt32(line.Trim());
+											line = sr.ReadLine();
+										}
+										break;
+									default:
+										break;
+								}
+							randomEventCounter++;
+						}
+	                }
+	            }
+			}
+		} catch (Exception e) {
+			// Let the user know what went wrong.
+			Debug.Log (e.Message);
 		}
 	}
 }

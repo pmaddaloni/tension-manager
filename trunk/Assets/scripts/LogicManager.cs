@@ -13,6 +13,11 @@ public struct choiceNode {
 		public float challengeRate;
 	}
 
+public struct randomEventNode {
+	public string description;
+	public int impactAmount;
+}
+
 public class LogicManager : MonoBehaviour
 {
 	
@@ -75,6 +80,7 @@ public class LogicManager : MonoBehaviour
 
 	private choiceNode[] choices;
 	public string[] scenes = new string[20];
+	public randomEventNode[] randomScenes = new randomEventNode[5];
 	public List<choiceNode>[] choiceList = new List<choiceNode>[6];
 	public string sceneText; //the scene description
 	
@@ -87,6 +93,7 @@ public class LogicManager : MonoBehaviour
 		Parser parser = gameObject.AddComponent<Parser>();
 		parser.parseScenes("Scenes.txt", scenes);
 		parser.parseChoices("Choices.txt", choiceList);
+		parser.parseRandomEvents("RandomEvents.txt", randomScenes);
 	
 		sceneText = scenes[0] + "\n" + begin;
 		
