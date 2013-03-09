@@ -93,7 +93,7 @@
 	<Choice4> 
 
 			<label>
-			Call in Swat
+			Call in SWAT
 			<end>
 
 			<description>
@@ -217,7 +217,7 @@
 		<end>
 
 		<description>
-		Cigarettes always make bad situations better, right? It gives you a minute to collect your thoughts and decide what to do. The glow of the end of your cigarette takes you away for a moment.
+		Cigarettes always make bad situations better you posit sullenly to yourself. It gives you a minute to collect your thoughts and decide what to do. The glow of the end of your cigarette takes you away for a moment.
 		<end>
 
 		<success>
@@ -244,7 +244,7 @@
 		<end>
 
 		<description>
-		The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor, and one down here just in case. Let’s be sharp everyone.”
+		The radio hisses and you begin speaking with the button held down. “Everyone I need you ready at a moment's go. We need a team moving up to his floor, and one down here just in case. Let’s be sharp everyone.”
 		<end>
 
 		<success>
@@ -271,7 +271,7 @@
 		<end>
 
 		<description>
-		The radio hisses and you begin speaking with the button held down. “Team I need you to be ready at a moments notice. We need a team moving up to his floor to support the bomb squad if necessary. Do not open fire unless I give the order.”
+		The radio hisses and you begin speaking while depressing the call button. “Team I need you to be ready at a moment's notice. We need a team moving up to his floor to support the bomb squad if necessary. Do not open fire unless I give the order.”
 		<end>
 
 		<success>
@@ -327,7 +327,6 @@
 		<description>
 		An officer standing next to you hands you a pair. You look through their telescoping lenses and see the man looking directly back at you. He points.
 		<end>
-		<End>
 
 		<success>
 		The man does not react to your action.
@@ -348,15 +347,558 @@
 <ENDCLASS>
 
 <Class2>
+
+	<Choice0> 
+
+		<label>
+		Reason with the man
+		<end>
+
+		<description>
+		You try to reason with the man, using all of your training and expertise in the area.
+		<end>
+
+		<success>
+		The man appears to be listening and stands quite still.
+		<end>
+
+		<failure>
+		The man waves his hand dismissively at you and he seems more perturbed.
+		<end>
+
+		<impact>
+		2
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice1> 
+
+		<label>
+		Do nothing
+		<end>
+
+		<description>
+		The answers seem to be just beyond your grasp. You run your fingers over your scalp. You light another one.
+		<end>
+
+		<success>
+		The man seems soothed slightly by your appearing to be calm as well.
+		<end>
+
+		<failure>
+		Your indecision irks the man visibly and he peers over the edge.
+		<end>
+
+		<impact>
+		2
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice2> 
+
+		<label>
+		Ask the man for his name
+		<end>
+
+		<description>
+		You tap into the simplest of your emotional arsenal. 
+		
+		"Tell me your name." You say to the man.
+		<end>
+
+		<success>
+		He stops for a moment and then answers. There appears to be a light in his face now.
+		<end>
+
+		<failure>
+		He answers, "You don't really care what it is. Cheap parlor tricks won't work on me."
+		<end>
+
+		<impact>
+		2
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+		<Choice3> 
+
+		<label>
+		Ask about his family
+		<end>
+
+		<description>
+		Finding some way to reach the man emotionally is an important step in getting this situation under control. You ask him for whatever he wants to offer about his family.
+		<end>
+
+		<success>
+		He doesn't answer, but looks introverted.
+		<end>
+
+		<failure>
+		He answers simply:
+		
+		"Fuck you."
+		<end>
+
+		<impact>
+		2
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice4> 
+
+		<label>
+		Empathize with the fellow
+		<end>
+
+		<description>
+		You try to put yourself in his shoes. You begin in on this tactic, speaking through the loudspeaker in a calm tone.
+		<end>
+
+		<success>
+		He answers back, though not absolutely coherently, not aggressively either. Progress.
+		<end>
+
+		<failure>
+		That didn't work. He doesn't want to talk. He wants to create a craze. He's on his way to achieving his goal/
+		<end>
+
+		<impact>
+		2
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
 <EndClass>
 
 <Class3>
+	<Choice0> 
+
+		<label>
+		Try to find out some information from bystanders
+		<end>
+
+		<description>
+		Someone might know this guy and be able to give you a little insight. You move through the crowd as quickly as you can speaking to people but nothing concrete or helpful is given.
+		<end>
+
+		<success>
+		You mulling about has the man looking amongst the crowd as well. His eyes reflect recognition, though with whom is unclear.
+		<end>
+
+		<failure>
+		The man, losing sight of you for a moment, seems upset by this.
+		<end>
+
+		<impact>
+		3
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice1> 
+
+		<label>
+		Ask the man about his problems
+		<end>
+
+		<description>
+		You need to make a better connection with the cause of this. You attempt to get some information that can get you closer to this by trying to converse with the man.
+		<end>
+
+		<success>
+		While he doesn't make clear his causes, he at least is talking with you.
+		<end>
+
+		<failure>
+		Several lude gestures later you stand there no better off.
+		<end>
+
+		<impact>
+		3
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice2> 
+
+		<label>
+		Do nothing
+		<end>
+
+		<description>
+		Indecision gnawing at you, you light another one. You need to collect yourself. You've been doing this for a while now; personal things shouldn't matter. You escape for a moment with a drag.
+		<end>
+
+		<success>
+		Being calm has a tendency to calm others. While you might not be calm inside, the maniac certainly doesn't know this. He stop moving so much.
+		<end>
+
+		<failure>
+		Your silence is deafening and not helping matters. Even the other officers are glancing at you now.
+		<end>
+
+		<impact>
+		3
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice3> 
+
+		<label>
+		Check in with SWAT
+		<end>
+
+		<description>
+		You hold the radio up and check in with the squad. They are moving into position and will be ready to go if needed.
+		<end>
+
+		<success>
+		The man seems to get more unsure the more you use your radio.
+		<end>
+
+		<failure>
+		The man seems to get upset with your frequent use of your radio.
+		<end>
+
+		<impact>
+		3
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice4> 
+
+		<label>
+		Goad the poor bastard
+		<end>
+
+		<description>
+		Your nerves reaching an edge you lose yourself for a moment. You begin chiding the man in an attempt to shame his poor decision to do this.  
+		<end>
+
+		<success>
+		Surprising to everyone involved, the man appears to actually be embarrassed for a split second.
+		<end>
+
+		<failure>
+		That made things worse. The officers on scene mutter to each other. Reverse psychology is overrated.
+		<end>
+
+		<impact>
+		3
+		<end>
+		
+		<challenge>
+		0
+		<end>
+	<EndChoice>
 <EndClass>
 
 <Class4>
+	<Choice0> 
+
+		<label>
+		Do nothing
+		<end>
+
+		<description>
+		Your hand trembles for a moment and you feel your lower back getting sweaty. Fighting to get ahold of yourself you light another one. You must look off today, because the officers are eyeing you in a way you don't appreciate. Your head is beginning to pound. 
+		<end>
+
+		<success>
+		You need a drink, and it looks like the maniac feels the same way.
+		<end>
+
+		<failure>
+		The man sees your weakness and this pushes him further.
+		<end>
+
+		<impact>
+		4
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice1> 
+
+		<label>
+		Tell the man you're getting close to giving up on him
+		<end>
+
+		<description>
+		The words still hanging in the air as you remove the loudspeaker from your mouth. This seems to shock everyone around. The lunatic teeters back and forth with his eyes fixed on you.
+		<end>
+
+		<success>
+		Maybe you're speaking a language that only he understands. You realize that can't be a good thing. He backs up.
+		<end>
+
+		<failure>
+		He laughs and answers that he gave up a while ago. The time for this to end is drawing near, he exclaims.
+		<end>
+
+		<impact>
+		4
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice2> 
+
+		<label>
+		Tell the man that you've spoken with his family
+		<end>
+
+		<description>
+		You tell the man that you've spoken with family and that they're on their way. They'll be there soon, you lie. 
+		<end>
+
+		<success>
+		This seems to confuse the man, but at least it doesn't anger him.
+		<end>
+
+		<failure>
+		He calls out your lie and is obviously barely gripping on to his senses.
+		<end>
+
+		<impact>
+		4
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice3> 
+
+		<label>
+		Ask the man why he's doing this
+		<end>
+
+		<description>
+		Seeking to get to the root of this, and getting desperate at this point, you blatantly ask him.
+		<end>
+
+		<success>
+		He blinks and stands there, still. He looks down at you, and in a moment of rationale, explains that it's too deep and that you couldn't understand. 
+		<end>
+
+		<failure>
+		He fiddles a bit with the bomb on his chest and begins dancing closer to the edge.
+		<end>
+
+		<impact>
+		4
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	<Choice4> 
+
+		<label>
+		Order the snipers to take their shot
+		<end>
+
+		<description>
+		You give the signal and the command goes over the airwaves. The crazed man looks up as the gunshot breaks the evening sky in two.
+		<end>
+
+		<success>
+		The man stumbles back and looks up. You get the report back that it was a glancing shot and he's not mortally wounded. He looks tired and less confident now. You expect screaming but he just looks down at the crowd with empty eyes.
+		<end>
+
+		<failure>
+		The bullet clips the concrete next to the man and dust wafts up into the air. His line of sight whips instantly to you. He points coldly and starts laughing, a hollow, strange laugh.
+		<end>
+
+		<impact>
+		4
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
 <EndClass>
 
 <Class5>
+	<Choice0> 
+
+		<label>
+		Order the snipers to take the man out
+		<end>
+
+		<description>
+		You look over at the swat commander and give him a nod. He puts his finger up to his ear and the words are inaudible, but the sound of the shot rings for miles.
+		<end>
+
+		<success>
+		The man stumbles for a moment and falls back. 
+		<end>
+
+		<failure>
+		The man also clearly heard the shot, and shouts down at you. 
+		
+		"That's it! Here I come!"
+		<end>
+
+		<impact>
+		5
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+		<Choice1> 
+
+		<label>
+		Order SWAT to move in
+		<end>
+
+		<description>
+		You glance at the commanding SWAT officer and mouth, "it's time." He nods in accordance turns his back and begins giving orders over his headset. You look up at the man with your breath held.
+		<end>
+
+		<success>
+		The man whips around and you hear him yell and then he goes down. 
+		<end>
+
+		<failure>
+		The man whips around and yells, then turns and jumps from the building.
+		<end>
+
+		<impact>
+		5
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+		<Choice2> 
+		
+		<label>
+		Do nothing but smoke
+		<end>
+
+		<description>
+		Fed up with the situation, and things in general, you stand there jaw clenched. Time is coming quickly to a close, and you find your will to care slipping. You stand there impassively and glare up at the man, your cigarette burning down toward the filter, and he glares back down at you.
+		<end>
+
+		<success>
+		The man becomes visibly nervous with your strange behavior and begins glancing behind him nervously.
+		<end>
+
+		<failure>
+		The man tells you to go to hell and very wrings his fists at you. This clearly is just antagonizing him. 
+		<end>
+
+		<impact>
+		5
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+	<Choice3> 
+
+		<label>
+		Clear the area out
+		<end>
+
+		<description>
+		"That's it everyone! We're moving out!" You begin giving the order to have all units fall back and remove all onlookers forcibly if need be. Everyone begins to mobilize as if galvanized by some chemical reaction. 
+		<end>
+
+		<success>
+		As the crowd begins to move outward the man looks troubled that he's losing his audience. He looks fervently around for you and can't find you.
+		<end>
+
+		<failure>
+		As the crowd begins to move, the man begins pacing wildly and begins searching the crowd for you. Unable to find you he looks absolutely mad.
+		<end>
+
+		<impact>
+		5
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
+	
+		<Choice4> 
+		<label>
+		Goad the man
+		<end>
+
+		<description>
+		You begin yelling epithets over the loudspeaker at the lunatic. The other officers looks at each other incredulously or with shocked expressions. This surely isn't protocol.
+		<end>
+
+		<success>
+		Your words seem to strike a chord with the fellow. He looks to be at a loss.
+		<end>
+
+		<failure>
+		This turns into a shouting match between you and the frantic man. That clearly was a bad idea.
+		<end>
+
+		<impact>
+		5
+		<end>
+
+		<challenge>
+		0
+		<end>
+	<EndChoice>
 <EndClass>
 
 
