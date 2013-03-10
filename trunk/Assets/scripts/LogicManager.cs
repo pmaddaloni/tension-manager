@@ -17,6 +17,7 @@ public struct tensionStruct {
 	public float[] challengeLevels;
 	public float[] successImpacts;
 	public float[] failureImpacts;
+	public KeyValuePair<bool, float> randomEvent;
 }
 
 public struct randomEventNode {
@@ -111,6 +112,7 @@ public class LogicManager : MonoBehaviour
 		tension.challengeLevels = new float[3];
 		tension.successImpacts = new float[3];
 		tension.failureImpacts = new float[3];
+		tension.randomEvent = new KeyValuePair<bool, float>(false,0);
 	
 		sceneText = scenes[0] + "\n" + begin;
 		
@@ -156,6 +158,12 @@ public class LogicManager : MonoBehaviour
 	//set the current choices
 	void setChoices() {
 		
+		if (tension.randomEvent.Key)
+		{
+			jumperDist += Convert.ToInt32(tension.randomEvent.Value);
+			tension.randomEvent = new KeyValuePair<bool,float>(false,0);	
+		}
+
 		tensionManager.updateTension(gameTimeRemaining, jumperDist, tension);
 		
 		currentChoiceClass[0] = Math.Abs(jumperDist + Convert.ToInt32(tension.successImpacts[0]));
@@ -276,7 +284,8 @@ public class LogicManager : MonoBehaviour
 			choiceTimeRemaining = choiceLength;
 			choiceStartTime = currTime;
 			handleChoice ();
-		} else
+		} 
+		else
 			choiceTimeRemaining = choiceLength - (int)choiceTimePassed;
 	}
 	
@@ -317,7 +326,10 @@ public class LogicManager : MonoBehaviour
 			jumperDist -= Convert.ToInt32(tension.failureImpacts[gui.getChosenID()]);
 			sceneText += "\n" + choice.failureText;
 		}
-		
+						
+		if (tension.randomEvent.Key)
+			sceneText += "\n\n" + randomScenes[UnityEngine.Random.Range(0,randomScenes.Length-1)];	
+			
 		sceneText += "\n\nMake your move.";
 		
 		updateGameStatus();//tell the GUI to update the game status
