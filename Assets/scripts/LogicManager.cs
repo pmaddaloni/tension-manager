@@ -168,15 +168,15 @@ public class LogicManager : MonoBehaviour
 				if (currentChoiceClass[i] == currentChoiceClass[i-1])
 					choice[1] = choice[0];
 				else
-					choice[2] = new List<choiceNode>(choiceList[currentChoiceClass[2]]);
+					choice[1] = new List<choiceNode>(choiceList[currentChoiceClass[1]]);
 				break;
 			case 2:
 				if (currentChoiceClass[i] == currentChoiceClass[i-1])
-					choice[3] = choice[2];
+					choice[2] = choice[1];
 				else if (currentChoiceClass[i] == currentChoiceClass[i-2])
-					choice[3] = choice[1];
+					choice[2] = choice[1];
 				else 
-					choice[3] = new List<choiceNode>(choiceList[currentChoiceClass[3]]);
+					choice[2] = new List<choiceNode>(choiceList[currentChoiceClass[2]]);
 				break;
 			default:
 				choice[i] = new List<choiceNode>(choiceList[currentChoiceClass[i]]);
