@@ -39,7 +39,7 @@ public class LogicManager : MonoBehaviour
 	private float gameLength = 100;
 	
 	//how many seconds per choice?
-	private int choiceLength = 5;
+	private int choiceLength = 15;
 	
 	//how many choices
 	private int numChoices = 3;
@@ -127,9 +127,15 @@ public class LogicManager : MonoBehaviour
 				startGame ();
 			return;
 		}
-		
-		updateGameTimeRemaining();
-		handleChoiceTimer ();
+		else {
+			if (gameTimeRemaining > 0) {
+				updateGameTimeRemaining();
+				handleChoiceTimer ();
+			}
+			else {
+				updateGameTimeRemaining();
+			}
+		}
 	}
 	
 	//Start the game -- initialize timers
@@ -140,6 +146,7 @@ public class LogicManager : MonoBehaviour
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
 		setChoices();//initialize the choices
+		updateGameTimeRemaining();
 		updateGameStatus (); //initialize the game status
 		//seed the random number generator
 		UnityEngine.Random.seed = (int)System.DateTime.Now.TimeOfDay.TotalMilliseconds;
@@ -149,34 +156,39 @@ public class LogicManager : MonoBehaviour
 	//set the current choices
 	void setChoices() {
 		
-		tension = tensionManager.updateTension(gameTimeRemaining, jumperDist, tension);
+		tensionManager.updateTension(gameTimeRemaining, jumperDist, tension);
 		
-		currentChoiceClass[0] = Math.Abs(jumperDist - Convert.ToInt32(tension.successImpacts[0]));
-		currentChoiceClass[1] = Math.Abs(jumperDist - Convert.ToInt32(tension.successImpacts[1]));
-		currentChoiceClass[2] = Math.Abs(jumperDist - Convert.ToInt32(tension.successImpacts[2]));
+		currentChoiceClass[0] = Math.Abs(jumperDist + Convert.ToInt32(tension.successImpacts[0]));
+		currentChoiceClass[1] = Math.Abs(jumperDist + Convert.ToInt32(tension.successImpacts[1]));
+		currentChoiceClass[2] = Math.Abs(jumperDist + Convert.ToInt32(tension.successImpacts[2]));
 		
 		List<choiceNode>[] choice = new List<choiceNode>[3];
 		
+		try{
+			
 		for (int i = 0; i < numChoices; i++) 
 		{
 			switch (i)
 			{
 			case 0:
-				choice[0] = new List<choiceNode>(choiceList[currentChoiceClass[1]]);
+				print (i + " = " + currentChoiceClass[i]);
+				choice[i] = new List<choiceNode>(choiceList[currentChoiceClass[i]]);
 				break;
 			case 1:
+				print (i + " = " + currentChoiceClass[i]);
 				if (currentChoiceClass[i] == currentChoiceClass[i-1])
-					choice[1] = choice[0];
+					choice[i] = choice[i-1];
 				else
-					choice[1] = new List<choiceNode>(choiceList[currentChoiceClass[1]]);
+					choice[i] = new List<choiceNode>(choiceList[currentChoiceClass[i]]);
 				break;
 			case 2:
+				print (i + " = " + currentChoiceClass[i]);
 				if (currentChoiceClass[i] == currentChoiceClass[i-1])
-					choice[2] = choice[1];
+					choice[i] = choice[i-1];
 				else if (currentChoiceClass[i] == currentChoiceClass[i-2])
-					choice[2] = choice[1];
+					choice[i] = choice[i-2];
 				else 
-					choice[2] = new List<choiceNode>(choiceList[currentChoiceClass[2]]);
+					choice[i] = new List<choiceNode>(choiceList[currentChoiceClass[i]]);
 				break;
 			default:
 				choice[i] = new List<choiceNode>(choiceList[currentChoiceClass[i]]);
@@ -190,9 +202,19 @@ public class LogicManager : MonoBehaviour
 			choices[i].challengeRate = choice[i][randomChoice].challengeRate;
 			choices[i].impactAmount = choice[i][randomChoice].impactAmount;
 			choices[i].description = choice[i][randomChoice].description;
+				
+			choices[i].label += "Success:" + tension.successImpacts[i] + " Failure:" 
+					+ tension.failureImpacts[i] + " Challenge:" + tension.challengeLevels[i];
+						
 			choices[i].successText = choice[i][randomChoice].successText;
 			choices[i].failureText = choice[i][randomChoice].failureText;
 			choice[i].RemoveAt(randomChoice);
+		}
+		}
+		catch(Exception e)
+		{
+			Debug.Log (e.Message);
+			//Application.Quit();
 		}
 		setGUIChoiceStrings();
 	}
@@ -212,7 +234,27 @@ public class LogicManager : MonoBehaviour
 	//Set the game status in the gui
 	void updateGameStatus ()
 	{
-		gui.setGameStatus ("The man is " + jumperDist + " steps from the edge.");
+		if (jumperDist > 10) {
+			gui.setGameStatus ("You've successfully gotten the man to come down off the ledge.");
+			sceneText = scenes[3];
+			gameTimeRemaining = 0;
+			choiceTimeRemaining = 0;			
+		}
+		else if (jumperDist < 1) {
+			gui.setGameStatus ("The man has reached the edge of the ledge.");
+			sceneText = scenes[2];
+			gameTimeRemaining = 0;
+			choiceTimeRemaining = 0;
+		}
+		else if (gameTimeRemaining <= 0) {
+			gui.setGameStatus ("Time is up.");
+			sceneText = scenes[1];
+			gameTimeRemaining = 0;
+			choiceTimeRemaining = 0;
+		}
+		else {
+			gui.setGameStatus ("The man is " + jumperDist + " steps from the edge.");
+		}
 	}
 	
 	void updateGameTimeRemaining() {
