@@ -156,15 +156,15 @@ public class LogicManager : MonoBehaviour
 	void setChoices() {
 		if (tension.randomEvent.Key)
 		{
-			jumperDist += Convert.ToInt32(tension.randomEvent.Value);
+			jumperDist += Convert.ToInt32(Math.Round(tension.randomEvent.Value));
 			tension.randomEvent = new KeyValuePair<bool,float>(false,0);	
 		}
 
 		tensionManager.updateTension(gameTimeRemaining, jumperDist, tension);
 		
-		currentChoiceClass[0] = Math.Abs(jumperDist + Convert.ToInt32(tension.successImpacts[0]));
-		currentChoiceClass[1] = Math.Abs(jumperDist + Convert.ToInt32(tension.successImpacts[1]));
-		currentChoiceClass[2] = Math.Abs(jumperDist + Convert.ToInt32(tension.successImpacts[2]));
+		currentChoiceClass[0] = Math.Abs(jumperDist - Convert.ToInt32(Math.Round(tension.successImpacts[0])));
+		currentChoiceClass[1] = Math.Abs(jumperDist - Convert.ToInt32(Math.Round(tension.successImpacts[1])));
+		currentChoiceClass[2] = Math.Abs(jumperDist - Convert.ToInt32(Math.Round(tension.successImpacts[2])));
 		
 		List<choiceNode>[] choice = new List<choiceNode>[3];
 		
@@ -315,11 +315,11 @@ public class LogicManager : MonoBehaviour
 		sceneText = choice.description;
 		
 		if (successful) {
-			jumperDist += Convert.ToInt32(tension.successImpacts[gui.getChosenID()]);
+			jumperDist += Convert.ToInt32(Math.Round(tension.successImpacts[gui.getChosenID()]));
 			sceneText += "\n" + choice.successText;
 		}
 		else {
-			jumperDist -= Convert.ToInt32(tension.failureImpacts[gui.getChosenID()]);
+			jumperDist -= Convert.ToInt32(Math.Round(tension.failureImpacts[gui.getChosenID()]));
 			sceneText += "\n" + choice.failureText;
 		}
 						
