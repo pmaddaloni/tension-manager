@@ -17,6 +17,7 @@ public class TensionManager : MonoBehaviour {
 	private float desiredTensionPercent;
 	
 	//the current, success and fail state values on the spectrum
+	//assumes that successStateVal is higher than failStateVal
 	private int failStateVal;
 	private int successStateVal;
 	private int currStateVal;
@@ -56,12 +57,24 @@ public class TensionManager : MonoBehaviour {
 		//how far should the state be from an end-state after the choice resolves?
 		float postChoiceDist = getPostChoiceDist();
 		
-		//now build choices that set impact to result in post choice distance
-		//need to check if that should go towards success or failure
-		//then round to equal actual distances
-		//then correct for rounding with challenge setting
+		//impact values are the difference between the current state and the desired fail or success state
+		float maxSuccessImpact = (successStateVal-postChoiceDist) - currentState;
+		float maxFailImpact =  currentState - (failStateVal + postChoiceDist);
+		float challenge = .5f;//dummy
 		
-		Debug.Log ("post choice dist: " + postChoiceDist);
+		//set the impacts for each choice in the array
+		for (int i = 0; i < tension.challengeLevels.Length; i++) {
+			tension.successImpacts[i] = maxSuccessImpact;
+			tension.failureImpacts[i] = maxFailImpact;
+			tension.challengeLevels[i] = challenge;
+		}
+		
+		//need to check if that should go towards success or failure or both -- right now I'm using both
+		//then round to equal actual int distances
+		//then correct for rounding with challenge setting
+		//find the tension discrepancy created by rounding the impact
+		//calc the tension to compensate -- based on whether it's success or failure important
+		
 		return tension;//should return the new tension
 	}
 	
@@ -80,7 +93,6 @@ public class TensionManager : MonoBehaviour {
 		float highValue = tensionLevels[highIndex];
 		float rawTension = lowValue + (highValue-lowValue)*betweenPercent;
 		desiredTensionPercent = rawTension/maxTension;
-		Debug.Log ("current desired tension percent: " + desiredTensionPercent);
 	}
 	
 	//returns the post choice distance-from-end-state based on desired tension
