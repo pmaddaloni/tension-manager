@@ -9,10 +9,6 @@ public class TensionManager : MonoBehaviour {
 	private float arcDuration;//how long the experience should be, in seconds
 	private List<float> tensionLevels; //a list of tension levels, to be evenly distributed over the arcDuration
 	
-	//the min and max tension levels, set by the user in init
-	private float minTension;
-	private float maxTension;
-	
 	//the currently desired tension percent
 	private float desiredTensionPercent;
 	
@@ -20,9 +16,12 @@ public class TensionManager : MonoBehaviour {
 	//assumes that successStateVal is higher than failStateVal
 	private int failStateVal;
 	private int successStateVal;
+	
+	//the size of the overall space and half the space, for reasoning about percent distance from fail/success
+	private float spaceSize;
+	private float halfSpaceSize;
+	
 	private int currStateVal;
-	
-	
 	
 	bool initialized = false;
 	
@@ -57,9 +56,17 @@ public class TensionManager : MonoBehaviour {
 		//how far should the state be from an end-state after the choice resolves?
 		float postChoiceDist = getPostChoiceDist();
 		
+		/*Debug.Log ("desired: " + desiredTensionPercent);
+		Debug.Log("postChoice: " + postChoiceDist);*/
+		
 		//impact values are the difference between the current state and the desired fail or success state
-		float maxSuccessImpact = (successStateVal-postChoiceDist) - currentState;
+		float maxSuccessImpact = successStateVal - postChoiceDist - currentState;
 		float maxFailImpact =  currentState - (failStateVal + postChoiceDist);
+		
+		/*Debug.Log ("currVal: " + currentState);
+		Debug.Log ("succImp: " + maxSuccessImpact);
+		Debug.Log ("failImp: " + maxFailImpact);*/
+		
 		float challenge = .5f;//dummy
 		
 		//set the impacts for each choice in the array
@@ -75,7 +82,7 @@ public class TensionManager : MonoBehaviour {
 		//find the tension discrepancy created by rounding the impact
 		//calc the tension to compensate -- based on whether it's success or failure important
 		
-		//return tension;//should return the new tension
+		//return tension; //should return the new tension
 	}
 	
 	//interpolates the current tension value for this amount of time passed
@@ -92,20 +99,22 @@ public class TensionManager : MonoBehaviour {
 		float lowValue = tensionLevels[lowIndex];
 		float highValue = tensionLevels[highIndex];
 		float rawTension = lowValue + (highValue-lowValue)*betweenPercent;
-		desiredTensionPercent = rawTension/maxTension;
+		
+		desiredTensionPercent = rawTension/100;
 	}
 	
-	//returns the post choice distance-from-end-state based on desired tension
+	//returns the post choice percent-distance-from--each-end-state based on desired tension
+	//reasons about distance using the halfSpaceSize so the lowest-importance choice will leave you at the midpoint
 	//assumes desiredTensionPercent is updated
 	public float getPostChoiceDist() {
+		
 		//size of the success-failure space
-		float spaceSize = Math.Abs(successStateVal-failStateVal);
-		return desiredTensionPercent*spaceSize;
+		return halfSpaceSize - (desiredTensionPercent*halfSpaceSize);
 	}
 	
 	
 	
-	public void init(float duration, string tensionFileName, float min, float max, int failVal, int succVal) {
+	public void init(float duration, string tensionFileName, int failVal, int succVal) {
 		
 		tensionLevels = new List<float>();
 		
@@ -115,13 +124,15 @@ public class TensionManager : MonoBehaviour {
 		}
 		
 		arcDuration = duration;
-		minTension = min;
-		maxTension = max;
 		successStateVal = succVal;
 		failStateVal = failVal;
 				
 		initTensionLevels(tensionFileName);
 		initialized  = true;
+		
+		//init the sizes of the success-fail space
+		spaceSize = Math.Abs(successStateVal - failStateVal);
+		halfSpaceSize = spaceSize/2;
 	}
 	
 	//read the tension levels from the file into the list
@@ -139,8 +150,8 @@ public class TensionManager : MonoBehaviour {
                 while ((numString = sr.ReadLine()) != null) 
                 {
 					if(float.TryParse(numString, out newNum)) {
-						if (newNum < minTension) Debug.LogError("tension file has value less than minTension at line: " + lineNum);
-						else if (newNum > maxTension) Debug.LogError("tension file has value greater than maxTension at line: " + lineNum);
+						if (newNum < 0) Debug.LogError("tension file has value less than 0 at line: " + lineNum);
+						else if (newNum > 100) Debug.LogError("tension file has value greater than 100 at line: " + lineNum);
 						else {
 							tensionLevels.Add(newNum);
 						}

@@ -45,9 +45,6 @@ public class LogicManager : MonoBehaviour
 	//how many choices
 	private int numChoices = 3;
 	
-	float minTension = 0;
-	float maxTension = 100;
-	
 	//Measured in steps from the edge -- just like jumperDist
 	int successDist = 11;
 	int failDist = 0;
@@ -117,7 +114,7 @@ public class LogicManager : MonoBehaviour
 		sceneText = scenes[0] + "\n" + begin;
 		
 		tensionManager = gameObject.AddComponent<TensionManager>();
-		tensionManager.init(gameLength, "tensionLevels.txt", minTension, maxTension, failDist, successDist);
+		tensionManager.init(gameLength, "tensionLevels.txt", failDist, successDist);
 	}
 	
 	// Update is called once per frame
@@ -147,8 +144,8 @@ public class LogicManager : MonoBehaviour
 		gameStarted = true;
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
-		setChoices();//initialize the choices
 		updateGameTimeRemaining();
+		setChoices();//initialize the choices
 		updateGameStatus (); //initialize the game status
 		//seed the random number generator
 		UnityEngine.Random.seed = (int)System.DateTime.Now.TimeOfDay.TotalMilliseconds;
@@ -157,7 +154,6 @@ public class LogicManager : MonoBehaviour
 	
 	//set the current choices
 	void setChoices() {
-		
 		if (tension.randomEvent.Key)
 		{
 			jumperDist += Convert.ToInt32(tension.randomEvent.Value);
@@ -333,7 +329,6 @@ public class LogicManager : MonoBehaviour
 		sceneText += "\n\nMake your move.";
 		
 		updateGameStatus();//tell the GUI to update the game status
-		
 		setChoices();//updates the choice list
 	}
 }
