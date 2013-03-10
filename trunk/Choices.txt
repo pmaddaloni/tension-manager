@@ -835,7 +835,7 @@
 		<end>
 
 		<failure>
-		The man tells you to go to hell and very wrings his fists at you. This clearly is just antagonizing him. 
+		The man tells you to go to hell and shakes his fists at you. This clearly is just antagonizing him.
 		<end>
 
 		<impact>
