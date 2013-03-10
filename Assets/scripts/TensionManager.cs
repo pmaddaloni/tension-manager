@@ -18,8 +18,8 @@ public class TensionManager : MonoBehaviour {
 	private int successStateVal;
 	
 	//the size of the overall space and half the space, for reasoning about percent distance from fail/success
-	private float spaceSize;
-	private float halfSpaceSize;
+	//private float spaceSize;
+	//private float halfSpaceSize;
 	
 	private int currStateVal;
 	
@@ -50,18 +50,21 @@ public class TensionManager : MonoBehaviour {
 		//set the current state
 		currStateVal = currentState;
 		
-		//set the desired tension from the graph
+		//set the desired tension percent from the graph
 		updateDesiredTension(arcDuration-timeRemaining);
 		
 		//how far should the state be from an end-state after the choice resolves?
-		float postChoiceDist = getPostChoiceDist();
+		//float postChoiceDist = getPostChoiceDist();
 		
 		/*Debug.Log ("desired: " + desiredTensionPercent);
 		Debug.Log("postChoice: " + postChoiceDist);*/
 		
-		//impact values are the difference between the current state and the desired fail or success state
-		float maxSuccessImpact = successStateVal - postChoiceDist - currentState;
-		float maxFailImpact =  currentState - (failStateVal + postChoiceDist);
+		//how far is current state from success/failure?
+		float distFromSuccess = Math.Abs (successStateVal-currentState);
+		float distFromFailure = Math.Abs (currentState-failStateVal);
+		
+		float maxSuccessImpact = desiredTensionPercent*distFromSuccess;
+		float maxFailImpact =  desiredTensionPercent*distFromFailure;
 		
 		/*Debug.Log ("currVal: " + currentState);
 		Debug.Log ("succImp: " + maxSuccessImpact);
@@ -103,6 +106,7 @@ public class TensionManager : MonoBehaviour {
 		desiredTensionPercent = rawTension/100;
 	}
 	
+	/*
 	//returns the post choice percent-distance-from--each-end-state based on desired tension
 	//reasons about distance using the halfSpaceSize so the lowest-importance choice will leave you at the midpoint
 	//assumes desiredTensionPercent is updated
@@ -110,7 +114,7 @@ public class TensionManager : MonoBehaviour {
 		
 		//size of the success-failure space
 		return halfSpaceSize - (desiredTensionPercent*halfSpaceSize);
-	}
+	}*/
 	
 	
 	
@@ -129,10 +133,6 @@ public class TensionManager : MonoBehaviour {
 				
 		initTensionLevels(tensionFileName);
 		initialized  = true;
-		
-		//init the sizes of the success-fail space
-		spaceSize = Math.Abs(successStateVal - failStateVal);
-		halfSpaceSize = spaceSize/2;
 	}
 	
 	//read the tension levels from the file into the list
