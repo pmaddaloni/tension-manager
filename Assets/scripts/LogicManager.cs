@@ -13,6 +13,12 @@ public struct choiceNode {
 		public float challengeRate;
 	}
 
+public struct tensionStruct {	
+	public float[] challengeLevels;
+	public float[] successImpacts;
+	public float[] failureImpacts;
+}
+
 public struct randomEventNode {
 	public string description;
 	public int impactAmount;
@@ -25,8 +31,9 @@ public class LogicManager : MonoBehaviour
 	public GUIManager gui;
 	
 	//The Tension Manager
-	TensionManager tM;
+	TensionManager tensionManager;
 	
+
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
@@ -85,6 +92,9 @@ public class LogicManager : MonoBehaviour
 	public string sceneText; //the scene description
 	
 	private int currentChoiceClass = 0;
+	
+	public tensionStruct tension = new tensionStruct();
+
 
 	//---------------------------METHODS-----------------------------------------//	
 	void Start () {
@@ -94,11 +104,15 @@ public class LogicManager : MonoBehaviour
 		parser.parseScenes("Scenes.txt", scenes);
 		parser.parseChoices("Choices.txt", choiceList);
 		parser.parseRandomEvents("RandomEvents.txt", randomScenes);
+		
+		tension.challengeLevels = new float[3];
+		tension.successImpacts = new float[3];
+		tension.failureImpacts = new float[3];
 	
 		sceneText = scenes[0] + "\n" + begin;
 		
-		tM = gameObject.AddComponent<TensionManager>();
-		tM.init(gameLength, "tensionLevels.txt", minTension, maxTension);
+		tensionManager = gameObject.AddComponent<TensionManager>();
+		tensionManager.init(gameLength, "tensionLevels.txt", minTension, maxTension);
 	}
 	
 	// Update is called once per frame
@@ -112,7 +126,7 @@ public class LogicManager : MonoBehaviour
 		}
 		
 		updateGameTimeRemaining();
-		tM.getImportanceLevel(gameTimeRemaining);
+		tensionManager.getImportanceLevel(gameTimeRemaining);
 		handleChoiceTimer ();
 	}
 	
@@ -132,6 +146,9 @@ public class LogicManager : MonoBehaviour
 	
 	//set the current choices
 	void setChoices() {
+		
+		currentChoiceClass = 0;
+		
 		List<choiceNode> tmp = new List<choiceNode>(choiceList[currentChoiceClass]);
 		for (int i = 0; i < numChoices; i++) 
 		{
@@ -196,21 +213,40 @@ public class LogicManager : MonoBehaviour
 		//set new choices here after dealing with repercussions
 		choiceNode choice = choices[gui.getChosenID()];
 		float attempt = UnityEngine.Random.Range(0f,1f);
-		bool success = attempt >= choice.challengeRate;
+				
+		tensionManager.getChoices(&tension);
+		bool successful;
+		
+		switch (gui.getChosenID())
+		{
+		case 0:
+			successful = attempt >= tension.challengeLevels[0];
+			break;
+		case 1:
+			successful = attempt >= tension.challengeLevels[1];
+			break;
+		case 2:
+			successful = attempt >= tension.challengeLevels[2];
+			break;
+		default:
+			successful = false;
+			break;
+		}
+		
 		
 		//the description for the next scene
 		sceneText = choice.description;
 		
-		if (success) {
-			jumperDist += choice.impactAmount;
+		if (successful) {
+			jumperDist += Convert.ToInt32(tension.successImpacts[gui.getChosenID()]);
 			sceneText += "\n" + choice.successText;
 		}
 		else {
-			jumperDist -= choice.impactAmount;
+			jumperDist -= Convert.ToInt32(tension.failureImpacts[gui.getChosenID()]);
 			sceneText += "\n" + choice.failureText;
 		}
 		
-		sceneText += "\n\n Make your move.";
+		sceneText += "\n\nMake your move.";
 		
 		updateGameStatus();//tell the GUI to update the game status
 		
