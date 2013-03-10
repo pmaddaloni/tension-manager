@@ -39,13 +39,13 @@ public class TensionManager : MonoBehaviour {
 	 * timeRemaining: how much time is remaining in the arc duration?
 	 * currentState: what is the current state between success and fail?
 	 * */
-	public tensionStruct updateTension(float timeRemaining, int currentState, tensionStruct tension) {
+	public void updateTension(float timeRemaining, int currentState, tensionStruct tension) {
 		if(successStateVal <= currentState || currentState <= failStateVal) {
 			Debug.LogError("TensionManager: Tried to getChoices for a state that's already failed or succeeded");
-			return tension;
+			//return tension;
 		} else if (timeRemaining <= 0) {
 			Debug.LogError("TensionManager: Tried to calculate desired tension for timeRemaining <= 0");
-			return tension;
+			//return tension;
 		}
 		
 		//set the current state
@@ -75,7 +75,7 @@ public class TensionManager : MonoBehaviour {
 		//find the tension discrepancy created by rounding the impact
 		//calc the tension to compensate -- based on whether it's success or failure important
 		
-		return tension;//should return the new tension
+		//return tension;//should return the new tension
 	}
 	
 	//interpolates the current tension value for this amount of time passed
