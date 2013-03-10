@@ -55,6 +55,9 @@ public class LogicManager : MonoBehaviour
 		get{return jumperDist;}
 	}
 	
+	//max allowable impact of a choice
+	private int maxImpact = 10;
+	
 	//--------------------------TIMER VARIABLES--------------------------------//
 	//when does the user start the game?
 	private float gameStartTime;
@@ -151,6 +154,23 @@ public class LogicManager : MonoBehaviour
 		UnityEngine.Random.seed = (int)System.DateTime.Now.TimeOfDay.TotalMilliseconds;
 		gui.activateGameGUI();//start up the GUI
 	}
+
+	//determine which class of choices to draw the choice text from method
+	private int determineChoiceClass (float determine)
+	{
+		if (determine >= 0.6)
+			return 5;
+		else if (determine < 0.6 && determine >= 0.5)
+			return 4;
+		else if (determine < 0.5 && determine >= 0.4)
+			return 3;
+		else if (determine < 0.4 && determine >= 0.3)
+			return 2;
+		else if (determine < 0.3 && determine >= 0.2)
+			return 1;
+		else
+			return 0;
+	}
 	
 	//set the current choices
 	void setChoices() {
@@ -168,22 +188,24 @@ public class LogicManager : MonoBehaviour
 		//determine what class of choices should be available to the user
 		for (int i = 0; i < numChoices; i++)
 		{		
-			if (Convert.ToInt32(Math.Round(tension.successImpacts[i])) >= 5 || Convert.ToInt32(Math.Round(tension.failureImpacts[i])) >= 5)
+			if (tension.successImpacts[i] >= 5 || tension.failureImpacts[i] >= 5)
 				currentChoiceClass[i] = 5;
 			else{
-				if ( Convert.ToInt32(Math.Round(tension.successImpacts[i])) > Convert.ToInt32(Math.Round(tension.failureImpacts[i])) )
-					currentChoiceClass[i] = Convert.ToInt32(Math.Round(tension.successImpacts[i]));
+				if ( Convert.ToInt32(tension.successImpacts[i]) > Convert.ToInt32(tension.failureImpacts[i]) )
+					currentChoiceClass[i] = determineChoiceClass(tension.successImpacts[i]/maxImpact);
 				else
-					currentChoiceClass[i] = Convert.ToInt32(Math.Round(tension.failureImpacts[i]));
+					currentChoiceClass[i] = determineChoiceClass(tension.failureImpacts[i]/maxImpact);
 			}
 		}
 		
-		List<choiceNode>[] choice = new List<choiceNode>[3];
+		List<choiceNode>[] choice = new List<choiceNode>[3];	//the three choices that will be inserted into the choice buttons
 		
 		try{
 			
 		for (int i = 0; i < numChoices; i++) 
 		{
+			//ensure that no duplicate choices appear to the user by checking if a chosen class has already been used in 
+			//a previous choice butotn
 			switch (i)
 			{
 			case 0:
@@ -211,6 +233,7 @@ public class LogicManager : MonoBehaviour
 				break;
 			}
 			
+			//choices set for the actual buttons
 			choices[i] = new choiceNode();
 			int randomChoice = UnityEngine.Random.Range(0, choice[i].Count);
 			
