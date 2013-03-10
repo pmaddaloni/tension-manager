@@ -94,7 +94,7 @@ public class LogicManager : MonoBehaviour
 	public List<choiceNode>[] choiceList = new List<choiceNode>[6];
 	public string sceneText; //the scene description
 	
-	private int currentChoiceClass = 0;
+	private int[] currentChoiceClass = new int[3];
 	
 	public tensionStruct tension = new tensionStruct();
 
@@ -149,21 +149,50 @@ public class LogicManager : MonoBehaviour
 	//set the current choices
 	void setChoices() {
 		
-		currentChoiceClass = 0;
+		tension = tensionManager.updateTension(gameTimeRemaining, jumperDist, tension);
 		
-		List<choiceNode> tmp = new List<choiceNode>(choiceList[currentChoiceClass]);
+		currentChoiceClass[0] = Math.Abs(jumperDist - Convert.ToInt32(tension.successImpacts[0]));
+		currentChoiceClass[1] = Math.Abs(jumperDist - Convert.ToInt32(tension.successImpacts[1]));
+		currentChoiceClass[2] = Math.Abs(jumperDist - Convert.ToInt32(tension.successImpacts[2]));
+		
+		List<choiceNode>[] choice = new List<choiceNode>[3];
+		
 		for (int i = 0; i < numChoices; i++) 
 		{
-			choices[i] = new choiceNode();
-			int choice = UnityEngine.Random.Range(0, tmp.Count);
+			switch (i)
+			{
+			case 0:
+				choice[0] = new List<choiceNode>(choiceList[currentChoiceClass[1]]);
+				break;
+			case 1:
+				if (currentChoiceClass[i] == currentChoiceClass[i-1])
+					choice[1] = choice[0];
+				else
+					choice[2] = new List<choiceNode>(choiceList[currentChoiceClass[2]]);
+				break;
+			case 2:
+				if (currentChoiceClass[i] == currentChoiceClass[i-1])
+					choice[3] = choice[2];
+				else if (currentChoiceClass[i] == currentChoiceClass[i-2])
+					choice[3] = choice[1];
+				else 
+					choice[3] = new List<choiceNode>(choiceList[currentChoiceClass[3]]);
+				break;
+			default:
+				choice[i] = new List<choiceNode>(choiceList[currentChoiceClass[i]]);
+				break;
+			}
 			
-			choices[i].label = tmp[choice].label;
-			choices[i].challengeRate = tmp[choice].challengeRate;
-			choices[i].impactAmount = tmp[choice].impactAmount;
-			choices[i].description = tmp[choice].description;
-			choices[i].successText = tmp[choice].successText;
-			choices[i].failureText = tmp[choice].failureText;
-			tmp.RemoveAt(choice);
+			choices[i] = new choiceNode();
+			int randomChoice = UnityEngine.Random.Range(0, choice[i].Count);
+			
+			choices[i].label = choice[i][randomChoice].label;
+			choices[i].challengeRate = choice[i][randomChoice].challengeRate;
+			choices[i].impactAmount = choice[i][randomChoice].impactAmount;
+			choices[i].description = choice[i][randomChoice].description;
+			choices[i].successText = choice[i][randomChoice].successText;
+			choices[i].failureText = choice[i][randomChoice].failureText;
+			choice[i].RemoveAt(randomChoice);
 		}
 		setGUIChoiceStrings();
 	}
@@ -216,8 +245,6 @@ public class LogicManager : MonoBehaviour
 		choiceNode choice = choices[gui.getChosenID()];
 		float attempt = UnityEngine.Random.Range(0f,1f);
 				
-		//update the tensionStruct with new challenge & impact levels
-		tension = tensionManager.updateTension(gameTimeRemaining, jumperDist, tension);
 		bool successful;
 		
 		switch (gui.getChosenID())
