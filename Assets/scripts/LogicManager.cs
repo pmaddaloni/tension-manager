@@ -154,17 +154,29 @@ public class LogicManager : MonoBehaviour
 	
 	//set the current choices
 	void setChoices() {
+		
+		//if the tensionManager has determined that a random event should take place to get
+		//tension to a desired level
 		if (tension.randomEvent.Key)
 		{
-			jumperDist += Convert.ToInt32(Math.Round(tension.randomEvent.Value));
-			tension.randomEvent = new KeyValuePair<bool,float>(false,0);	
+			jumperDist += Convert.ToInt32(Math.Round(tension.randomEvent.Value));//calculate new jumper distance
+			tension.randomEvent = new KeyValuePair<bool,float>(false,0);	//reset the randomEvent	
 		}
-
+		
 		tensionManager.updateTension(gameTimeRemaining, jumperDist, tension);
 		
-		currentChoiceClass[0] = Math.Abs(jumperDist - Convert.ToInt32(Math.Round(tension.successImpacts[0])));
-		currentChoiceClass[1] = Math.Abs(jumperDist - Convert.ToInt32(Math.Round(tension.successImpacts[1])));
-		currentChoiceClass[2] = Math.Abs(jumperDist - Convert.ToInt32(Math.Round(tension.successImpacts[2])));
+		//determine what class of choices should be available to the user
+		for (int i = 0; i < numChoices; i++)
+		{		
+			if (Convert.ToInt32(Math.Round(tension.successImpacts[i])) >= 5 || Convert.ToInt32(Math.Round(tension.failureImpacts[i])) >= 5)
+				currentChoiceClass[i] = 5;
+			else{
+				if ( Convert.ToInt32(Math.Round(tension.successImpacts[i])) > Convert.ToInt32(Math.Round(tension.failureImpacts[i])) )
+					currentChoiceClass[i] = Convert.ToInt32(Math.Round(tension.successImpacts[i]));
+				else
+					currentChoiceClass[i] = Convert.ToInt32(Math.Round(tension.failureImpacts[i]));
+			}
+		}
 		
 		List<choiceNode>[] choice = new List<choiceNode>[3];
 		
