@@ -33,7 +33,6 @@ public class LogicManager : MonoBehaviour
 	//The Tension Manager
 	TensionManager tensionManager;
 	
-
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
@@ -42,11 +41,15 @@ public class LogicManager : MonoBehaviour
 	//how many seconds per choice?
 	private int choiceLength = 5;
 	
+	//how many choices
+	private int numChoices = 3;
+	
 	float minTension = 0;
 	float maxTension = 100;
 	
-	//how many choices
-	private int numChoices = 3;
+	//Measured in steps from the edge -- just like jumperDist
+	int successDist = 11;
+	int failDist = 0;
 	
 	//what is the current distance from the edge? Initialized here for every game
 	private int jumperDist = 5;
@@ -112,7 +115,7 @@ public class LogicManager : MonoBehaviour
 		sceneText = scenes[0] + "\n" + begin;
 		
 		tensionManager = gameObject.AddComponent<TensionManager>();
-		tensionManager.init(gameLength, "tensionLevels.txt", minTension, maxTension);
+		tensionManager.init(gameLength, "tensionLevels.txt", minTension, maxTension, failDist, successDist);
 	}
 	
 	// Update is called once per frame
@@ -126,7 +129,6 @@ public class LogicManager : MonoBehaviour
 		}
 		
 		updateGameTimeRemaining();
-		tensionManager.getImportanceLevel(gameTimeRemaining);
 		handleChoiceTimer ();
 	}
 	
@@ -214,7 +216,8 @@ public class LogicManager : MonoBehaviour
 		choiceNode choice = choices[gui.getChosenID()];
 		float attempt = UnityEngine.Random.Range(0f,1f);
 				
-		tensionManager.getChoices(&tension);
+		//update the tensionStruct with new challenge & impact levels
+		tension = tensionManager.updateTension(gameTimeRemaining, jumperDist, tension);
 		bool successful;
 		
 		switch (gui.getChosenID())
