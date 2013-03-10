@@ -13,6 +13,16 @@ public class TensionManager : MonoBehaviour {
 	private float minTension;
 	private float maxTension;
 	
+	//the currently desired tension percent
+	private float desiredTensionPercent;
+	
+	//the current, success and fail state values on the spectrum
+	private int failStateVal;
+	private int successStateVal;
+	private int currStateVal;
+	
+	
+	
 	bool initialized = false;
 	
 	public void Start() {
@@ -24,24 +34,41 @@ public class TensionManager : MonoBehaviour {
 		}
 	}
 	
-	/*returns the impact level necessary to match the desired tension
-	 * timePassed: how much time has passed in this arc duration?
+	/*returns the impact level and challenge necessary to match the desired tension
+	 * timeRemaining: how much time is remaining in the arc duration?
+	 * currentState: what is the current state between success and fail?
 	 * */
-	public int getImportanceLevel(float timeRemaining) {
-		float currDesiredTensionPercent = getCurrDesiredTension(arcDuration-timeRemaining)/maxTension;
+	public tensionStruct updateTension(float timeRemaining, int currentState, tensionStruct tension) {
+		if(successStateVal <= currentState || currentState <= failStateVal) {
+			Debug.LogError("TensionManager: Tried to getChoices for a state that's already failed or succeeded");
+			return tension;
+		} else if (timeRemaining <= 0) {
+			Debug.LogError("TensionManager: Tried to calculate desired tension for timeRemaining <= 0");
+			return tension;
+		}
 		
-		Debug.Log("current desired tension percent: " + currDesiredTensionPercent);
-		return 0;
+		//set the current state
+		currStateVal = currentState;
+		
+		//set the desired tension from the graph
+		updateDesiredTension(arcDuration-timeRemaining);
+		
+		//how far should the state be from an end-state after the choice resolves?
+		float postChoiceDist = getPostChoiceDist();
+		
+		//now build choices that set impact to result in post choice distance
+		//need to check if that should go towards success or failure
+		//then round to equal actual distances
+		//then correct for rounding with challenge setting
+		
+		Debug.Log ("post choice dist: " + postChoiceDist);
+		return tension;//should return the new tension
 	}
 	
 	//interpolates the current tension value for this amount of time passed
 	//assumes an equal amount of time per graph tension level
-	private float getCurrDesiredTension(float timePassed) {
+	private void updateDesiredTension(float timePassed) {
 		
-		if (timePassed > arcDuration) {
-			Debug.LogError("Tried to calculate desired tension for timePassed > arcDuration");
-			return 0;
-		}
 		float percentComplete = timePassed/arcDuration;
 		
 		//based on percent complete, which index from the list should the tension be at?
@@ -51,10 +78,22 @@ public class TensionManager : MonoBehaviour {
 		float betweenPercent = rawIndex - lowIndex;
 		float lowValue = tensionLevels[lowIndex];
 		float highValue = tensionLevels[highIndex];
-		return lowValue + (highValue-lowValue)*betweenPercent;
+		float rawTension = lowValue + (highValue-lowValue)*betweenPercent;
+		desiredTensionPercent = rawTension/maxTension;
+		Debug.Log ("current desired tension percent: " + desiredTensionPercent);
 	}
 	
-	public void init(float duration, string tensionFileName, float min, float max) {
+	//returns the post choice distance-from-end-state based on desired tension
+	//assumes desiredTensionPercent is updated
+	public float getPostChoiceDist() {
+		//size of the success-failure space
+		float spaceSize = Math.Abs(successStateVal-failStateVal);
+		return desiredTensionPercent*spaceSize;
+	}
+	
+	
+	
+	public void init(float duration, string tensionFileName, float min, float max, int failVal, int succVal) {
 		
 		tensionLevels = new List<float>();
 		
@@ -63,12 +102,14 @@ public class TensionManager : MonoBehaviour {
 			return;
 		}
 		
-		initialized  = true;
 		arcDuration = duration;
 		minTension = min;
 		maxTension = max;
+		successStateVal = succVal;
+		failStateVal = failVal;
 				
 		initTensionLevels(tensionFileName);
+		initialized  = true;
 	}
 	
 	//read the tension levels from the file into the list
