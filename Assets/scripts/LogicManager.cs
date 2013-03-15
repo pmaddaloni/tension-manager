@@ -264,7 +264,7 @@ public class LogicManager : MonoBehaviour
 			choices[i].label += "Success: " + Math.Ceiling(tension.successImpacts[i]) +
 					(Math.Ceiling(tension.successImpacts[i]) == 1 ? " step": " steps") + " toward safety. Failure: " +
 					Math.Ceiling(tension.failureImpacts[i]) + 
-						(Math.Ceiling(tension.successImpacts[i]) == 1 ? " step": " steps") + " toward demise. Liklihood of success is " + tension.challengeLevels[i]*100 + "%";
+						(Math.Ceiling(tension.successImpacts[i]) == 1 ? " step": " steps") + " toward demise. Liklihood of success is " + (tension.challengeLevels[i]*100).ToString ("#") + "%";
 						
 			choices[i].successText = choice[i][randomChoice].successText;
 			choices[i].failureText = choice[i][randomChoice].failureText;
