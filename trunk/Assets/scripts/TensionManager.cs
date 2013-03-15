@@ -23,7 +23,8 @@ public class TensionManager : MonoBehaviour {
 	
 	private int currStateVal;
 	
-	bool initialized = false;
+	private bool initialized = false;
+	private bool throttling = false;
 	
 	public void Start() {
 	}
@@ -32,6 +33,16 @@ public class TensionManager : MonoBehaviour {
 		if(!initialized) {
 			Debug.Log ("Tension Manager not initialized");
 		}
+	}
+	
+	public void setThrottle(bool setToThrottle)
+	{
+		throttling = setToThrottle;
+	}
+		
+	public bool checkIfThrottlingNecessary()
+	{
+		return false;
 	}
 	
 	/*returns the impact level and challenge necessary to match the desired tension
