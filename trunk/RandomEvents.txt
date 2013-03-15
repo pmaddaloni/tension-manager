@@ -3,6 +3,13 @@
 	<description>
 		The dark clouds overhead begin to open up, and their contents begin to spill out. As the rain begins to come out your cigarette sputters out. You throw it to the ground and flip your coat collar up. The man's madness seems invigorated by the downpour, and his grin spreads from ear to ear. You swear you can see the bomb ever so slightly better now, though you know that makes no sense. Perhaps you should just join him up there, you muse.
 	<END>
+	<positive>
+		The wet maniac momentarily slips toward the edge, but this surprise appears to scare him. and he backs up.
+	<END>
+	
+	<negative>
+		The man dregs up new madness from the rain and moves closer to the edge.
+	<END> 
 	<impact>
 		3
 	<END>
@@ -10,8 +17,15 @@
 
 <RandomScene1>
 	<description>
-		You knew the clouds overhead would prove to be a problem at some point. God damn these thunder storms. The clap of thunder startles you with its ferocity. As the noise washes over the scene, the already jittery man lurches forward at its sound. He seems stunned at first, but then somehow happy to be that much closer to the edge.
+		You knew the clouds overhead would prove to be a problem at some point. God damn these thunder storms. The clap of thunder startles you with its ferocity. As the noise washes over the scene, the already jittery man lurches at its sound.
 	<END>
+	<positive>
+		The unexpected boom sends the man reeling back from the edge.
+	<END>
+	
+	<negative>
+		The unexpected boom sends the man reeling toward the edge.
+	<END> 
 	<impact>
 		3
 	<END>
@@ -19,8 +33,15 @@
 
 <RandomScene2>
 	<description>
-		Dusk has its tendency on dark and overcast days to obscure little details around us. The man hardly seems to notice the pigeons that are perched on the window sill above him. As he begins to shout something derisive at you, he startles the pigeons into a frenzy of feathers and cooing as they scatter in a flurry. This unexpected event takes the man by surprise, and as the pigeons fly into his face while attempting to escape, he stumbles closer to the edge.
+		Dusk has its tendency on dark and overcast days to obscure little details around us. The man hardly seems to notice the pigeons that are perched on the window sill above him. As he begins to shout something derisive at you, he startles the pigeons into a frenzy of feathers and cooing as they scatter in a flurry. This unexpected event takes the man by surprise, and as the pigeons fly into his face while attempting to escape, he stumbles around the ledge.
 	<END>
+	<positive>
+		In an unexpected lucky turn, the birds scare him further from the ledge.
+	<END>
+	
+	<negative>
+		The crazed man chases the birds as they fly away from the building, putting him that much closer to the edge.
+	<END> 
 	<impact>
 		3
 	<END>
@@ -28,8 +49,15 @@
 
 <RandomScene3>
 	<description>
-		The man begins muttering to himself. First slowly, then talking faster while fingering the aparatus strapped to his chest. He begins pointing at what, you can only guess, and then shrieks. He gesticulates wildly, then stumbles a bit. Leaping to his feet he screams again down at the crowd, something indiscernible. You nervously grasp your pack in your pocket, as he is now even closer to the edge of the building.
+		The man begins muttering to himself. First slowly, then talking faster while fingering the aparatus strapped to his chest. He begins pointing at what, you can only guess, and then shrieks. He gesticulates wildly, then stumbles a bit. Leaping to his feet he screams again down at the crowd, something indiscernible. You nervously grasp your pack in your pocket, unsure of what he will do.
 	<END>
+	<positive>
+		He ends this outburst by sinking back into himself figuratively, and sinking back from the ledge literally.
+	<END>
+	
+	<negative>
+		His outburst ends with him walking as if entranced toward the edge, then stopping.
+	<END> 
 	<impact>
 		3
 	<END>

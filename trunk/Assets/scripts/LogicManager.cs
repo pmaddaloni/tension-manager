@@ -25,6 +25,8 @@ public struct tensionStruct
 public struct randomEventNode
 {
 	public string description;
+	public string positiveEvent;
+	public string negativeEvent;
 	public int impactAmount;
 }
 
@@ -392,9 +394,14 @@ public class LogicManager : MonoBehaviour
 		//if the tensionManager has determined that a random event should take place to get
 		//tension to a desired level
 		if (tension.randomEvent.Key) {
-			jumperDist -= Convert.ToInt32 (Math.Round (tension.randomEvent.Value));//calculate new jumper distance
-			sceneText += "\n" + randomScenes [UnityEngine.Random.Range (0, randomScenes.Length - 1)];
-			tension.randomEvent = new KeyValuePair<bool,float> (false, 0);	//reset the randomEvent	
+			int random = UnityEngine.Random.Range (0, randomScenes.Length - 1);
+			jumperDist += Convert.ToInt32 (Math.Round (tension.randomEvent.Value));//calculate new jumper distance
+			
+			sceneText += "\n" + randomScenes[random].description;		
+			if (tension.randomEvent.Value > 0)
+				sceneText += '\n' + randomScenes[random].positiveEvent;
+			else
+				sceneText += '\n' + randomScenes[random].negativeEvent;
 		}
 			
 		if (jumperDist <= failDist || jumperDist >= successDist || gameTimeRemaining <= 0) {
