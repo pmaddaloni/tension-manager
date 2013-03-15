@@ -61,8 +61,11 @@ public class LogicManager : MonoBehaviour
 		get{ return jumperDist;}
 	}
 	
-	//max allowable impact of a choice
+	//max possible impact of a choice
 	private int maxImpact;
+	
+	//Tension manager will prevent an end condition from happening until this much of the game time has past
+	private float minPercentTimeToEnd = .75f;
 	
 	//--------------------------TIMER VARIABLES--------------------------------//
 	//when does the user start the game?
@@ -136,7 +139,7 @@ public class LogicManager : MonoBehaviour
 		
 		tensionManager = gameObject.AddComponent<TensionManager> ();
 		
-		tensionManager.init (gameLength, "tensionLevels.txt", failDist, successDist, randomScenes.Length > 0);
+		tensionManager.init(gameLength, "tensionLevels.txt", failDist, successDist, randomScenes.Length > 0, minPercentTimeToEnd);
 	}
 	
 	// Update is called once per frame
