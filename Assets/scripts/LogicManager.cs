@@ -37,7 +37,7 @@ public class LogicManager : MonoBehaviour
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
-	private float gameLength = 16;
+	private float gameLength = 106;
 	
 	//how many seconds per choice?
 	private int choiceLength = 15;
@@ -94,7 +94,7 @@ public class LogicManager : MonoBehaviour
 	public randomEventNode[] randomScenes = new randomEventNode[5];
 	public List<choiceNode>[] choiceList = new List<choiceNode>[6];
 	public string sceneText; //the scene description
-	
+	public int amountToThrottle = 0;
 	private int[] currentChoiceClass = new int[3];
 	
 	public tensionStruct tension = new tensionStruct();
@@ -108,6 +108,9 @@ public class LogicManager : MonoBehaviour
 		parser.parseScenes("Scenes.txt", scenes);
 		parser.parseChoices("Choices.txt", choiceList);
 		parser.parseRandomEvents("RandomEvents.txt", randomScenes);
+		
+		if (randomScenes.Length > 0)
+			tensionManager.setThrottle(true);
 		
 		tension.challengeLevels = new float[3];
 		tension.successImpacts = new float[3];
@@ -133,6 +136,10 @@ public class LogicManager : MonoBehaviour
 			if (gameTimeRemaining > 0) {
 				updateGameTimeRemaining();
 				handleChoiceTimer ();
+			}
+			else if (checkIfThrottlingNecessary(amountToThrottle))
+			{
+				updateGameStatusThrottle();
 			}
 			else {
 				//updateGameTimeRemaining();
@@ -297,6 +304,14 @@ public class LogicManager : MonoBehaviour
 		else {
 			gui.setGameStatus ("The man is " + jumperDist + " steps from the edge.");
 		}
+	}
+	
+	private void updateGameStatusThrottle ()
+	{
+		int i = UnityEngine.Random.Range(0,randomScenes.Length);
+		sceneText = randomScenes[i];
+		jumperDist -= amountToThrottle;
+		gui.setGameStatus ("The man is " + jumperDist + " steps from the edge.");
 	}
 	
 	void updateGameTimeRemaining() {
