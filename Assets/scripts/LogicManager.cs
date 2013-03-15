@@ -37,7 +37,7 @@ public class LogicManager : MonoBehaviour
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
-	private float gameLength = 106;
+	private float gameLength = 15;
 	
 	//how many seconds per choice?
 	private int choiceLength = 15;
@@ -66,6 +66,11 @@ public class LogicManager : MonoBehaviour
 	private bool gameStarted = false;
 	public bool GameStarted {
 		get { return gameStarted;}
+	}
+	
+	private bool gameEnded = false;
+	public bool GameEnded {
+		get {return GameEnded;}
 	}
 	
 	//when did the current choice start?
@@ -109,9 +114,6 @@ public class LogicManager : MonoBehaviour
 		parser.parseChoices("Choices.txt", choiceList);
 		parser.parseRandomEvents("RandomEvents.txt", randomScenes);
 		
-		if (randomScenes.Length > 0)
-			tensionManager.setThrottle(true);
-		
 		tension.challengeLevels = new float[3];
 		tension.successImpacts = new float[3];
 		tension.failureImpacts = new float[3];
@@ -120,6 +122,10 @@ public class LogicManager : MonoBehaviour
 		sceneText = scenes[0] + "\n" + begin;
 		
 		tensionManager = gameObject.AddComponent<TensionManager>();
+				
+		if (randomScenes.Length > 0)
+			tensionManager.setThrottle(true);
+		
 		tensionManager.init(gameLength, "tensionLevels.txt", failDist, successDist);
 	}
 	
@@ -250,9 +256,15 @@ public class LogicManager : MonoBehaviour
 			choices[i].challengeRate = choice[i][randomChoice].challengeRate;
 			choices[i].impactAmount = choice[i][randomChoice].impactAmount;
 			choices[i].description = choice[i][randomChoice].description;
+			
+				//debug info:
+			/*choices[i].label += "Success:" + tension.successImpacts[i] + " Failure:" 
+					+ tension.failureImpacts[i] + " Challenge:" + tension.challengeLevels[i];*/
 				
-			choices[i].label += "Success:" + tension.successImpacts[i] + " Failure:" 
-					+ tension.failureImpacts[i] + " Challenge:" + tension.challengeLevels[i];
+			choices[i].label += "Success: " + Math.Ceiling(tension.successImpacts[i]) +
+					(Math.Ceiling(tension.successImpacts[i]) == 1 ? " step": " steps") + " toward safety. Failure: " +
+					Math.Ceiling(tension.failureImpacts[i]) + 
+						(Math.Ceiling(tension.successImpacts[i]) == 1 ? " step": " steps") + " toward demise. Liklihood of success is " + tension.challengeLevels[i]*100 + "%";
 						
 			choices[i].successText = choice[i][randomChoice].successText;
 			choices[i].failureText = choice[i][randomChoice].failureText;
@@ -284,22 +296,30 @@ public class LogicManager : MonoBehaviour
 	{
 		if (jumperDist > 10) {
 			gui.setGameStatus ("You've successfully gotten the man to come down off the ledge.");
-			sceneText = scenes[3];
-			gameTimeRemaining = 0;
-			choiceTimeRemaining = 0;			
+			if (Input.anyKeyDown)
+			{
+				sceneText = scenes[3];
+				gameTimeRemaining = 0;
+				choiceTimeRemaining = 0;	
+			}		
 		}
 		else if (jumperDist < 1) {
 			gui.setGameStatus ("The man has reached the edge of the ledge.");
-			sceneText = scenes[2];
-			gameTimeRemaining = 0;
-			choiceTimeRemaining = 0;
+			if (Input.anyKeyDown)
+			{
+				sceneText = scenes[2];
+				gameTimeRemaining = 0;
+				choiceTimeRemaining = 0;	
+			}
 		}
 		else if (gameTimeRemaining <= 0) {
 			gui.setGameStatus ("Time is up.");
-			//print("poop!");
-			sceneText = scenes[1];
-			gameTimeRemaining = 0;
-			choiceTimeRemaining = 0;
+			if (Input.anyKeyDown)
+			{
+				sceneText = scenes[1];
+				gameTimeRemaining = 0;
+				choiceTimeRemaining = 0;	
+			}
 		}
 		else {
 			gui.setGameStatus ("The man is " + jumperDist + " steps from the edge.");
@@ -337,7 +357,7 @@ public class LogicManager : MonoBehaviour
 		} 
 		else
 			//if (gameTimeRemaining > 0)
-				choiceTimeRemaining = choiceLength - (int)choiceTimePassed;
+			choiceTimeRemaining = choiceLength - (int)choiceTimePassed;
 	}
 	
 	//handle a user choice
@@ -380,8 +400,16 @@ public class LogicManager : MonoBehaviour
 						
 		if (tension.randomEvent.Key)
 			sceneText += "\n\n" + randomScenes[UnityEngine.Random.Range(0,randomScenes.Length-1)];	
-			
-		sceneText += "\nMake your move.";
+		
+		if (jumperDist < 1 || jumperDist > 10 || gameTimeRemaining <= 0)
+		{
+			sceneText += "\n\n Press any key to see the ending";
+			for (int i = 0; i < numChoices ; i++)
+				choices[i].label = "";
+			setGUIChoiceStrings();
+		}
+		else	
+			sceneText += "\nMake your move.";
 		
 		updateGameStatus();//tell the GUI to update the game status
 		setChoices();//updates the choice list
