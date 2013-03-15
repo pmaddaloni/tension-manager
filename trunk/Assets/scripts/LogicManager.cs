@@ -398,7 +398,7 @@ public class LogicManager : MonoBehaviour
 		}
 			
 		if (jumperDist <= failDist || jumperDist >= successDist || gameTimeRemaining <= 0) {
-			sceneText += "\n\n Press any key to see the ending";
+			sceneText += "\n\nPress any key for your ending";
 			for (int i = 0; i < numChoices; i++)
 				choices [i].label = "";
 			setGUIChoiceStrings ();
