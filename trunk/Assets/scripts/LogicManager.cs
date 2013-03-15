@@ -282,6 +282,15 @@ public class LogicManager : MonoBehaviour
 			//Application.Quit();
 		}
 		
+		System.Random rng = new System.Random();  
+   		int n = choices.Length;  
+   		while (n > 1) {  
+       		 n--;  
+        	int k = rng.Next(n + 1);  
+       		choiceNode value = choices[k];  
+        	choices[k] = choices[n];  
+       		choices[n] = value;  
+    	}  
 		setGUIChoiceStrings();
 	}
 	
@@ -302,29 +311,30 @@ public class LogicManager : MonoBehaviour
 	{
 		if (jumperDist >= successDist) {
 			gui.setGameStatus ("You've successfully gotten the man to come down off the ledge.");
+			gameTimeRemaining = 0;
+			choiceTimeRemaining = 0;
 			if (Input.anyKeyDown)
 			{
 				sceneText = scenes[3];
-				gameTimeRemaining = 0;
-				choiceTimeRemaining = 0;	
+	
 			}		
 		}
 		else if (jumperDist <= failDist) {
 			gui.setGameStatus ("The man has reached the edge of the ledge.");
+			gameTimeRemaining = 0;
+			choiceTimeRemaining = 0;
 			if (Input.anyKeyDown)
 			{
-				sceneText = scenes[2];
-				gameTimeRemaining = 0;
-				choiceTimeRemaining = 0;	
+				sceneText = scenes[2];	
 			}
 		}
 		else if (gameTimeRemaining <= 0) {
 			gui.setGameStatus ("Time is up.");
+			gameTimeRemaining = 0;
+			choiceTimeRemaining = 0;
 			if (Input.anyKeyDown)
 			{
-				sceneText = scenes[1];
-				gameTimeRemaining = 0;
-				choiceTimeRemaining = 0;	
+				sceneText = scenes[1];	
 			}
 		}
 		else {
