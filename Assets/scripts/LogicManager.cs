@@ -338,7 +338,7 @@ public class LogicManager : MonoBehaviour
 			}
 		}
 		else {
-			gui.setGameStatus ("The man is " + jumperDist + " steps from the edge.");
+			gui.setGameStatus ("The man is " + jumperDist + (jumperDist == 1? " step": " steps") +" from the edge.");
 		}
 	}
 	
