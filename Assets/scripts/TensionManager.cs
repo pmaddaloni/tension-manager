@@ -40,8 +40,9 @@ public class TensionManager : MonoBehaviour {
 		throttling = setToThrottle;
 	}
 		
-	public bool checkIfThrottlingNecessary()
+	public bool checkIfThrottlingNecessary(int amountToThrottle)
 	{
+		amountToThrottle = 0;
 		return false;
 	}
 	
