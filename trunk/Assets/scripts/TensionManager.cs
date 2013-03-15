@@ -19,6 +19,9 @@ public class TensionManager : MonoBehaviour {
 	private int failStateVal;
 	private int successStateVal;
 	
+	//the size of the success-fail space
+	private int spaceSize;
+	
 	//the size of the overall space and half the space, for reasoning about percent distance from fail/success
 	//private float spaceSize;
 	//private float halfSpaceSize;
@@ -77,7 +80,6 @@ public class TensionManager : MonoBehaviour {
 	}
 	
 	void buildChoices(tensionStruct tension) {
-		
 		//how far is current state from success/failure?
 		float distFromSuccess = Math.Abs (successStateVal-currStateVal);
 		float distFromFailure = Math.Abs (currStateVal-failStateVal);
@@ -90,26 +92,35 @@ public class TensionManager : MonoBehaviour {
 		
 		//set the impacts for each choice in the array
 		for (int i = 0; i < numChoices; i++) {
+			
 			//how much extra impact will the choice allow?
 			float extraPercent = UnityEngine.Random.Range(0, maxExtraPercent);
 			
-			//what percent of the desired tension does this addition grant?
-			float percentAboveAverage = extraPercent/desiredTensionPercent;
-			
-			if (i % (int)impacts.SIZE == (int)impacts.success) {
+			if (i % (int)impacts.SIZE == (int)impacts.success) {//boost the success impact
 				//the increased impact
 				tension.successImpacts[i] = (desiredTensionPercent+extraPercent)*distFromSuccess;
 				//average impact
 				tension.failureImpacts[i] = desiredTensionPercent*distFromFailure;
+				//the percent, out of the spaceSize that the extra percent boosts the success impact
+				float gainPercent = (extraPercent * distFromSuccess)/spaceSize;
+				Debug.Log("extraPerc: " + extraPercent);
+				Debug.Log ("gainPercent: " + gainPercent);
 				//add the additional percent to the challenge to compensate for greater reward
-				tension.challengeLevels[i] = BASE_CHALLENGE + percentAboveAverage;
-			} else if (i % (int)impacts.SIZE == (int)impacts.fail) {
+				tension.challengeLevels[i] = BASE_CHALLENGE + gainPercent*BASE_CHALLENGE;
+				
+			} else if (i % (int)impacts.SIZE == (int)impacts.fail) {//boost the fail impact
 				//the increased impact
 				tension.failureImpacts[i] = (desiredTensionPercent+extraPercent)*distFromFailure;
 				//average impact
 				tension.successImpacts[i] = desiredTensionPercent*distFromSuccess;
+				
+				//the percent, out of the space size, that the extra percent boosts the failure impact
+				float gainPercent = (extraPercent * distFromFailure)/spaceSize;
+				Debug.Log("extraPerc: " + extraPercent);
+				Debug.Log ("gainPercent: " + gainPercent);
 				//remove the additional percent from the challenge to compensate for greater punishment
-				tension.challengeLevels[i] = BASE_CHALLENGE - percentAboveAverage;
+				tension.challengeLevels[i] = BASE_CHALLENGE - gainPercent*BASE_CHALLENGE;
+				
 			} else {//neither - average impact, base challenge
 				tension.successImpacts[i] = desiredTensionPercent*distFromSuccess;
 				tension.failureImpacts[i] = desiredTensionPercent*distFromFailure;
@@ -160,6 +171,7 @@ public class TensionManager : MonoBehaviour {
 		arcDuration = duration;
 		successStateVal = succVal;
 		failStateVal = failVal;
+		spaceSize = Mathf.Abs (successStateVal - failStateVal);
 				
 		initTensionLevels(tensionFileName);
 		initialized  = true;

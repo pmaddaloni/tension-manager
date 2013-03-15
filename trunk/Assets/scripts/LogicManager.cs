@@ -37,7 +37,7 @@ public class LogicManager : MonoBehaviour
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
-	private float gameLength = 15;
+	private float gameLength = 120;
 	
 	//how many seconds per choice?
 	private int choiceLength = 15;
@@ -50,13 +50,13 @@ public class LogicManager : MonoBehaviour
 	int failDist = 0;
 	
 	//what is the current distance from the edge? Initialized here for every game
-	private int jumperDist = 5;
+	private int jumperDist;
 	public int JumperDist {
 		get{return jumperDist;}
 	}
 	
 	//max allowable impact of a choice
-	private int maxImpact = 10;
+	private int maxImpact;
 	
 	//--------------------------TIMER VARIABLES--------------------------------//
 	//when does the user start the game?
@@ -113,6 +113,10 @@ public class LogicManager : MonoBehaviour
 		parser.parseScenes("Scenes.txt", scenes);
 		parser.parseChoices("Choices.txt", choiceList);
 		parser.parseRandomEvents("RandomEvents.txt", randomScenes);
+		
+		//set the maximum impact a choice can have
+		maxImpact = Mathf.Abs(successDist - failDist) - 1;
+		jumperDist = Mathf.CeilToInt( (successDist - failDist)/2);//start halfway, rounded up:)
 		
 		tension.challengeLevels = new float[3];
 		tension.successImpacts = new float[3];
@@ -277,6 +281,7 @@ public class LogicManager : MonoBehaviour
 			Debug.Log (e.Message);
 			//Application.Quit();
 		}
+		
 		setGUIChoiceStrings();
 	}
 	
@@ -295,7 +300,7 @@ public class LogicManager : MonoBehaviour
 	//Set the game status in the gui
 	void updateGameStatus ()
 	{
-		if (jumperDist > 10) {
+		if (jumperDist >= successDist) {
 			gui.setGameStatus ("You've successfully gotten the man to come down off the ledge.");
 			if (Input.anyKeyDown)
 			{
@@ -304,7 +309,7 @@ public class LogicManager : MonoBehaviour
 				choiceTimeRemaining = 0;	
 			}		
 		}
-		else if (jumperDist < 1) {
+		else if (jumperDist <= failDist) {
 			gui.setGameStatus ("The man has reached the edge of the ledge.");
 			if (Input.anyKeyDown)
 			{
