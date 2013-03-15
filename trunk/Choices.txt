@@ -11,11 +11,11 @@
 		<End>
 
 		<success> 
-		The man looks hesitant for a moment. You find out nothing more.
+		The man looks hesitant for a moment. You learn nothing.
 		<End>
 
 		<failure> 
-		The man scowls at you. You find out nothing more.
+		The man scowls at you. You learn nothing.
 		<End>
 
 		<impact> 
@@ -35,8 +35,7 @@
 
 		<description>
 		You inquire as to what the closest officer knows. 
-
-		The officer looks tired. He answers, that they don't have much information, but the bomb looks authentic enough and this situation will not end well for anyone if it goes off. You press your fingers to the bridge of your nose and squeeze as you listen.
+		The officer looks tired. He answers that they don't have much information, but the bomb looks authentic enough, and this situation will not end well for anyone if it goes off. You press your fingers to the bridge of your nose and squeeze as you listen.
 
 		<End>
 
@@ -65,10 +64,7 @@
 
 		<description>
 		You take out the radio in your overcoat and hold in the button. You inquire about positioning.
-
-
 		The radio hisses that satisfying white noise, then a response that they are ready when you are.
-
 		You put the radio back in your coat.
 		<end>
 
@@ -96,12 +92,9 @@
 			<end>
 
 			<description>
-			You take out the radio in your overcoat and hold in the button.
-
-			You notice that SWAT arrived before you had. You ask about positioning.
-
+			You notice that SWAT arrived before you had.
+			You take out the radio in your overcoat and hold in the button. You ask about positioning.
 			The radio hisses that satisfying white noise; then a response, ready on mark.
-
 			You put the radio back in your coat.
 			<end>
 
@@ -130,7 +123,6 @@
 
 		<description>
 		Holding the bullhorn, “Alright everyone that is not a policeman needs to move out of this immediate area. Go home folks and let us handle this. We appreciate your cooperation in making our jobs easier.”
-
 		This appears to have done nothing.
 		<end>
 
@@ -158,7 +150,7 @@
 		<end>
 
 		<description>
-		You stand there grinding your teeth, unsure of what to do with yourself. You pull out a pack of cigarettes from your pocket. Quitting was never really an options anyway. The drag calms your nerves a bit.
+		You stand there grinding your teeth, unsure of what to do with yourself. You pull out a pack of cigarettes from your pocket. Quitting was never really an option anyway. The drag calms your nerves a bit.
 		<end>
 
 		<success>
@@ -353,7 +345,7 @@
 		<end>
 
 		<description>
-		You try to reason with the man, using all of your training and expertise in the area.
+		You try to reason with the man, using all of your training and expertise in this area.
 		<end>
 
 		<success>
@@ -361,7 +353,7 @@
 		<end>
 
 		<failure>
-		The man waves his hand dismissively at you and he seems more perturbed.
+		The man waves his hand dismissively at you and seems more perturbed.
 		<end>
 
 		<impact>
@@ -384,7 +376,7 @@
 		<end>
 
 		<success>
-		The man seems soothed slightly by your appearing to be calm as well.
+		The man seems soothed slightly by you appearing deceptively calm through your indecision.
 		<end>
 
 		<failure>
@@ -408,7 +400,6 @@
 
 		<description>
 		You tap into the simplest of your emotional arsenal. 
-		
 		"Tell me your name." You say to the man.
 		<end>
 
@@ -436,7 +427,7 @@
 		<end>
 
 		<description>
-		Finding some way to reach the man emotionally is an important step in getting this situation under control. You ask him for whatever he wants to offer about his family.
+		Finding some way to reach the man emotionally is an important step in getting this situation under control. You ask him questions, hoping for whatever he will offer about his family.
 		<end>
 
 		<success>
@@ -444,8 +435,7 @@
 		<end>
 
 		<failure>
-		He answers simply:
-		
+		He answers simply:	
 		"Fuck you."
 		<end>
 
@@ -469,7 +459,7 @@
 		<end>
 
 		<success>
-		He answers back, though not absolutely coherently, not aggressively either. Progress.
+		He answers back, not absolutely coherently, though not aggressively either. Progress.
 		<end>
 
 		<failure>
@@ -495,7 +485,7 @@
 		<end>
 
 		<description>
-		Someone might know this guy and be able to give you a little insight. You move through the crowd as quickly as you can speaking to people but nothing concrete or helpful is given.
+		Someone might know this guy and be able to give you a little insight. You move through the crowd as quickly as you can, speaking to people, but nothing concrete or helpful is given.
 		<end>
 
 		<success>
@@ -522,15 +512,15 @@
 		<end>
 
 		<description>
-		You need to make a better connection with the cause of this. You attempt to get some information that can get you closer to this by trying to converse with the man.
+		You need to make a better connection with the man and learn the cause of this. You attempt to get some information that can get you closer to understanding through conversing with the man.
 		<end>
 
 		<success>
-		While he doesn't make clear his causes, he at least is talking with you.
+		While he doesn't make his cause clear, he at least is talking with you.
 		<end>
 
 		<failure>
-		Several lude gestures later you stand there no better off.
+		Several lude gestures later, you stand there no better off.
 		<end>
 
 		<impact>
@@ -553,11 +543,11 @@
 		<end>
 
 		<success>
-		Being calm has a tendency to calm others. While you might not be calm inside, the maniac certainly doesn't know this. He stop moving so much.
+		Being calm has a tendency to calm others. While you might not be calm inside, the maniac certainly doesn't know this. He stops moving so much.
 		<end>
 
 		<failure>
-		Your silence is deafening and not helping matters. Even the other officers are glancing at you now.
+		Your silence is deafening, and not helping matters. Even the other officers are glancing at you now.
 		<end>
 
 		<impact>
@@ -603,7 +593,7 @@
 		<end>
 
 		<description>
-		Your nerves reaching an edge you lose yourself for a moment. You begin chiding the man in an attempt to shame his poor decision to do this.  
+		Your nerves reaching the edge, you lose yourself for a moment. You begin chiding the man in an attempt to shame his poor decision to do this.  
 		<end>
 
 		<success>
@@ -632,7 +622,7 @@
 		<end>
 
 		<description>
-		Your hand trembles for a moment and you feel your lower back getting sweaty. Fighting to get ahold of yourself you light another one. You must look off today, because the officers are eyeing you in a way you don't appreciate. Your head is beginning to pound. 
+		Your hand trembles for a moment, and you feel your lower back getting sweaty. Fighting to get ahold of yourself you light another one. You must look off today, because the officers are eyeing you in a way you don't appreciate. Your head is beginning to pound. 
 		<end>
 
 		<success>
@@ -640,7 +630,7 @@
 		<end>
 
 		<failure>
-		The man sees your weakness and this pushes him further.
+		The man sees your weakness, and this pushes him further.
 		<end>
 
 		<impact>
@@ -659,11 +649,11 @@
 		<end>
 
 		<description>
-		The words still hanging in the air as you remove the loudspeaker from your mouth. This seems to shock everyone around. The lunatic teeters back and forth with his eyes fixed on you.
+		The words hang ephemerally in the air as you remove the loudspeaker from your mouth. This seems to shock everyone around. The lunatic teeters back and forth with his eyes fixed on you.
 		<end>
 
 		<success>
-		Maybe you're speaking a language that only he understands. You realize that can't be a good thing. He backs up.
+		Maybe you're speaking a language that only he understands. You realize that can't be a good thing. Surprisingly, he backs up.
 		<end>
 
 		<failure>
@@ -686,7 +676,7 @@
 		<end>
 
 		<description>
-		You tell the man that you've spoken with family and that they're on their way. They'll be there soon, you lie. 
+		You tell the man that you've spoken with family, and that they're on their way. They'll be there soon, you lie. 
 		<end>
 
 		<success>
@@ -694,7 +684,7 @@
 		<end>
 
 		<failure>
-		He calls out your lie and is obviously barely gripping on to his senses.
+		He calls out your lie and is obviously barely hanging on to his senses.
 		<end>
 
 		<impact>
@@ -743,11 +733,11 @@
 		<end>
 
 		<success>
-		The man stumbles back and looks up. You get the report back that it was a glancing shot and he's not mortally wounded. He looks tired and less confident now. You expect screaming but he just looks down at the crowd with empty eyes.
+		The man stumbles back and looks up. You get the report back that it was a glancing shot and he's not mortally wounded. He looks tired and shaken. You expect screaming but he just looks down at the crowd with empty eyes.
 		<end>
 
 		<failure>
-		The bullet clips the concrete next to the man and dust wafts up into the air. His line of sight whips instantly to you. He points coldly and starts laughing, a hollow, strange laugh.
+		The bullet clips the concrete next to the man, and dust wafts up into the air. His line of sight whips instantly to you. He points coldly and starts laughing, a hollow, strange laugh.
 		<end>
 
 		<impact>
@@ -778,8 +768,8 @@
 
 		<failure>
 		The man also clearly heard the shot, and shouts down at you. 
-		
-		"That's it! Here I come!"
+		"You want to fuck with me?! I want to FUCK WITH YOU!"
+		He grins ear to ear.
 		<end>
 
 		<impact>
@@ -798,15 +788,15 @@
 		<end>
 
 		<description>
-		You glance at the commanding SWAT officer and mouth, "it's time." He nods in accordance turns his back and begins giving orders over his headset. You look up at the man with your breath held.
+		You glance at the commanding SWAT officer and mouth, "it's time." He nods in accordance, turns his back, and begins giving orders over his headset. You look up at the man with your breath held.
 		<end>
 
 		<success>
-		The man whips around and you hear him yell and then he goes down. 
+		The man whips around and you hear him yell, and then he goes down. 
 		<end>
 
 		<failure>
-		The man whips around and yells, then turns and jumps from the building.
+		The man whips around and yells, then turns and rushes toward the edge of the building.
 		<end>
 
 		<impact>
@@ -856,11 +846,11 @@
 		<end>
 
 		<success>
-		As the crowd begins to move outward the man looks troubled that he's losing his audience. He looks fervently around for you and can't find you.
+		As the crowd begins to move outward the man looks troubled that he's losing his audience. He looks fervently around for you, and can't find you.
 		<end>
 
 		<failure>
-		As the crowd begins to move, the man begins pacing wildly and begins searching the crowd for you. Unable to find you he looks absolutely mad.
+		As the crowd begins to move, the man begins pacing wildly and begins searching the crowd for you. Unable to find you he looks absolutely frantic.
 		<end>
 
 		<impact>
@@ -886,7 +876,7 @@
 		<end>
 
 		<failure>
-		This turns into a shouting match between you and the frantic man. That clearly was a bad idea.
+		This turns into a shouting match between you and the manic man. That clearly was a bad idea.
 		<end>
 
 		<impact>
