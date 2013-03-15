@@ -137,7 +137,7 @@ public class LogicManager : MonoBehaviour
 				updateGameTimeRemaining();
 				handleChoiceTimer ();
 			}
-			else if (checkIfThrottlingNecessary(amountToThrottle))
+			else if (tensionManager.checkIfThrottlingNecessary(amountToThrottle))
 			{
 				updateGameStatusThrottle();
 			}
@@ -309,7 +309,7 @@ public class LogicManager : MonoBehaviour
 	private void updateGameStatusThrottle ()
 	{
 		int i = UnityEngine.Random.Range(0,randomScenes.Length);
-		sceneText = randomScenes[i];
+		sceneText = randomScenes[i].description;
 		jumperDist -= amountToThrottle;
 		gui.setGameStatus ("The man is " + jumperDist + " steps from the edge.");
 	}
