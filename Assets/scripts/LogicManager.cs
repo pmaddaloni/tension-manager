@@ -42,7 +42,7 @@ public class LogicManager : MonoBehaviour
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
-	private float gameLength = 15;
+	private float gameLength = 120;
 	
 	//how many seconds per choice?
 	private int choiceLength = 15;
