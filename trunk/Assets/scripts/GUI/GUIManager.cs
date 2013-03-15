@@ -31,7 +31,11 @@ public class GUIManager : MonoBehaviour {
 		
 		//update the game timer
 		timer.Text = getTimerText();
-		choiceTimer.Text = "Choice Selected in: \n" + logic.ChoiceTimeRemaining.ToString();
+		int time = (int)logic.GameTimeRemaining;
+		if (time > 0)
+			choiceTimer.Text = "Choice selected in: \n" + logic.ChoiceTimeRemaining.ToString() + " seconds";
+		else
+			choiceTimer.Text = "The time for making choices is past.";
 	}
 	
 	public void activateGameGUI() {
@@ -58,9 +62,12 @@ public class GUIManager : MonoBehaviour {
 	//returns the game time in a pretty clock-like string
 	string getTimerText() {
 		int time = (int)logic.GameTimeRemaining;
-		
-		int minutes = time/60;
-		int seconds = time % 60;
-		return ("The bomb will explode in\n  " + minutes + ":" + seconds.ToString("00"));
+		if (time <= 0)
+			return "The bomb's timer has elapsed.";
+		else {
+			int minutes = time/60;
+			int seconds = time % 60;
+			return ("The bomb will explode in\n" + minutes + ":" + seconds.ToString("00"));
+		}
 	}
 }

@@ -7,15 +7,15 @@
 		<End>
 
 		<description> 
-		You raise the bullhorn to your mouth. “Look, whatever it is that you want, we can work it out. Just please step away form the ledge and disarm that bomb sir. Then we can talk about what it is you want.”
+		You raise the bullhorn to your mouth. You try to convine him to disarm the bomb. You try to find out what it is he wants.
 		<End>
 
 		<success> 
-		The man looks hesitant for a moment 
+		The man looks hesitant for a moment. You find out nothing more.
 		<End>
 
 		<failure> 
-		The man scowls at you 
+		The man scowls at you. You find out nothing more.
 		<End>
 
 		<impact> 
@@ -34,9 +34,9 @@
 		<End>
 
 		<description>
-		“What can you tell me about the situation?” 
+		You inquire as to what the closest officer knows. 
 
-		The officer looks tired. He answers, “We don’t have much information. We’ve been able to get a good look at the guy, and the bomb looks authentic enough. The swat is on its way with the bomb squad. We have to calm this guy down or at the least we’re looking at millions of dollars worth of city damage and a PR nightmare, at the worst we’re looking at lots of collateral damage and people dying. Crazy fucker.”
+		The officer looks tired. He answers, that they don't have much information, but the bomb looks authentic enough and this situation will not end well for anyone if it goes off. You press your fingers to the bridge of your nose and squeeze as you listen.
 
 		<End>
 
@@ -60,15 +60,14 @@
 	<Choice3> 
 
 		<label>
-		Call in the bomb squad
+		Radio the bomb squad
 		<end>
 
 		<description>
-		You take out the radio in your overcoat and hold in the button.
+		You take out the radio in your overcoat and hold in the button. You inquire about positioning.
 
-		“How long until arrival?”
 
-		The radio hisses that satisfying white noise, then a response “We will be there momentarily sir.”
+		The radio hisses that satisfying white noise, then a response that they are ready when you are.
 
 		You put the radio back in your coat.
 		<end>
@@ -99,10 +98,9 @@
 			<description>
 			You take out the radio in your overcoat and hold in the button.
 
-			You notice that you got there before swat had. 
-			“How long until arrival?”
+			You notice that SWAT arrived before you had. You ask about positioning.
 
-			The radio hisses that satisfying white noise; then a response, “We will be there momentarily sir. Over.”
+			The radio hisses that satisfying white noise; then a response, ready on mark.
 
 			You put the radio back in your coat.
 			<end>
@@ -240,7 +238,7 @@
 	<Choice3> 
 
 		<label>
-		Call bomb squad into position
+		Prep the bomb squad
 		<end>
 
 		<description>
@@ -267,11 +265,11 @@
 	<Choice4> 
 
 		<label>
-		Call swat into position
+		Prep SWAT
 		<end>
 
 		<description>
-		The radio hisses and you begin speaking while depressing the call button. “Team I need you to be ready at a moment's notice. We need a team moving up to his floor to support the bomb squad if necessary. Do not open fire unless I give the order.”
+		The radio hisses and you begin speaking while depressing the call button. “Team I need you to be ready at a moment's notice. We need a team moving up to his floor to support the bomb squad if necessary. No gunfire unless I give the order.”
 		<end>
 
 		<success>
@@ -329,7 +327,7 @@
 		<end>
 
 		<success>
-		The man does not react to your action.
+		The man does not react beyond this.
 		<end>
 
 		<failure>

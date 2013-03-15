@@ -37,7 +37,7 @@ public class LogicManager : MonoBehaviour
 	//-----------------------------CONFIGURABLE PARAMETERS----------------------//
 	
 	//How many seconds in the game?
-	private float gameLength = 100;
+	private float gameLength = 16;
 	
 	//how many seconds per choice?
 	private int choiceLength = 15;
@@ -135,7 +135,8 @@ public class LogicManager : MonoBehaviour
 				handleChoiceTimer ();
 			}
 			else {
-				updateGameTimeRemaining();
+				//updateGameTimeRemaining();
+				updateGameStatus();
 			}
 		}
 	}
@@ -144,6 +145,7 @@ public class LogicManager : MonoBehaviour
 	void startGame ()
 	{
 		sceneText = sceneText.Remove(sceneText.IndexOf(begin),begin.Length);
+		choiceTimeRemaining = choiceLength;
 		gameStarted = true;
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
@@ -287,6 +289,7 @@ public class LogicManager : MonoBehaviour
 		}
 		else if (gameTimeRemaining <= 0) {
 			gui.setGameStatus ("Time is up.");
+			//print("poop!");
 			sceneText = scenes[1];
 			gameTimeRemaining = 0;
 			choiceTimeRemaining = 0;
@@ -299,7 +302,8 @@ public class LogicManager : MonoBehaviour
 	void updateGameTimeRemaining() {
 		
 		float timePassed = Time.timeSinceLevelLoad - gameStartTime;
-		gameTimeRemaining = gameLength - timePassed;
+		//if (gameTimeRemaining != 0)
+			gameTimeRemaining = gameLength - timePassed;
 	}
 	
 	/*
@@ -317,7 +321,8 @@ public class LogicManager : MonoBehaviour
 			handleChoice ();
 		} 
 		else
-			choiceTimeRemaining = choiceLength - (int)choiceTimePassed;
+			//if (gameTimeRemaining > 0)
+				choiceTimeRemaining = choiceLength - (int)choiceTimePassed;
 	}
 	
 	//handle a user choice
@@ -361,7 +366,7 @@ public class LogicManager : MonoBehaviour
 		if (tension.randomEvent.Key)
 			sceneText += "\n\n" + randomScenes[UnityEngine.Random.Range(0,randomScenes.Length-1)];	
 			
-		sceneText += "\n\nMake your move.";
+		sceneText += "\nMake your move.";
 		
 		updateGameStatus();//tell the GUI to update the game status
 		setChoices();//updates the choice list
