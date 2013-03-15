@@ -6,12 +6,14 @@ using System.IO;
 
 public class TensionManager : MonoBehaviour {
 		
+	private const float BASE_CHALLENGE = .5f;
+		
 	private float arcDuration;//how long the experience should be, in seconds
 	private List<float> tensionLevels; //a list of tension levels, to be evenly distributed over the arcDuration
 	
 	//the currently desired tension percent
 	private float desiredTensionPercent;
-	
+		
 	//the current, success and fail state values on the spectrum
 	//assumes that successStateVal is higher than failStateVal
 	private int failStateVal;
@@ -26,6 +28,11 @@ public class TensionManager : MonoBehaviour {
 	private bool initialized = false;
 	private bool throttling = false;
 	
+	//which end of the choice to increase
+	private enum impacts {
+		success, fail, neither, SIZE
+	};
+		
 	public void Start() {
 	}
 	
@@ -65,39 +72,50 @@ public class TensionManager : MonoBehaviour {
 		//set the desired tension percent from the graph
 		updateDesiredTension(arcDuration-timeRemaining);
 		
-		//how far should the state be from an end-state after the choice resolves?
-		//float postChoiceDist = getPostChoiceDist();
-		
-		/*Debug.Log ("desired: " + desiredTensionPercent);
-		Debug.Log("postChoice: " + postChoiceDist);*/
+		//build the choices
+		buildChoices(tension);
+	}
+	
+	void buildChoices(tensionStruct tension) {
 		
 		//how far is current state from success/failure?
-		float distFromSuccess = Math.Abs (successStateVal-currentState);
-		float distFromFailure = Math.Abs (currentState-failStateVal);
+		float distFromSuccess = Math.Abs (successStateVal-currStateVal);
+		float distFromFailure = Math.Abs (currStateVal-failStateVal);
 		
-		float maxSuccessImpact = desiredTensionPercent*distFromSuccess;
-		float maxFailImpact =  desiredTensionPercent*distFromFailure;
+		//the maxExtraPercent a choice can push past the avgImpact
+		float remainingPercent = 1 - desiredTensionPercent;
+		float maxExtraPercent = desiredTensionPercent*remainingPercent;
 		
-		/*Debug.Log ("currVal: " + currentState);
-		Debug.Log ("succImp: " + maxSuccessImpact);
-		Debug.Log ("failImp: " + maxFailImpact);*/
-		
-		float challenge = .5f;//dummy
+		int numChoices = tension.challengeLevels.Length;
 		
 		//set the impacts for each choice in the array
-		for (int i = 0; i < tension.challengeLevels.Length; i++) {
-			tension.successImpacts[i] = maxSuccessImpact;
-			tension.failureImpacts[i] = maxFailImpact;
-			tension.challengeLevels[i] = challenge;
+		for (int i = 0; i < numChoices; i++) {
+			//how much extra impact will the choice allow?
+			float extraPercent = UnityEngine.Random.Range(0, maxExtraPercent);
+			
+			//what percent of the desired tension does this addition grant?
+			float percentAboveAverage = extraPercent/desiredTensionPercent;
+			
+			if (i % (int)impacts.SIZE == (int)impacts.success) {
+				//the increased impact
+				tension.successImpacts[i] = (desiredTensionPercent+extraPercent)*distFromSuccess;
+				//average impact
+				tension.failureImpacts[i] = desiredTensionPercent*distFromFailure;
+				//add the additional percent to the challenge to compensate for greater reward
+				tension.challengeLevels[i] = BASE_CHALLENGE + percentAboveAverage;
+			} else if (i % (int)impacts.SIZE == (int)impacts.fail) {
+				//the increased impact
+				tension.failureImpacts[i] = (desiredTensionPercent+extraPercent)*distFromFailure;
+				//average impact
+				tension.successImpacts[i] = desiredTensionPercent*distFromSuccess;
+				//remove the additional percent from the challenge to compensate for greater punishment
+				tension.challengeLevels[i] = BASE_CHALLENGE - percentAboveAverage;
+			} else {//neither - average impact, base challenge
+				tension.successImpacts[i] = desiredTensionPercent*distFromSuccess;
+				tension.failureImpacts[i] = desiredTensionPercent*distFromFailure;
+				tension.challengeLevels[i] = BASE_CHALLENGE;
+			}
 		}
-		
-		//need to check if that should go towards success or failure or both -- right now I'm using both
-		//then round to equal actual int distances
-		//then correct for rounding with challenge setting
-		//find the tension discrepancy created by rounding the impact
-		//calc the tension to compensate -- based on whether it's success or failure important
-		
-		//return tension; //should return the new tension
 	}
 	
 	//interpolates the current tension value for this amount of time passed
