@@ -33,7 +33,7 @@ public class GUIManager : MonoBehaviour {
 		timer.Text = getTimerText();
 		int time = (int)logic.GameTimeRemaining;
 		if (time > 0)
-			choiceTimer.Text = "Choice selected in: \n" + logic.ChoiceTimeRemaining.ToString() + " seconds";
+			choiceTimer.Text = "Choice selected in: \n" + (logic.ChoiceTimeRemaining-1).ToString() + " seconds";
 		else
 			choiceTimer.Text = "The time for making choices is past.";
 	}

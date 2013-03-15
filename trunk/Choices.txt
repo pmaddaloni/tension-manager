@@ -473,7 +473,7 @@
 		<end>
 
 		<failure>
-		That didn't work. He doesn't want to talk. He wants to create a craze. He's on his way to achieving his goal/
+		That didn't work. He doesn't want to talk. He wants to create a craze. He's on his way to achieving his goal.
 		<end>
 
 		<impact>
