@@ -1,4 +1,3 @@
-<RANDOMSCENES>
 <RandomScene0>
 	<description>
 		The dark clouds overhead begin to open up, and their contents begin to spill out. As the rain begins to come out your cigarette sputters out. You throw it to the ground and flip your coat collar up. The man's madness seems invigorated by the downpour, and his grin spreads from ear to ear. You swear you can see the bomb ever so slightly better now, though you know that makes no sense. Perhaps you should just join him up there, you muse.
@@ -62,4 +61,3 @@
 		3
 	<END>
 <ENDSCENE>
-<ENDRANDOMSCENES>

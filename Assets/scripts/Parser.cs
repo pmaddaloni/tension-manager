@@ -149,7 +149,7 @@ public class Parser : MonoBehaviour
 				// the file is reached. 
 				while ((line = sr.ReadLine()) != null) {
 					//Debug.Log(line);
-					if ((line.Trim ().ToUpper ()).Equals ("<RandomScene" + randomEventCounter + ">")) {
+					if ((line.Trim ().ToUpper ()).Equals ("<RANDOMSCENE" + randomEventCounter + ">")) {
 						while ((line = sr.ReadLine()) != null && !(line.Trim()).ToUpper().Equals("<ENDSCENE>")) {			
 							if ((line.Trim ()).Length == 0) {	
 								continue;
@@ -186,8 +186,8 @@ public class Parser : MonoBehaviour
 							default:
 								break;
 							}
-							randomEventCounter++;
 						}
+						randomEventCounter++;
 					}
 				}
 			}
