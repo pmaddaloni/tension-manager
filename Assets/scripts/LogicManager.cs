@@ -47,7 +47,7 @@ public class LogicManager : MonoBehaviour
 	private float gameLength = 120;
 	
 	//how many seconds per choice?
-	private int choiceLength = 15;
+	private int choiceLength = 20;
 	
 	//how many choices
 	private int numChoices = 3;
@@ -347,8 +347,8 @@ public class LogicManager : MonoBehaviour
 				sceneText = scenes [1];	
 			}
 		} else {
-			gui.setGameStatus ("The man is " + jumperDist + (jumperDist == 1 ? " step" : " steps") + " from the edge of the building, and "
-								+ (successDist - jumperDist) + (successDist - jumperDist == 1 ? " step" : " steps") + " from safety.");
+			gui.setGameStatus ("The man is: " + "\n\n" +  jumperDist + (jumperDist == 1 ? " step" : " steps") + " from the edge\n\n"
+								+ (successDist - jumperDist) + (successDist - jumperDist == 1 ? " step" : " steps") + " from safety");
 		}
 	}
 	
@@ -423,7 +423,7 @@ public class LogicManager : MonoBehaviour
 			sceneText += "\n" + choice.failureText;
 		}				
 		
-		
+		//if it's the last choice, tell tension manager to climax
 		bool lastChoice = gameTimeRemaining <= choiceLength;
 		tensionManager.updateTension (gameTimeRemaining, jumperDist, tension, lastChoice);
 		
