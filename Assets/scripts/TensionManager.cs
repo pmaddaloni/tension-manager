@@ -21,7 +21,7 @@ public class TensionManager : MonoBehaviour
 	
 	//extra impact choices must yield at least this much wiggle room
 	//if it can't provide at least this, will throttle play
-	private float minExtraPercent = .1f;
+	private float minExtraPercent = .07f;
 		
 	//the current, success and fail state values on the spectrum
 	//assumes that successStateVal is higher than failStateVal
@@ -39,7 +39,6 @@ public class TensionManager : MonoBehaviour
 	//How much time must be past before allowing a game end?
 	private float minEndTimePercent;
 	private bool initialized = false;
-	//private bool throttling = false;
 	
 	//which end of the choice to increase
 	private enum impacts
@@ -72,7 +71,7 @@ public class TensionManager : MonoBehaviour
 	 * bool throttle: should throttling be allowed
 	 * minPercentTimeToEnd: how much of the duration must have been passed to allow a win/fail state?
 	 * */
-	public void init (float duration, string tensionFileName, int failVal, int succVal, bool throttle, float minPercentTimeToEnd)
+	public void init (float duration, string tensionFileName, int failVal, int succVal, float minPercentTimeToEnd)
 	{
 		
 		tensionLevels = new List<float> ();
@@ -89,9 +88,6 @@ public class TensionManager : MonoBehaviour
 				
 		initTensionLevels (tensionFileName);
 		initialized = true;
-		
-		//should throttling be possible?
-		throttling = throttle;
 		
 		minEndTimePercent = minPercentTimeToEnd;
 	}
@@ -238,10 +234,20 @@ public class TensionManager : MonoBehaviour
 	
 	//set a positive or negative throttle that'll move the current state 50-100% to the center of the space
 	private void setThrottle(tensionStruct tension, throttleType throttle) {
-		float distFromCenter = Mathf.Abs(currStateVal - spaceSize/2);
-		float halfDistFromCenter = distFromCenter/2;
-		float throttleAmt = UnityEngine.Random.Range(halfDistFromCenter, distFromCenter); 										// STACK OVERFLOW error is possible HERE
+		float maxThrottle;
+		
+		
+		//throttle the state to as much as half way to the other extreme
+		if(throttle == throttleType.positive) {
+			maxThrottle = distFromSuccess/2;
+		} else {//negative throttle
 			
+			maxThrottle = distFromFailure/2;
+		}
+		
+		//throttle the state at least halfway to maxThrottle
+		float throttleAmt = UnityEngine.Random.Range(0, maxThrottle); 
+		
 		if(throttle == throttleType.negative){
 			throttleAmt *= -1;
 		}
@@ -251,12 +257,16 @@ public class TensionManager : MonoBehaviour
 		distFromSuccess = Math.Abs (successStateVal - currStateVal);
 		distFromFailure = Math.Abs (currStateVal - failStateVal);
 		
+		/*Debug.Log ("throttle type: " + throttle);
+		Debug.Log("new amt: " + throttleAmt);
+		Debug.Log ("currState: " + currStateVal);*/
 		//there was a pre-existing throttle to be taken into account, add it to the new throttle
 		if (tension.randomEventNeeded[0]) throttleAmt += tension.randomEventImpact[0];
 		//tension.randomEvent = new KeyValuePair<bool, float>(true, throttleAmt);
 		tension.randomEventNeeded[0] = true;
 		tension.randomEventImpact[0] = throttleAmt;
 		//print ("Tension Manager" + tension.randomEventNeeded[0] + " " + tension.randomEventImpact[0]);
+		//Debug.Log ("throttle true: " + throttleAmt);
 	}
 	
 	//returns the type of throttling necessary based on the max move percents in the effort of providing interesting choices
@@ -269,6 +279,9 @@ public class TensionManager : MonoBehaviour
 		//how much wiggle room there is to add extra impact without allowing end states
 		float remainingNonWinSuccessPercent = maxSuccessMovePercent - desiredTensionPercent;
 		float remainingNonWinFailPercent = maxFailMovePercent - desiredTensionPercent;
+		/*Debug.Log("nonWinSuccessPerc: " + remainingNonWinSuccessPercent);
+		Debug.Log ("nonWinFailPerc: " + remainingNonWinFailPercent);
+		Debug.Log ("desired tension: " + desiredTensionPercent);*/
 			
 		//If we're not able to allow extra impact percent of the specified minimum value
 		if (remainingNonWinSuccessPercent < minExtraPercent)
@@ -294,7 +307,8 @@ public class TensionManager : MonoBehaviour
 		}
 		else if (!throttleNegative && !throttlePositive) {
 			//set the maxExtra percent based on smaller remainingNonWin Percent & desired tension
-			float tensionBasedExtra = desiredTensionPercent*Mathf.Min(remainingNonWinFailPercent, remainingNonWinSuccessPercent);
+			//float tensionBasedExtra = desiredTensionPercent*Mathf.Min(remainingNonWinFailPercent, remainingNonWinSuccessPercent);
+			float tensionBasedExtra = Mathf.Min(remainingNonWinFailPercent, remainingNonWinSuccessPercent);
 			maxExtraPercent = Mathf.Max(tensionBasedExtra, minExtraPercent);
 			return throttleType.handled;
 		} else if (throttlePositive)

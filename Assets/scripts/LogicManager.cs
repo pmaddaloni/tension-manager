@@ -53,7 +53,7 @@ public class LogicManager : MonoBehaviour
 	private int numChoices = 3;
 	
 	//Measured in steps from the edge -- just like jumperDist
-	int successDist = 11;
+	int successDist = 16;
 	int failDist = 0;
 	
 	//what is the current distance from the edge? Initialized here for every game
@@ -115,7 +115,7 @@ public class LogicManager : MonoBehaviour
 	public string sceneText; //the scene description
 	public int amountToThrottle = 0;
 	private int[] currentChoiceClass = new int[3];
-	public tensionStruct tension = new tensionStruct ();
+	public tensionStruct tension = new tensionStruct();
 
 
 	//---------------------------METHODS-----------------------------------------//	
@@ -143,7 +143,7 @@ public class LogicManager : MonoBehaviour
 		
 		tensionManager = gameObject.AddComponent<TensionManager> ();
 		
-		tensionManager.init(gameLength, "tensionLevels.txt", failDist, successDist, randomScenes.Length > 0, minPercentTimeToEnd);
+		tensionManager.init(gameLength, "tensionLevels.txt", failDist, successDist, minPercentTimeToEnd);
 	}
 	
 	// Update is called once per frame
