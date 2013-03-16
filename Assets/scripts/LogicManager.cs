@@ -19,7 +19,9 @@ public struct tensionStruct
 	public float[] challengeLevels;
 	public float[] successImpacts;
 	public float[] failureImpacts;
-	public KeyValuePair<bool, float> randomEvent;
+	public bool[] randomEventNeeded;
+	public float[] randomEventImpact;
+	//public KeyValuePair<bool, float> randomEvent;
 }
 
 public struct randomEventNode
@@ -45,7 +47,7 @@ public class LogicManager : MonoBehaviour
 	private float gameLength = 120;
 	
 	//how many seconds per choice?
-	private int choiceLength = 15;
+	private int choiceLength = 20;
 	
 	//how many choices
 	private int numChoices = 3;
@@ -133,7 +135,9 @@ public class LogicManager : MonoBehaviour
 		tension.challengeLevels = new float[3];
 		tension.successImpacts = new float[3];
 		tension.failureImpacts = new float[3];
-		tension.randomEvent = new KeyValuePair<bool, float> (false, 0);
+		tension.randomEventNeeded = new bool[1];
+		tension.randomEventImpact = new float[1];
+		//tension.randomEvent = new KeyValuePair<bool, float> (false, 0);
 	
 		sceneText = scenes [0] + "\n" + begin;
 		
@@ -220,18 +224,18 @@ public class LogicManager : MonoBehaviour
 				//a previous choice butotn
 				switch (i) {
 				case 0:
-					print (i + " = " + currentChoiceClass [i]);
+					//print (i + " = " + currentChoiceClass [i]);
 					choice [i] = new List<choiceNode> (choiceList [currentChoiceClass [i]]);
 					break;
 				case 1:
-					print (i + " = " + currentChoiceClass [i]);
+					//print (i + " = " + currentChoiceClass [i]);
 					if (currentChoiceClass [i] == currentChoiceClass [i - 1])
 						choice [i] = choice [i - 1];
 					else
 						choice [i] = new List<choiceNode> (choiceList [currentChoiceClass [i]]);
 					break;
 				case 2:
-					print (i + " = " + currentChoiceClass [i]);
+					//print (i + " = " + currentChoiceClass [i]);
 					if (currentChoiceClass [i] == currentChoiceClass [i - 1])
 						choice [i] = choice [i - 1];
 					else if (currentChoiceClass [i] == currentChoiceClass [i - 2])
@@ -266,6 +270,8 @@ public class LogicManager : MonoBehaviour
 					(Math.Ceiling (tension.failureImpacts [i]) == 1 ? " step" : " steps")))
 					
 						+ " toward demise. Liklihood of success is " + (100 - tension.challengeLevels [i] * 100).ToString ("#") + "%";
+				
+				//print ("LogicManager" + tension.challengeLevels [i]);
 						
 				choices [i].successText = choice [i] [randomChoice].successText;
 				choices [i].failureText = choice [i] [randomChoice].failureText;
@@ -276,7 +282,7 @@ public class LogicManager : MonoBehaviour
 			//Application.Quit();
 		}
 		
-		System.Random rng = new System.Random ();  
+		/*System.Random rng = new System.Random ();  
 		int n = choices.Length;  
 		while (n > 1) {  
 			n--;  
@@ -284,7 +290,7 @@ public class LogicManager : MonoBehaviour
 			choiceNode value = choices [k];  
 			choices [k] = choices [n];  
 			choices [n] = value;  
-		}  
+		}  */
 		setGUIChoiceStrings ();
 	}
 	
@@ -396,12 +402,14 @@ public class LogicManager : MonoBehaviour
 		
 		//if the tensionManager has determined that a random event should take place to get
 		//tension to a desired level
-		if (tension.randomEvent.Key) {
+		//print("Logic Manager " + tension.randomEventNeeded[0] + " " + tension.randomEventImpact[0]);
+		if (tension.randomEventNeeded[0]) {
 			int random = UnityEngine.Random.Range (0, randomScenes.Length - 1);
-			jumperDist += Convert.ToInt32 (Math.Round (tension.randomEvent.Value));//calculate new jumper distance
+			jumperDist += Convert.ToInt32 (Math.Ceiling (tension.randomEventImpact[0]));//calculate new jumper distance
 			
-			sceneText += "\n" + randomScenes[random].description;		
-			if (tension.randomEvent.Value > 0)
+			sceneText += "\n" + randomScenes[random].description;	
+			print (randomScenes[random].description);
+			if (tension.randomEventImpact[0] > 0)
 				sceneText += '\n' + randomScenes[random].positiveEvent;
 			else
 				sceneText += '\n' + randomScenes[random].negativeEvent;

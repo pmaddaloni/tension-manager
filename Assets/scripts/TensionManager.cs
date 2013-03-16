@@ -39,7 +39,7 @@ public class TensionManager : MonoBehaviour
 	//How much time must be past before allowing a game end?
 	private float minEndTimePercent;
 	private bool initialized = false;
-	private bool throttling = false;
+	//private bool throttling = false;
 	
 	//which end of the choice to increase
 	private enum impacts
@@ -129,7 +129,9 @@ public class TensionManager : MonoBehaviour
 		cappedExtraPercent = false;
 		
 		//reset the random throttle event
-		tension.randomEvent = new KeyValuePair<bool, float>(false, 0);
+		//tension.randomEvent = new KeyValuePair<bool, float>(false, 0);
+		tension.randomEventNeeded[0] = false;
+		tension.randomEventImpact[0] = 0;
 		
 		//how far into the arc are we?
 		percentComplete = (arcDuration - timeRemaining) / arcDuration;
@@ -193,7 +195,7 @@ public class TensionManager : MonoBehaviour
 					tension.failureImpacts [i] = desiredTensionPercent * distFromFailure;
 					tension.challengeLevels [i] = BASE_CHALLENGE;
 				}
-			}
+			} //print ("TensionManager" + tension.challengeLevels [i]);
 		}
 	}
 	
@@ -238,7 +240,7 @@ public class TensionManager : MonoBehaviour
 	private void setThrottle(tensionStruct tension, throttleType throttle) {
 		float distFromCenter = Mathf.Abs(currStateVal - spaceSize/2);
 		float halfDistFromCenter = distFromCenter/2;
-		float throttleAmt = UnityEngine.Random.Range(halfDistFromCenter, distFromCenter);
+		float throttleAmt = UnityEngine.Random.Range(halfDistFromCenter, distFromCenter); 										// STACK OVERFLOW error is possible HERE
 			
 		if(throttle == throttleType.negative){
 			throttleAmt *= -1;
@@ -250,8 +252,11 @@ public class TensionManager : MonoBehaviour
 		distFromFailure = Math.Abs (currStateVal - failStateVal);
 		
 		//there was a pre-existing throttle to be taken into account, add it to the new throttle
-		if (tension.randomEvent.Key) throttleAmt += tension.randomEvent.Value;
-		tension.randomEvent = new KeyValuePair<bool, float>(true, throttleAmt);
+		if (tension.randomEventNeeded[0]) throttleAmt += tension.randomEventImpact[0];
+		//tension.randomEvent = new KeyValuePair<bool, float>(true, throttleAmt);
+		tension.randomEventNeeded[0] = true;
+		tension.randomEventImpact[0] = throttleAmt;
+		//print ("Tension Manager" + tension.randomEventNeeded[0] + " " + tension.randomEventImpact[0]);
 	}
 	
 	//returns the type of throttling necessary based on the max move percents in the effort of providing interesting choices
