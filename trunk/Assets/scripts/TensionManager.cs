@@ -108,7 +108,12 @@ public class TensionManager : MonoBehaviour
 	 * climax: presents choices that will cause success or failure
 	 * */
 	public void updateTension (float timeRemaining, int currentState, tensionStruct tension, bool climax)
-	{
+	{		
+		//reset the random throttle event
+		//tension.randomEvent = new KeyValuePair<bool, float>(false, 0);
+		tension.randomEventNeeded[0] = false;
+		tension.randomEventImpact[0] = 0;
+		
 		if (successStateVal <= currentState || currentState <= failStateVal) {
 			Debug.LogError ("TensionManager: Tried to getChoices for a state that's already failed or succeeded");
 			return;
@@ -123,11 +128,6 @@ public class TensionManager : MonoBehaviour
 		//reset the throttling booleans
 		cappedImpact = false;
 		cappedExtraPercent = false;
-		
-		//reset the random throttle event
-		//tension.randomEvent = new KeyValuePair<bool, float>(false, 0);
-		tension.randomEventNeeded[0] = false;
-		tension.randomEventImpact[0] = 0;
 		
 		//how far into the arc are we?
 		percentComplete = (arcDuration - timeRemaining) / arcDuration;
