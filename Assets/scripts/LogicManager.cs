@@ -174,7 +174,7 @@ public class LogicManager : MonoBehaviour
 		gameStartTime = Time.timeSinceLevelLoad;
 		choiceStartTime = Time.timeSinceLevelLoad;
 		updateGameTimeRemaining ();
-		tensionManager.updateTension (gameTimeRemaining, jumperDist, tension);
+		tensionManager.updateTension (gameTimeRemaining, jumperDist, tension, false);
 		setChoices ();//initialize the choices
 		updateGameStatus (); //initialize the game status
 		//seed the random number generator
@@ -411,7 +411,8 @@ public class LogicManager : MonoBehaviour
 			sceneText += "\n" + choice.failureText;
 		}				
 		
-		tensionManager.updateTension (gameTimeRemaining, jumperDist, tension);
+		bool lastChoice = gameTimeRemaining <= choiceLength;
+		tensionManager.updateTension (gameTimeRemaining, jumperDist, tension, lastChoice);
 		
 		//if the tensionManager has determined that a random event should take place to get
 		//tension to a desired level
