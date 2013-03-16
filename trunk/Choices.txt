@@ -7,7 +7,7 @@
 		<End>
 
 		<description> 
-		You raise the bullhorn to your mouth. You try to convine him to disarm the bomb. You try to find out what it is he wants.
+		You raise the bullhorn to your mouth. You try to convince him to disarm the bomb. You try to find out what it is he wants.
 		<End>
 
 		<success> 
@@ -203,7 +203,7 @@
 	<Choice2> 
 
 		<label>
-		Do nothing
+		Stand there
 		<end>
 
 		<description>
@@ -368,7 +368,7 @@
 	<Choice1> 
 
 		<label>
-		Do nothing
+		Think. Think hard
 		<end>
 
 		<description>
@@ -535,7 +535,7 @@
 	<Choice2> 
 
 		<label>
-		Do nothing
+		Take a moment
 		<end>
 
 		<description>
@@ -618,7 +618,7 @@
 	<Choice0> 
 
 		<label>
-		Do nothing
+		Get a hold of yourself
 		<end>
 
 		<description>
