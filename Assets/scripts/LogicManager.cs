@@ -47,7 +47,7 @@ public class LogicManager : MonoBehaviour
 	private float gameLength = 120;
 	
 	//how many seconds per choice?
-	private int choiceLength = 20;
+	private int choiceLength = 15;
 	
 	//how many choices
 	private int numChoices = 3;
@@ -67,7 +67,7 @@ public class LogicManager : MonoBehaviour
 	private int maxImpact;
 	
 	//Tension manager will prevent an end condition from happening until this much of the game time has past
-	private float minPercentTimeToEnd = .6f;
+	private float minPercentTimeToEnd = .50f;
 	
 	//--------------------------TIMER VARIABLES--------------------------------//
 	//when does the user start the game?
@@ -293,7 +293,7 @@ public class LogicManager : MonoBehaviour
 			choiceNode value = choices [k];  
 			choices [k] = choices [n];  
 			choices [n] = value;  
-		}  */
+		} */
 		setGUIChoiceStrings ();
 	}
 	
@@ -378,7 +378,7 @@ public class LogicManager : MonoBehaviour
 		float currTime = Time.timeSinceLevelLoad;
 		float choiceTimePassed = currTime - choiceStartTime;
 		
-		if (choiceTimePassed >= choiceLength) {
+		if (choiceTimePassed >= choiceLength && jumperDist > failDist && jumperDist < successDist ) {
 			choiceTimeRemaining = choiceLength;
 			choiceStartTime = currTime;
 			handleChoice ();
@@ -423,6 +423,7 @@ public class LogicManager : MonoBehaviour
 			sceneText += "\n" + choice.failureText;
 		}				
 		
+		
 		bool lastChoice = gameTimeRemaining <= choiceLength;
 		tensionManager.updateTension (gameTimeRemaining, jumperDist, tension, lastChoice);
 		
@@ -441,12 +442,12 @@ public class LogicManager : MonoBehaviour
 				sceneText += '\n' + randomScenes[random].negativeEvent;
 			randomScenes.RemoveAt(random);
 			print (randomScenes.Count);
-		}
+		}		
+		sceneText += "\nMake your move.";
 			
 		if (jumperDist <= failDist || jumperDist >= successDist || gameTimeRemaining <= 0) {
 			updateGameStatus();
 		} else {
-			sceneText += "\nMake your move.";
 			updateGameStatus ();//tell the GUI to update the game status
 			setChoices ();//updates the choice list
 		}
