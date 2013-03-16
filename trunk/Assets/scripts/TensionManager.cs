@@ -6,7 +6,6 @@ using System.IO;
 
 public class TensionManager : MonoBehaviour
 {
-		
 	private const float BASE_CHALLENGE = .5f;
 	private float arcDuration;//how long the experience should be, in seconds
 	private float percentComplete;//how far along on the arc should we be?
@@ -106,8 +105,9 @@ public class TensionManager : MonoBehaviour
 	/*returns the impact level and challenge necessary to match the desired tension
 	 * timeRemaining: how much time is remaining in the arc duration?
 	 * currentState: what is the current state between success and fail?
+	 * climax: presents choices that will cause success or failure
 	 * */
-	public void updateTension (float timeRemaining, int currentState, tensionStruct tension)
+	public void updateTension (float timeRemaining, int currentState, tensionStruct tension, bool climax)
 	{
 		if (successStateVal <= currentState || currentState <= failStateVal) {
 			Debug.LogError ("TensionManager: Tried to getChoices for a state that's already failed or succeeded");
@@ -136,17 +136,17 @@ public class TensionManager : MonoBehaviour
 		updateDesiredTension ();
 	
 		//build the choices
-		buildChoices (tension);
+		buildChoices (tension, climax);
 	}
 	
-	void buildChoices (tensionStruct tension)
+	void buildChoices (tensionStruct tension, bool climax)
 	{
 		//how far is current state from success/failure?
 		distFromSuccess = Math.Abs (successStateVal - currStateVal);
 		distFromFailure = Math.Abs (currStateVal - failStateVal);
 		
 		//set based on the desired tension -- will throttle progress if there's no play for additional impace percent
-		updateMaxExtraImpactPercentAndThrottle (tension);
+		if(!climax) updateMaxExtraImpactPercentAndThrottle(tension);
 		
 		int numChoices = tension.challengeLevels.Length;
 		
@@ -158,7 +158,12 @@ public class TensionManager : MonoBehaviour
 				tension.successImpacts [i] = cappedSuccessImpact;
 				tension.failureImpacts [i] = cappedFailImpact;
 				tension.challengeLevels [i] = BASE_CHALLENGE;
-			} else {
+				
+			} else if(climax) {//make all choices allow success or failure
+				tension.successImpacts [i] = distFromSuccess;
+				tension.failureImpacts [i] = distFromFailure;
+				tension.challengeLevels [i] = BASE_CHALLENGE;
+			}else {
 			
 				//how much extra impact will the choice allow?
 				float extraPercent;
@@ -235,7 +240,6 @@ public class TensionManager : MonoBehaviour
 	//set a positive or negative throttle that'll move the current state 50-100% to the center of the space
 	private void setThrottle(tensionStruct tension, throttleType throttle) {
 		float maxThrottle;
-		
 		
 		//throttle the state to as much as half way to the other extreme
 		if(throttle == throttleType.positive) {
