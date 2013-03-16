@@ -79,7 +79,7 @@ public class Parser : MonoBehaviour
 								case "<LABEL>":
 									line = sr.ReadLine ();
 									while (!(line.Trim()).ToUpper().Equals("<END>")) {
-										temp.label += line.Trim () + '\n';
+										temp.label += line.Trim ();
 										line = sr.ReadLine ();
 									}
 									break;
@@ -187,8 +187,8 @@ public class Parser : MonoBehaviour
 							default:
 								break;
 							}
-							randomEvents.Add (temp);
 						}
+						randomEvents.Add (temp);
 						randomEventCounter++;
 					}
 				}
