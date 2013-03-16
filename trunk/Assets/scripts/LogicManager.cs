@@ -67,7 +67,7 @@ public class LogicManager : MonoBehaviour
 	private int maxImpact;
 	
 	//Tension manager will prevent an end condition from happening until this much of the game time has past
-	private float minPercentTimeToEnd = .75f;
+	private float minPercentTimeToEnd = .6f;
 	
 	//--------------------------TIMER VARIABLES--------------------------------//
 	//when does the user start the game?
@@ -155,7 +155,7 @@ public class LogicManager : MonoBehaviour
 				startGame ();
 			return;
 		} else {
-			if (gameTimeRemaining > 0) {
+			if (gameTimeRemaining > 0 && jumperDist > failDist && jumperDist < successDist) {
 				updateGameTimeRemaining ();
 				handleChoiceTimer ();
 			} else {
@@ -354,6 +354,7 @@ public class LogicManager : MonoBehaviour
 	
 	private void updateForEnding()
 	{
+		sceneText = sceneText.Remove (sceneText.IndexOf ("Make your move."), "Make your move.".Length);
 		sceneText += "\n\nPress any key for your ending";
 		for (int i = 0; i < numChoices; i++)
 			choices [i].label = "";
