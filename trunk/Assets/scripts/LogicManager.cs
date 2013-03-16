@@ -80,10 +80,10 @@ public class LogicManager : MonoBehaviour
 		get { return gameStarted;}
 	}
 	
-	/*private bool gameEnded = false;
+	private bool gameEnded = false;
 	public bool GameEnded {
 		get {return GameEnded;}
-	}*/
+	}
 	
 	//when did the current choice start?
 	private float choiceStartTime;
@@ -261,15 +261,18 @@ public class LogicManager : MonoBehaviour
 				/*choices[i].label += "Success:" + tension.successImpacts[i] + " Failure:" 
 					+ tension.failureImpacts[i] + " Challenge:" + tension.challengeLevels[i];*/
 				
-				choices [i].label += "Success: " + (Math.Ceiling (tension.successImpacts [i]) + jumperDist >= successDist ? "The man will get off the ledge" :
+				choices [i].label += ". This move is " + ((100 - tension.challengeLevels [i] * 100) < 50 ? "very risky" :
+														((100 - tension.challengeLevels [i] * 100) > 50 ? "less risky" : "risky")) + 
+						
+					".\nSuccess: " + (Math.Ceiling (tension.successImpacts [i]) + jumperDist >= successDist ? "The man will get off the ledge" :
 								(Math.Ceiling (tension.successImpacts [i]) +
 					(Math.Ceiling (tension.successImpacts [i]) == 1 ? " step" : " steps"))) + " toward safety. Failure: " +
 					
 					(jumperDist - Math.Ceiling (tension.failureImpacts [i]) <= failDist ? "The man will leap" : 
 								(Math.Ceiling (tension.failureImpacts [i]) +
-					(Math.Ceiling (tension.failureImpacts [i]) == 1 ? " step" : " steps")))
-					
-						+ " toward demise. Liklihood of success is " + (100 - tension.challengeLevels [i] * 100).ToString ("#") + "%";
+					(Math.Ceiling (tension.failureImpacts [i]) == 1 ? " step" : " steps")))	
+						+ " toward demise. ";
+							// + "Liklihood of success is " + (100 - tension.challengeLevels [i] * 100).ToString ("#") + "%";
 				
 				//print ("LogicManager" + tension.challengeLevels [i]);
 						
@@ -313,16 +316,22 @@ public class LogicManager : MonoBehaviour
 			gui.setGameStatus ("You've successfully gotten the man to come down off the ledge.");
 			gameTimeRemaining = 0;
 			choiceTimeRemaining = 0;
-			updateForEnding();
+			if (!gameEnded){
+				gameEnded = true;
+				updateForEnding();
+			}
 			if (Input.anyKeyDown) {
 				sceneText = scenes [3];
 	
 			}		
 		} else if (jumperDist <= failDist) {
-			gui.setGameStatus ("The man has reached the edge of the ledge.");
+			gui.setGameStatus ("The man has reached the edge of the ledge and his end.");
 			gameTimeRemaining = 0;
 			choiceTimeRemaining = 0;
-			updateForEnding();
+			if (!gameEnded){
+				gameEnded = true;
+				updateForEnding();
+			}		
 			if (Input.anyKeyDown) {
 				sceneText = scenes [2];	
 			}
@@ -330,7 +339,10 @@ public class LogicManager : MonoBehaviour
 			gui.setGameStatus ("Time is up.");
 			gameTimeRemaining = 0;
 			choiceTimeRemaining = 0;
-			updateForEnding();
+			if (!gameEnded){
+				gameEnded = true;
+				updateForEnding();
+			}
 			if (Input.anyKeyDown) {
 				sceneText = scenes [1];	
 			}
@@ -346,7 +358,6 @@ public class LogicManager : MonoBehaviour
 		for (int i = 0; i < numChoices; i++)
 			choices [i].label = "";
 		setGUIChoiceStrings ();
-		updateGameStatus ();//tell the GUI to update the game status
 	}
 	
 	void updateGameTimeRemaining ()
@@ -422,16 +433,17 @@ public class LogicManager : MonoBehaviour
 			jumperDist += Mathf.RoundToInt (tension.randomEventImpact[0]);//calculate new jumper distance
 			
 			sceneText += "\n" + randomScenes[random].description;	
-			print (randomScenes[random].description);
+			print (randomScenes.Count + " " + randomScenes[random].description);
 			if (tension.randomEventImpact[0] > 0)
 				sceneText += '\n' + randomScenes[random].positiveEvent;
 			else
 				sceneText += '\n' + randomScenes[random].negativeEvent;
 			randomScenes.RemoveAt(random);
+			print (randomScenes.Count);
 		}
 			
 		if (jumperDist <= failDist || jumperDist >= successDist || gameTimeRemaining <= 0) {
-			updateForEnding();
+			updateGameStatus();
 		} else {
 			sceneText += "\nMake your move.";
 			updateGameStatus ();//tell the GUI to update the game status
