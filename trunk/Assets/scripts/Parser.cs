@@ -135,7 +135,7 @@ public class Parser : MonoBehaviour
 		}
 	}
 	
-	public void parseRandomEvents (string fileName, randomEventNode[] randomEvents)
+	public void parseRandomEvents (string fileName, List<randomEventNode> randomEvents)
 	{
 		try {			
 			// Create an instance of StreamReader to read from a file. 
@@ -150,6 +150,7 @@ public class Parser : MonoBehaviour
 				while ((line = sr.ReadLine()) != null) {
 					//Debug.Log(line);
 					if ((line.Trim ().ToUpper ()).Equals ("<RANDOMSCENE" + randomEventCounter + ">")) {
+						randomEventNode temp = new randomEventNode ();
 						while ((line = sr.ReadLine()) != null && !(line.Trim()).ToUpper().Equals("<ENDSCENE>")) {			
 							if ((line.Trim ()).Length == 0) {	
 								continue;
@@ -158,34 +159,35 @@ public class Parser : MonoBehaviour
 							case "<DESCRIPTION>":
 								line = sr.ReadLine ();
 								while (!(line.Trim()).ToUpper().Equals("<END>")) {
-									randomEvents [randomEventCounter].description += line.Trim () + '\n';
+									temp.description += line.Trim () + '\n';
 									line = sr.ReadLine ();
 								}
 								break;
 							case "<POSITIVE>":
 								line = sr.ReadLine ();
 								while (!(line.Trim()).ToUpper().Equals("<END>")) {
-									randomEvents [randomEventCounter].positiveEvent += line.Trim () + '\n';
+									temp.positiveEvent += line.Trim () + '\n';
 									line = sr.ReadLine ();
 								}
 								break;
 							case "<NEGATIVE>":
 								line = sr.ReadLine ();
 								while (!(line.Trim()).ToUpper().Equals("<END>")) {
-									randomEvents [randomEventCounter].negativeEvent += line.Trim () + '\n';
+									temp.negativeEvent += line.Trim () + '\n';
 									line = sr.ReadLine ();
 								}
 								break;
 							case "<IMPACT>":
 								line = sr.ReadLine ();
 								while (!(line.Trim()).ToUpper().Equals("<END>")) {
-									randomEvents [randomEventCounter].impactAmount = Convert.ToInt32 (line.Trim ());
+									temp.impactAmount = Convert.ToInt32 (line.Trim ());
 									line = sr.ReadLine ();
 								}
 								break;
 							default:
 								break;
 							}
+							randomEvents.Add (temp);
 						}
 						randomEventCounter++;
 					}

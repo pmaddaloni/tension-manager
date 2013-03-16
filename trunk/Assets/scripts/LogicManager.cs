@@ -110,7 +110,7 @@ public class LogicManager : MonoBehaviour
 
 	private choiceNode[] choices;
 	public string[] scenes = new string[20];
-	public randomEventNode[] randomScenes = new randomEventNode[5];
+	public List<randomEventNode> randomScenes = new List<randomEventNode>();
 	public List<choiceNode>[] choiceList = new List<choiceNode>[6];
 	public string sceneText; //the scene description
 	public int amountToThrottle = 0;
@@ -313,6 +313,7 @@ public class LogicManager : MonoBehaviour
 			gui.setGameStatus ("You've successfully gotten the man to come down off the ledge.");
 			gameTimeRemaining = 0;
 			choiceTimeRemaining = 0;
+			updateForEnding();
 			if (Input.anyKeyDown) {
 				sceneText = scenes [3];
 	
@@ -321,6 +322,7 @@ public class LogicManager : MonoBehaviour
 			gui.setGameStatus ("The man has reached the edge of the ledge.");
 			gameTimeRemaining = 0;
 			choiceTimeRemaining = 0;
+			updateForEnding();
 			if (Input.anyKeyDown) {
 				sceneText = scenes [2];	
 			}
@@ -328,12 +330,23 @@ public class LogicManager : MonoBehaviour
 			gui.setGameStatus ("Time is up.");
 			gameTimeRemaining = 0;
 			choiceTimeRemaining = 0;
+			updateForEnding();
 			if (Input.anyKeyDown) {
 				sceneText = scenes [1];	
 			}
 		} else {
-			gui.setGameStatus ("The man is " + jumperDist + (jumperDist == 1 ? " step" : " steps") + " from the edge.");
+			gui.setGameStatus ("The man is " + jumperDist + (jumperDist == 1 ? " step" : " steps") + " from the edge of the building, and "
+								+ (successDist - jumperDist) + (successDist - jumperDist == 1 ? " step" : " steps") + " from safety.");
 		}
+	}
+	
+	private void updateForEnding()
+	{
+		sceneText += "\n\nPress any key for your ending";
+		for (int i = 0; i < numChoices; i++)
+			choices [i].label = "";
+		setGUIChoiceStrings ();
+		updateGameStatus ();//tell the GUI to update the game status
 	}
 	
 	void updateGameTimeRemaining ()
@@ -404,8 +417,8 @@ public class LogicManager : MonoBehaviour
 		//tension to a desired level
 		//print("Logic Manager " + tension.randomEventNeeded[0] + " " + tension.randomEventImpact[0]);
 		if (tension.randomEventNeeded[0]) {
-			int random = UnityEngine.Random.Range (0, randomScenes.Length - 1);
-			jumperDist += Convert.ToInt32 (Math.Ceiling (tension.randomEventImpact[0]));//calculate new jumper distance
+			int random = UnityEngine.Random.Range (0, randomScenes.Count - 1);
+			jumperDist += Mathf.RoundToInt (tension.randomEventImpact[0]);//calculate new jumper distance
 			
 			sceneText += "\n" + randomScenes[random].description;	
 			print (randomScenes[random].description);
@@ -413,15 +426,11 @@ public class LogicManager : MonoBehaviour
 				sceneText += '\n' + randomScenes[random].positiveEvent;
 			else
 				sceneText += '\n' + randomScenes[random].negativeEvent;
+			randomScenes.RemoveAt(random);
 		}
 			
 		if (jumperDist <= failDist || jumperDist >= successDist || gameTimeRemaining <= 0) {
-			sceneText += "\n\nPress any key for your ending";
-			for (int i = 0; i < numChoices; i++)
-				choices [i].label = "";
-			setGUIChoiceStrings ();
-			updateGameStatus ();//tell the GUI to update the game status
-
+			updateForEnding();
 		} else {
 			sceneText += "\nMake your move.";
 			updateGameStatus ();//tell the GUI to update the game status
